@@ -1,0 +1,541 @@
+syntax = "proto3";
+
+package sysclient;
+
+option go_package = "./sys";
+
+// login start
+message LoginRequest {
+    string Username = 1;
+    string Password = 2;
+    string Code = 3;
+    string Uuid = 4;
+}
+message LoginResponse {
+    string CurrentAuthority = 1;
+    int64 Expire = 2;
+    string Token = 3;
+}
+// login end
+
+// user start
+message UserInfoReq {
+    int64 userId = 1;
+}
+
+message UserInfoResp {
+    repeated string roles = 1;
+    repeated string permissions = 2;
+    repeated string buttons = 3;
+    string introduction = 4;
+    string avatar = 5;
+    string userName = 6;
+    string name = 7;
+    int64 userId = 8;
+    int64 deptId = 9;
+    int64 roleId = 10;
+}
+
+message UserRetrieveResp {
+    int64 userId = 1;
+    string username = 2;
+    string phone = 3;
+    int64 status = 4;
+    string email = 5;
+    int64 sex = 6;
+    string remark = 7;
+    int64 roleId = 8;
+    int64 deptId = 9;
+    int64 postId = 10;
+}
+
+message UserListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message UserListData{
+    int64 userId = 1;
+    string userName = 2;
+    string phone = 3;
+    int64 status = 4;
+    string email = 5;
+    string avatar = 6;
+    int64 sex = 7;
+    string remark = 8;
+    string createdAt = 9;
+    string updatedAt = 10;
+    int64 createBy = 11;
+    int64 updateBy = 12;
+    int64 roleId = 13;
+    int64 deptId = 14;
+    int64 postId = 15;
+    DeptListData dept = 16;
+}
+
+message UserListResp {
+    int64 count = 1;
+    repeated UserListData list = 2;
+}
+
+message UserAddReq {
+    string username = 1;
+    string password = 2;
+    string phone = 3;
+    int64 roleId = 4;
+    string avatar = 5;
+    int64 sex = 6;
+    string email = 7;
+    int64 deptId = 8;
+    int64 postId = 9;
+    string remark = 10;
+    int64 status = 11;
+    int64 createBy = 12;
+    int64 updateBy = 13;
+}
+
+message UserAddResp {}
+
+message UserUpdateReq {
+    int64 userId = 1;
+    string username = 2;
+    string phone = 3;
+    int64 roleId = 4;
+    int64 sex = 5;
+    string email = 6;
+    int64 deptId = 7;
+    int64 postId = 8;
+    string remark = 9;
+    int64 status = 10;
+    int64 updateBy = 11;
+}
+
+message UserUpdateResp {}
+
+message UserUpdateStatusReq {
+    int64 userId = 1;
+    int64 status = 2;
+    int64 updateBy = 3;
+}
+
+message UserUpdateStatusResp {}
+
+message UserUpdatePwdReq {
+    int64 userId = 1;
+    string password = 2;
+    int64 updateBy = 3;
+}
+
+message UserUpdatePwdResp {}
+
+message UserDeleteReq {
+    repeated int64 userIds = 1;
+}
+
+message UserDeleteResp {}
+// user end
+
+// role start
+message RoleListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message RoleListData{
+    int64 roleId = 1;
+    string roleName = 2;
+    string roleKey = 3;
+    int64 sort = 4;
+    string remark = 5;
+    int64 status = 6;
+    int64 createBy = 7;
+    string createdAt = 8;
+    int64 updateBy = 9;
+    string updatedAt = 10;
+}
+
+message RoleListResp {
+    int64 count = 1;
+    repeated RoleListData data = 2;
+}
+
+message RoleAddReq {
+    string roleName = 1;
+    string roleKey = 2;
+    int64 sort = 3;
+    string remark = 4;
+    int64 status = 5;
+    int64 createBy = 6;
+    string createdAt = 7;
+    repeated int64 menuIds = 8;
+}
+
+message RoleAddResp {}
+
+message RoleRetrieveReq {
+    int64 roleId = 1;
+}
+
+message RoleRetrieveResp {
+    int64 roleId = 1;
+    string roleName = 2;
+    string roleKey = 3;
+    int64 sort = 4;
+    string remark = 5;
+    int64 status = 6;
+    string createdAt = 7;
+    repeated int64 menuIds = 8;
+}
+
+message RoleUpdateReq {
+    int64 roleId = 1;
+    string roleName = 2;
+    string roleKey = 3;
+    int64 sort = 4;
+    string remark = 5;
+    int64 status = 6;
+    int64 updateBy = 7;
+    repeated int64 menuIds = 8;
+}
+
+message RoleUpdateResp {}
+
+message RoleDeleteReq {
+    repeated int64 roleIds = 1;
+}
+
+message RoleDeleteResp {}
+
+message RoleMenuTreeReq {
+    int64 roleId = 1;
+}
+
+message RoleMenuTreeData {
+    int64 id = 1;
+    string label = 2;
+    repeated RoleMenuTreeData children = 3;
+}
+
+message RoleMenuTreeResp {
+    repeated RoleMenuTreeData menus = 1;
+    repeated int64 checkedKeys = 2;
+}
+// role end
+
+// menu start
+message MenuAddReq {
+    string menuName = 1;
+    string title = 2;
+    string icon = 3;
+    string path = 4;
+    string paths = 5;
+    string menuType = 6;
+    string action = 7;
+    string permission = 8;
+    string breadcrumb =9;
+    string component =10;
+    string visible =11;
+    string isFrame =12;
+    int64 parentId = 13;
+    int64 noCache = 14;
+    int64 sort = 15;
+    int64 createBy =16;
+    int64 updateBy =17;
+}
+
+message MenuAddResp {}
+
+message MenuListReq {}
+
+message MenuListData {
+    int64 menuId = 1;
+    string menuName = 2;
+    string title = 3;
+    string icon = 4;
+    string path = 5;
+    string paths = 6;
+    string menuType = 7;
+    string action = 8;
+    string permission = 9;
+    string breadcrumb =10;
+    string component =11;
+    string visible =12;
+    string isFrame =13;
+    int64 parentId = 14;
+    int64 noCache = 15;
+    int64 sort = 16;
+    int64 createBy =17;
+    int64 updateBy =18;
+    string createdAt = 19;
+    string updatedAt = 20;
+    repeated MenuListData children = 21;
+}
+
+message MenuListResp{
+    repeated MenuListData data = 1;
+}
+
+message MenuRetrieveReq {
+    int64 menuId = 1;
+}
+
+message MenuRetrieveResp {
+    int64 menuId = 1;
+    string menuName = 2;
+    string title = 3;
+    string icon = 4;
+    string path = 5;
+    string paths = 6;
+    string menuType = 7;
+    string action = 8;
+    string permission = 9;
+    string breadcrumb =10;
+    string component =11;
+    string visible =12;
+    string isFrame =13;
+    int64 parentId = 14;
+    int64 noCache = 15;
+    int64 sort = 16;
+    int64 createBy =17;
+    int64 updateBy =18;
+}
+
+message MenuUpdateReq {
+    string menuName = 1;
+    string title = 2;
+    string icon = 3;
+    string path = 4;
+    string paths = 5;
+    string menuType = 6;
+    string action = 7;
+    string permission = 8;
+    string breadcrumb =9;
+    string component =10;
+    string visible =11;
+    string isFrame =12;
+    int64 parentId = 13;
+    int64 noCache = 14;
+    int64 sort = 15;
+    int64 createBy =16;
+    int64 updateBy =17;
+    int64 menuId =18;
+}
+
+message MenuUpdateResp {}
+
+message MenuDeleteReq {
+    int64 menuId = 1;
+}
+
+message MenuDeleteResp {}
+
+message MenuRoleReq {
+    int64 role_id = 1;
+}
+
+message MenuTree {
+    MenuListData data = 1;
+    repeated MenuTree children = 2;
+}
+
+message MenuRoleResp {
+    repeated MenuTree data = 1;
+}
+// menu end
+
+// dept start
+message DeptTreeReq {
+}
+
+message DeptTreeData {
+    int64 id = 1;
+    string label = 2;
+    repeated DeptTreeData children = 3;
+}
+
+message DeptTreeResp {
+    repeated DeptTreeData data = 1;
+}
+
+message DeptListReq {
+}
+
+message DeptListData{
+    int64 deptId = 1;
+    string deptPath = 2;
+    string deptName = 3;
+    string phone = 4;
+    string email = 5;
+    string leader = 6;
+    int64 status = 7;
+    int64 sort = 8;
+    int64 parentId = 9;
+    int64 createBy = 10;
+    string createdAt = 11;
+    string updatedAt = 12;
+    int64 updateBy = 13;
+    repeated DeptListData children = 14;
+}
+
+message DeptListResp {
+    repeated DeptListData data = 1;
+}
+
+message DeptRetrieveReq {
+    int64 deptId = 1;
+}
+
+message DeptRetrieveResp {
+    int64 deptId = 1;
+    string deptName = 2;
+    string phone = 3;
+    string email = 4;
+    string leader = 5;
+    int64 sort = 6;
+    int64 status = 7;
+    int64 parentId = 8;
+}
+
+message DeptAddReq {
+    string deptName = 1;
+    string phone = 2;
+    string email = 3;
+    string leader = 4;
+    int64 sort = 5;
+    int64 status = 6;
+    int64 parentId = 7;
+    int64 createBy = 8;
+    int64 updateBy = 9;
+}
+
+message DeptAddResp {}
+
+message DeptUpdateReq {
+    int64 deptId = 1;
+    string deptName = 2;
+    string phone = 3;
+    string email = 4;
+    string leader = 5;
+    int64 sort = 6;
+    int64 status = 7;
+    int64 parentId = 8;
+    int64 updateBy = 9;
+}
+
+message DeptUpdateResp {}
+
+message DeptDeleteReq {
+    repeated int64 deptIds = 1;
+}
+
+message DeptDeleteResp {}
+// dept end
+
+// post start
+message PostListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message PostListData{
+    int64 postId = 1;
+    string postName = 2;
+    string postCode = 3;
+    int64 sort = 4;
+    int64 status = 5;
+    string remark = 6;
+    int64 createBy = 7;
+    string createdAt = 8;
+    int64 updateBy = 9;
+    string updatedAt = 10;
+}
+
+message PostListResp {
+    int64 count = 1;
+    repeated PostListData data = 2;
+}
+
+message PostRetrieveReq {
+    int64 postId = 1;
+}
+
+message PostRetrieveResp {
+    int64 postId = 1;
+    string postName = 2;
+    string postCode = 3;
+    int64 sort = 4;
+    int64 status = 5;
+    string remark = 6;
+}
+
+message PostAddReq {
+    string postName = 1;
+    string postCode = 2;
+    int64 sort = 3;
+    int64 status = 4;
+    string remark = 5;
+    int64 createBy = 6;
+    int64 updateBy = 7;
+}
+
+message PostAddResp {}
+
+message PostUpdateReq {
+    int64 postId = 1;
+    string postName = 2;
+    string postCode = 3;
+    int64 sort = 4;
+    int64 status = 5;
+    string remark = 6;
+    int64 updateBy = 7;
+}
+
+message PostUpdateResp {}
+
+message PostDeleteReq {
+    repeated int64 postIds = 1;
+}
+
+message PostDeleteResp {}
+// post end
+
+service Sys {
+    rpc Login(LoginRequest) returns(LoginResponse);
+
+    rpc UserInfo(UserInfoReq) returns(UserInfoResp);
+    rpc UserList(UserListReq) returns(UserListResp);
+    rpc UserRetrieve(UserInfoReq) returns(UserRetrieveResp);
+    rpc UserAdd(UserAddReq) returns(UserAddResp);
+    rpc UserUpdate(UserUpdateReq) returns(UserUpdateResp);
+    rpc UserUpdateStatus(UserUpdateStatusReq) returns(UserUpdateStatusResp);
+    rpc UserUpdatePwd(UserUpdatePwdReq) returns(UserUpdatePwdResp);
+    rpc UserDelete(UserDeleteReq) returns(UserDeleteResp);
+
+    rpc RoleMenuTree(RoleMenuTreeReq) returns(RoleMenuTreeResp);
+    rpc RoleList(RoleListReq) returns(RoleListResp);
+    rpc RoleAdd(RoleAddReq) returns(RoleAddResp);
+    rpc RoleRetrieve(RoleRetrieveReq) returns(RoleRetrieveResp);
+    rpc RoleUpdate(RoleUpdateReq) returns(RoleUpdateResp);
+    rpc RoleDelete(RoleDeleteReq) returns(RoleDeleteResp);
+
+    rpc MenuAdd(MenuAddReq) returns(MenuAddResp);
+    rpc MenuList(MenuListReq) returns(MenuListResp);
+    rpc MenuRetrieve(MenuRetrieveReq) returns(MenuRetrieveResp);
+    rpc MenuUpdate(MenuUpdateReq) returns(MenuUpdateResp);
+    rpc MenuDelete(MenuDeleteReq) returns(MenuDeleteResp);
+
+    rpc MenuRole(MenuRoleReq) returns(MenuRoleResp);
+
+    rpc DeptTree(DeptTreeReq) returns(DeptTreeResp);
+    rpc DeptList(DeptListReq) returns(DeptListResp);
+    rpc DeptRetrieve(DeptRetrieveReq) returns(DeptRetrieveResp);
+    rpc DeptAdd(DeptAddReq) returns(DeptAddResp);
+    rpc DeptUpdate(DeptUpdateReq) returns(DeptUpdateResp);
+    rpc DeptDelete(DeptDeleteReq) returns(DeptDeleteResp);
+
+    rpc PostList(PostListReq) returns(PostListResp);
+    rpc PostRetrieve(PostRetrieveReq) returns(PostRetrieveResp);
+    rpc PostAdd(PostAddReq) returns(PostAddResp);
+    rpc PostUpdate(PostUpdateReq) returns(PostUpdateResp);
+    rpc PostDelete(PostDeleteReq) returns(PostDeleteResp);
+}

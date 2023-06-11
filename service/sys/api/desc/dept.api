@@ -1,0 +1,138 @@
+syntax = "v1"
+
+info(
+	title: "部门"
+	desc: "部门"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	DeptTreeResp {
+		Id       int64          `json:"id"`
+		Label    string         `json:"label"`
+		Children []DeptTreeResp `json:"children"`
+	}
+)
+
+type (
+	DeptListData {
+		DeptId    int64  `json:"deptId"`
+		DeptPath  string `json:"deptPath"`
+		DeptName  string `json:"deptName"`
+		Phone     string `json:"phone"`
+		Status    int64  `json:"status"`
+		Email     string `json:"email"`
+		Leader    string `json:"leader"`
+		Sort      int64  `json:"sort"`
+		ParentId  int64  `json:"parentId"`
+		CreatedAt string `json:"createdAt"`
+		UpdatedAt string `json:"updatedAt"`
+		CreateBy  int64  `json:"createBy"`
+		UpdateBy  int64  `json:"updateBy"`
+	}
+	DeptListResp {
+		DeptId    int64          `json:"deptId"`
+		DeptPath  string         `json:"deptPath"`
+		DeptName  string         `json:"deptName"`
+		Phone     string         `json:"phone"`
+		Status    int64          `json:"status"`
+		Email     string         `json:"email"`
+		Leader    string         `json:"leader"`
+		Sort      int64          `json:"sort"`
+		ParentId  int64          `json:"parentId"`
+		CreatedAt string         `json:"createdAt"`
+		UpdatedAt string         `json:"updatedAt"`
+		CreateBy  int64          `json:"createBy"`
+		UpdateBy  int64          `json:"updateBy"`
+		Children  []DeptListResp `json:"children"`
+	}
+)
+
+type (
+	DeptRetrieveReq {
+		DeptId    int64  `path:"deptId"`
+	}
+	DeptRetrieveResp {
+		DeptId   int64  `json:"deptId"`
+		DeptName string `json:"deptName"`
+		Phone    string `json:"phone"`
+		Email    string `json:"email"`
+		Leader   string `json:"leader"`
+		Sort     int64  `json:"sort"`
+		Status   int64  `json:"status"`
+		ParentId int64  `json:"parentId"`
+	}
+)
+
+type (
+	DeptAddReq {
+		DeptName string `json:"deptName"`
+		Phone    string `json:"phone,optional"`
+		Email    string `json:"email,optional"`
+		Leader   string `json:"leader"`
+		Sort     int64  `json:"sort,optional"`
+		Status   int64  `json:"status,optional"`
+		ParentId int64  `json:"parentId"`
+		CreateBy int64  `json:"createBy,optional"`
+		UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	DeptUpdateReq {
+		DeptId   int64  `json:"deptId"`
+		DeptName string `json:"deptName"`
+		Phone    string `json:"phone,optional"`
+		Email    string `json:"email,optional"`
+		Leader   string `json:"leader"`
+		Sort     int64  `json:"sort,optional"`
+		Status   int64  `json:"status,optional"`
+		ParentId int64  `json:"parentId"`
+		UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	DeptDeleteReq {
+		ids []int64 `json:"ids"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: dept
+	prefix: /api/v1
+)
+service sys {
+	@doc(
+		summary: "部门树"
+	)
+	@handler DeptTree
+	get /deptTree returns ([]*DeptTreeResp)
+	@doc(
+		summary: "部门列表"
+	)
+	@handler DeptList
+	get /dept returns ([]*DeptListResp)
+	@doc(
+		summary: "获取单个部门"
+	)
+	@handler DeptRetrieve
+	get /dept/:deptId (DeptRetrieveReq) returns (DeptRetrieveResp)
+	@doc(
+		summary: "新增部门"
+	)
+	@handler DeptAdd
+	post /dept (DeptAddReq)
+	@doc(
+		summary: "更新部门"
+	)
+	@handler DeptUpdate
+	put /dept (DeptUpdateReq)
+	@doc(
+		summary: "删除部门"
+	)
+	@handler DeptDelete
+	delete /dept (DeptDeleteReq)
+}

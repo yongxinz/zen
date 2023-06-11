@@ -1,0 +1,131 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "角色"
+	desc: "角色"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	RoleListReq {
+		PageReq
+	}
+	RoleListData {
+		RoleId    int64  `json:"roleId"`
+		RoleName  string `json:"roleName"`
+		RoleKey   string `json:"roleKey"`
+		Sort      int64  `json:"sort"`
+		Status    int64  `json:"status"`
+		Remark    string `json:"remark"`
+		CreatedAt string `json:"createdAt"`
+		UpdatedAt string `json:"updatedAt"`
+		CreateBy  int64  `json:"createBy"`
+		UpdateBy  int64  `json:"updateBy"`
+	}
+	RoleListResp {
+		List []RoleListData `json:"list"`
+		Pagination
+	}
+)
+
+type (
+	RoleRetrieveReq {
+		RoleId int64 `path:"roleId"`
+	}
+	RoleRetrieveResp {
+		RoleId   int64   `json:"roleId"`
+		RoleName string  `json:"roleName"`
+		RoleKey  string  `json:"roleKey"`
+		Sort     int64   `json:"sort"`
+		Status   int64   `json:"status"`
+		Remark   string  `json:"remark"`
+		MenuIds  []int64 `json:"menuIds"`
+	}
+)
+
+type (
+	RoleAddReq {
+		RoleName string  `json:"roleName"`
+		RoleKey  string  `json:"roleKey"`
+		Sort     int64   `json:"sort"`
+		Status   int64   `json:"status,optional"`
+		Remark   string  `json:"remark,optional"`
+		CreateBy int64   `json:"createBy,optional"`
+		UpdateBy int64   `json:"updateBy,optional"`
+		MenuIds  []int64 `json:"menuIds,optional"`
+	}
+)
+
+type (
+	RoleUpdateReq {
+		RoleId   int64  `json:"roleId"`
+		RoleName string `json:"roleName"`
+		RoleKey  string `json:"roleKey"`
+		Sort     int64  `json:"sort"`
+		Status   int64  `json:"status,optional"`
+		Remark   string `json:"remark,optional"`
+		UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	RoleDeleteReq {
+		ids []int64 `json:"ids"`
+	}
+)
+
+type (
+	RoleMenuTreeReq {
+		RoleId int64 `path:"roleId"`
+	}
+	RoleMenuTreeData {
+		Id       int64              `json:"id"`
+		Label    string             `json:"label"`
+		Children []RoleMenuTreeData `json:"children"`
+	}
+	RoleMenuTreeResp {
+		Menus       []RoleMenuTreeData `json:"menus"`
+		CheckedKeys []int64            `json:"checkedKeys"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: role
+	prefix: /api/v1
+)
+service sys {
+	@doc(
+		summary: "角色列表"
+	)
+	@handler RoleList
+	get /role (RoleListReq) returns (RoleListResp)
+	@doc(
+		summary: "获取单个角色"
+	)
+	@handler RoleRetrieve
+	get /role/:roleId (RoleRetrieveReq) returns (RoleRetrieveResp)
+	@doc(
+		summary: "新增角色"
+	)
+	@handler RoleAdd
+	post /role (RoleAddReq)
+	@doc(
+		summary: "更新角色"
+	)
+	@handler RoleUpdate
+	put /role/:roleId (RoleUpdateReq)
+	@doc(
+		summary: "删除角色"
+	)
+	@handler RoleDelete
+	delete /role (RoleDeleteReq)
+	@doc(
+		summary: "角色对应菜单树"
+	)
+	@handler RoleMenuTree
+	get /roleMenuTreeselect/:roleId (RoleMenuTreeReq) returns (RoleMenuTreeResp)
+}

@@ -1,0 +1,214 @@
+syntax = "v1"
+
+info(
+	title: "用户"
+	desc: "用户"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+		Uuid     string `json:"uuid"`
+		Code     string `json:"code"`
+	}
+	LoginResp {
+		CurrentAuthority string `json:"currentAuthority"`
+		Expire           int64  `json:"expire"`
+		Token            string `json:"token"`
+	}
+)
+
+type (
+	CaptchaResp {
+		Data string `json:"data"`
+		Id   string `json:"id"`
+	}
+)
+
+type (
+	UserInfoResp {
+		Introduction string   `json:"introduction"`
+		Avatar       string   `json:"avatar"`
+		UserName     string   `json:"userName"`
+		UserId       int64    `json:"userId"`
+		DeptId       int64    `json:"deptId"`
+		Name         string   `json:"name"`
+		Buttons      []string `json:"buttons"`
+		Roles        []string `json:"roles"`
+		Permissions  []string `json:"permissions"`
+	}
+)
+
+type (
+	UserListReq {
+		PageReq
+	}
+	UserListData {
+		UserId    int64        `json:"userId"`
+		UserName  string       `json:"username"`
+		Phone     string       `json:"phone"`
+		Status    int64        `json:"status"`
+		Email     string       `json:"email"`
+		Avatar    string       `json:"avatar"`
+		Sex       int64        `json:"sex"`
+		Remark    string       `json:"remark"`
+		CreatedAt string       `json:"createdAt"`
+		UpdatedAt string       `json:"updatedAt"`
+		CreateBy  int64        `json:"createBy"`
+		UpdateBy  int64        `json:"updateBy"`
+		RoleId    int64        `json:"roleId"`
+		DeptId    int64        `json:"deptId"`
+		PostId    int64        `json:"postId"`
+		Dept      DeptListData `json:"dept"`
+	}
+	UserListResp {
+		List []UserListData `json:"list"`
+		Pagination
+	}
+)
+
+type (
+	UserAddReq {
+		Username  string       `json:"username"`
+		Password  string       `json:"password"`
+		Phone     string       `json:"phone"`
+		Status    int64        `json:"status"`
+		Email     string       `json:"email"`
+		Sex       int64        `json:"sex,optional"`
+		Remark    string       `json:"remark,optional"`
+		RoleId    int64        `json:"roleId,optional"`
+		DeptId    int64        `json:"deptId"`
+		PostId    int64        `json:"postId,optional"`
+		CreateBy  int64        `json:"createBy,optional"`
+		UpdateBy  int64        `json:"updateBy,optional"`
+	}
+)
+
+type (
+	UserRetrieveReq {
+		UserId    int64        `path:"userId"`
+	}
+	UserRetrieveResp {
+		UserId    int64        `json:"userId"`
+		Username  string       `json:"username"`
+		Phone     string       `json:"phone"`
+		Status    int64        `json:"status"`
+		Email     string       `json:"email"`
+		Sex       int64        `json:"sex"`
+		Remark    string       `json:"remark"`
+		RoleId    int64        `json:"roleId"`
+		DeptId    int64        `json:"deptId"`
+		PostId    int64        `json:"postId"`
+	}
+)
+
+type (
+	UserUpdateReq {
+		UserId    int64        `json:"userId"`
+		Username  string       `json:"username"`
+		Phone     string       `json:"phone"`
+		Status    int64        `json:"status"`
+		Email     string       `json:"email"`
+		Sex       int64        `json:"sex,optional"`
+		Remark    string       `json:"remark,optional"`
+		RoleId    int64        `json:"roleId,optional"`
+		DeptId    int64        `json:"deptId"`
+		PostId    int64        `json:"postId,optional"`
+		UpdateBy  int64        `json:"updateBy,optional"`
+	}
+)
+
+type (
+	UserUpdateStatusReq {
+		UserId    int64        `json:"userId"`
+		Status    int64        `json:"status"`
+		UpdateBy  int64        `json:"updateBy,optional"`
+	}
+)
+
+type (
+	UserUpdatePwdReq {
+		UserId    int64        `json:"userId"`
+		password  string       `json:"password"`
+		UpdateBy  int64        `json:"updateBy,optional"`
+	}
+)
+
+type (
+	UserDeleteReq {
+		ids []int64 `json:"ids"`
+	}
+)
+
+@server(
+	group: user
+	prefix: /api/v1
+)
+service sys {
+	@doc(
+		summary: "登录"
+	)
+	@handler Login
+	post /login(LoginReq) returns (LoginResp)
+	@doc(
+		summary: "验证码"
+	)
+	@handler Captcha
+	get /captcha returns (CaptchaResp)
+}
+
+@server(
+	jwt: Auth
+	group: user
+	prefix: /api/v1
+)
+service sys {
+	@doc(
+		summary: "用户信息"
+	)
+	@handler UserInfo
+	get /getinfo returns (UserInfoResp)
+	@doc(
+		summary: "个人中心"
+	)
+	@handler Profile
+	get /user/profile returns (UserInfoResp)
+	@doc(
+		summary: "用户列表"
+	)
+	@handler UserList
+	get /sys-user (UserListReq) returns (UserListResp)
+	@doc(
+		summary: "获取单个用户"
+	)
+	@handler UserRetrieve
+	get /sys-user/:userId (UserRetrieveReq) returns (UserRetrieveResp)
+	@doc(
+		summary: "新增用户"
+	)
+	@handler UserAdd
+	post /sys-user (UserAddReq)
+	@doc(
+		summary: "更新用户"
+	)
+	@handler UserUpdate
+	put /sys-user (UserUpdateReq)
+	@doc(
+		summary: "更新用户状态"
+	)
+	@handler UserUpdateStatus
+	put /user/status (UserUpdateStatusReq)
+	@doc(
+		summary: "重置用户密码"
+	)
+	@handler UserUpdatePwd
+	put /user/pwd/reset (UserUpdatePwdReq)
+	@doc(
+		summary: "删除用户"
+	)
+	@handler UserDelete
+	delete /sys-user (UserDeleteReq)
+}

@@ -1,0 +1,6 @@
+import "desc/common.api"
+import "desc/user.api"
+import "desc/role.api"
+import "desc/dept.api"
+import "desc/menu.api"
+import "desc/post.api"

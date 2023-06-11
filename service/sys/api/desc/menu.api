@@ -1,0 +1,220 @@
+syntax = "v1"
+
+info(
+	title: "菜单"
+	desc: "菜单"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	MenuRoleResp {
+		MenuId     int64      `json:"menuId"`
+		MenuName   string     `json:"menuName"`
+		MenuType   string     `json:"menuType"`
+		Title      string     `json:"title"`
+		Permission string     `json:"permission"`
+		Params     string     `json:"params"`
+		Path       string     `json:"path"`
+		Paths      string     `json:"paths"`
+		Action     string     `json:"action"`
+		Apis       string     `json:"apis"`
+		SysApi     string     `json:"sysApi"`
+		Breadcrumb string     `json:"breadcrumb"`
+		Component  string     `json:"component"`
+		ParentId   int64      `json:"parentId"`
+		Sort       int64      `json:"sort"`
+		DataScope  string     `json:"dataScope"`
+		Icon       string     `json:"icon"`
+		IsFrame    string     `json:"isFrame"`
+		Visible    string     `json:"visible"`
+		Is_select  bool       `json:"is_select"`
+		NoCache    int64      `json:"noCache"`
+		CreateBy   int64      `json:"createBy"`
+		CreatedAt  string     `json:"createdAt"`
+		UpdateBy   int64      `json:"updateBy"`
+		UpdatedAt  string     `json:"updatedAt"`
+		Children   []MenuRoleResp `json:"children"`
+	}
+)
+
+type (
+	MenuListData {
+		MenuId     int64      `json:"menuId"`
+		MenuName   string     `json:"menuName"`
+		MenuType   string     `json:"menuType"`
+		Title      string     `json:"title"`
+		Permission string     `json:"permission"`
+		Params     string     `json:"params"`
+		Path       string     `json:"path"`
+		Paths      string     `json:"paths"`
+		Action     string     `json:"action"`
+		Apis       string     `json:"apis"`
+		SysApi     string     `json:"sysApi"`
+		Breadcrumb string     `json:"breadcrumb"`
+		Component  string     `json:"component"`
+		ParentId   int64      `json:"parentId"`
+		Sort       int64      `json:"sort"`
+		DataScope  string     `json:"dataScope"`
+		Icon       string     `json:"icon"`
+		IsFrame    string     `json:"isFrame"`
+		Visible    string     `json:"visible"`
+		Is_select  bool       `json:"is_select"`
+		NoCache    int64      `json:"noCache"`
+		CreateBy   int64      `json:"createBy"`
+		CreatedAt  string     `json:"createdAt"`
+		UpdateBy   int64      `json:"updateBy"`
+		UpdatedAt  string     `json:"updatedAt"`
+	}
+	MenuListResp {
+		MenuId     int64      `json:"menuId"`
+		MenuName   string     `json:"menuName"`
+		MenuType   string     `json:"menuType"`
+		Title      string     `json:"title"`
+		Permission string     `json:"permission"`
+		Params     string     `json:"params"`
+		Path       string     `json:"path"`
+		Paths      string     `json:"paths"`
+		Action     string     `json:"action"`
+		Apis       string     `json:"apis"`
+		SysApi     string     `json:"sysApi"`
+		Breadcrumb string     `json:"breadcrumb"`
+		Component  string     `json:"component"`
+		ParentId   int64      `json:"parentId"`
+		Sort       int64      `json:"sort"`
+		DataScope  string     `json:"dataScope"`
+		Icon       string     `json:"icon"`
+		IsFrame    string     `json:"isFrame"`
+		Visible    string     `json:"visible"`
+		Is_select  bool       `json:"is_select"`
+		NoCache    int64      `json:"noCache"`
+		CreateBy   int64      `json:"createBy"`
+		CreatedAt  string     `json:"createdAt"`
+		UpdateBy   int64      `json:"updateBy"`
+		UpdatedAt  string     `json:"updatedAt"`
+		Children  []MenuListResp `json:"children"`
+	}
+)
+
+type (
+	MenuRetrieveReq {
+		MenuId    int64  `path:"menuId"`
+	}
+	MenuRetrieveResp {
+		MenuId     int64      `json:"menuId"`
+		MenuName   string     `json:"menuName"`
+		MenuType   string     `json:"menuType"`
+		Title      string     `json:"title"`
+		Permission string     `json:"permission"`
+		Params     string     `json:"params"`
+		Path       string     `json:"path"`
+		Paths      string     `json:"paths"`
+		Action     string     `json:"action"`
+		Apis       string     `json:"apis"`
+		SysApi     string     `json:"sysApi"`
+		Breadcrumb string     `json:"breadcrumb"`
+		Component  string     `json:"component"`
+		ParentId   int64      `json:"parentId"`
+		Sort       int64      `json:"sort"`
+		DataScope  string     `json:"dataScope"`
+		Icon       string     `json:"icon"`
+		IsFrame    string     `json:"isFrame"`
+		Visible    string     `json:"visible"`
+		Is_select  bool       `json:"is_select"`
+		NoCache    int64      `json:"noCache"`
+	}
+)
+
+type (
+	MenuAddReq {
+		MenuName   string     `json:"menuName"`
+		MenuType   string     `json:"menuType"`
+		Title      string     `json:"title"`
+		Permission string     `json:"permission"`
+		Params     string     `json:"params,optional"`
+		Path       string     `json:"path,optional"`
+		Paths      string     `json:"paths,optional"`
+		Action     string     `json:"action,optional"`
+		Breadcrumb string     `json:"breadcrumb,optional"`
+		Component  string     `json:"component,optional"`
+		ParentId   int64      `json:"parentId,optional"`
+		Sort       int64      `json:"sort"`
+		Icon       string     `json:"icon"`
+		IsFrame    string     `json:"isFrame,optional"`
+		Visible    string     `json:"visible"`
+		NoCache    int64      `json:"noCache,optional"`
+		CreateBy   int64      `json:"createBy,optional"`
+		UpdateBy   int64      `json:"updateBy,optional"`
+	}
+)
+
+type (
+	MenuUpdateReq {
+		MenuId     int64      `json:"menuId"`
+		MenuName   string     `json:"menuName"`
+		MenuType   string     `json:"menuType"`
+		Title      string     `json:"title"`
+		Permission string     `json:"permission"`
+		Params     string     `json:"params"`
+		Path       string     `json:"path"`
+		Paths      string     `json:"paths"`
+		Action     string     `json:"action"`
+		Apis       string     `json:"apis"`
+		SysApi     string     `json:"sysApi"`
+		Breadcrumb string     `json:"breadcrumb"`
+		Component  string     `json:"component"`
+		ParentId   int64      `json:"parentId"`
+		Sort       int64      `json:"sort"`
+		DataScope  string     `json:"dataScope"`
+		Icon       string     `json:"icon"`
+		IsFrame    string     `json:"isFrame"`
+		Visible    string     `json:"visible"`
+		Is_select  bool       `json:"is_select"`
+		NoCache    int64      `json:"noCache"`
+		UpdateBy   int64      `json:"updateBy,optional"`
+	}
+)
+
+type (
+	MenuDeleteReq {
+		MenuId int64 `json:"menuId"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: menu
+	prefix: /api/v1
+)
+service sys {
+	@doc(
+		summary: "查询角色拥有的菜单"
+	)
+	@handler MenuRole
+	get /menurole returns ([]*MenuRoleResp)
+	@doc(
+		summary: "菜单列表"
+	)
+	@handler MenuList
+	get /menu returns ([]*MenuListResp)
+	@doc(
+		summary: "获取单个菜单"
+	)
+	@handler MenuRetrieve
+	get /menu/:menuId(MenuRetrieveReq) returns (MenuRetrieveResp)
+	@doc(
+		summary: "新增菜单"
+	)
+	@handler MenuAdd
+	post /menu(MenuAddReq)
+	@doc(
+		summary: "更新菜单"
+	)
+	@handler MenuUpdate
+	put /menu/:menuId(MenuUpdateReq)
+	@doc(
+		summary: "删除菜单"
+	)
+	@handler MenuDelete
+	delete /menu(MenuDeleteReq)
+}
