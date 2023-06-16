@@ -62,7 +62,7 @@ type (
 		RoleId    int64        `json:"roleId"`
 		DeptId    int64        `json:"deptId"`
 		PostId    int64        `json:"postId"`
-		Dept      DeptListData `json:"dept"`
+		DeptName  string       `json:"deptName"`
 	}
 	UserListResp {
 		List []UserListData `json:"list"`
@@ -200,12 +200,12 @@ service sys {
 		summary: "更新用户状态"
 	)
 	@handler UserUpdateStatus
-	put /user/status (UserUpdateStatusReq)
+	put /sys-user/status (UserUpdateStatusReq)
 	@doc(
 		summary: "重置用户密码"
 	)
 	@handler UserUpdatePwd
-	put /user/pwd/reset (UserUpdatePwdReq)
+	put /sys-user/pwd/reset (UserUpdatePwdReq)
 	@doc(
 		summary: "删除用户"
 	)

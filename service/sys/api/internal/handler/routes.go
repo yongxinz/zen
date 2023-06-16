@@ -65,12 +65,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/user/status",
+				Path:    "/sys-user/status",
 				Handler: user.UserUpdateStatusHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/user/pwd/reset",
+				Path:    "/sys-user/pwd/reset",
 				Handler: user.UserUpdatePwdHandler(serverCtx),
 			},
 			{

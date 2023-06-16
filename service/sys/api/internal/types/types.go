@@ -47,22 +47,22 @@ type UserListReq struct {
 }
 
 type UserListData struct {
-	UserId    int64        `json:"userId"`
-	UserName  string       `json:"username"`
-	Phone     string       `json:"phone"`
-	Status    int64        `json:"status"`
-	Email     string       `json:"email"`
-	Avatar    string       `json:"avatar"`
-	Sex       int64        `json:"sex"`
-	Remark    string       `json:"remark"`
-	CreatedAt string       `json:"createdAt"`
-	UpdatedAt string       `json:"updatedAt"`
-	CreateBy  int64        `json:"createBy"`
-	UpdateBy  int64        `json:"updateBy"`
-	RoleId    int64        `json:"roleId"`
-	DeptId    int64        `json:"deptId"`
-	PostId    int64        `json:"postId"`
-	Dept      DeptListData `json:"dept"`
+	UserId    int64  `json:"userId"`
+	UserName  string `json:"username"`
+	Phone     string `json:"phone"`
+	Status    int64  `json:"status"`
+	Email     string `json:"email"`
+	Avatar    string `json:"avatar"`
+	Sex       int64  `json:"sex"`
+	Remark    string `json:"remark"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
+	CreateBy  int64  `json:"createBy"`
+	UpdateBy  int64  `json:"updateBy"`
+	RoleId    int64  `json:"roleId"`
+	DeptId    int64  `json:"deptId"`
+	PostId    int64  `json:"postId"`
+	DeptName  string `json:"deptName"`
 }
 
 type UserListResp struct {

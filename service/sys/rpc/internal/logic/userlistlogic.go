@@ -53,21 +53,7 @@ func (l *UserListLogic) UserList(in *sys.UserListReq) (*sys.UserListResp, error)
 			RoleId:    user.SysUser.RoleId,
 			DeptId:    user.SysUser.DeptId,
 			PostId:    user.SysUser.PostId,
-			Dept: &sys.DeptListData{
-				DeptId:    user.SysDept.Id,
-				ParentId:  user.SysDept.ParentId.Int64,
-				DeptPath:  user.SysDept.DeptPath,
-				DeptName:  user.SysDept.DeptName.String,
-				Sort:      user.SysDept.Sort.Int64,
-				Leader:    user.SysDept.Leader.String,
-				Phone:     user.SysDept.Phone.String,
-				Email:     user.SysDept.Email.String,
-				Status:    user.SysDept.Status.Int64,
-				CreateBy:  user.SysDept.CreateBy.Int64,
-				CreatedAt: user.SysDept.CreatedAt.Time.Format("2006-01-02 15:04:05"),
-				UpdateBy:  user.SysDept.UpdateBy.Int64,
-				UpdatedAt: user.SysDept.UpdatedAt.Time.Format("2006-01-02 15:04:05"),
-			},
+			DeptName:  user.DeptName,
 		})
 	}
 

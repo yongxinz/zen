@@ -29,7 +29,7 @@ type (
 
 	SysUserList struct {
 		SysUser
-		SysDept
+		DeptName string `db:"dept_name"`
 	}
 )
 
@@ -42,7 +42,7 @@ func NewSysUserModel(conn sqlx.SqlConn, c cache.CacheConf) SysUserModel {
 
 func (m *customSysUserModel) FindAll(ctx context.Context, Current int64, PageSize int64) ([]*SysUserList, error) {
 	var resp []*SysUserList
-	query := "select sys_user.*, sd.* from sys_user left join sys_dept sd on sys_user.dept_id = sd.id limit ?,?"
+	query := "select sys_user.*, sd.dept_name as dept_name from sys_user left join sys_dept sd on sys_user.dept_id = sd.id limit ?,?"
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, (Current-1)*PageSize, PageSize)
 	switch err {
 	case nil:

@@ -70,7 +70,7 @@ message UserListData{
     int64 roleId = 13;
     int64 deptId = 14;
     int64 postId = 15;
-    DeptListData dept = 16;
+    string deptName = 16;
 }
 
 message UserListResp {
