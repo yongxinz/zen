@@ -62,9 +62,9 @@ type (
 type (
 	RoleUpdateReq {
 		RoleId   int64  `json:"roleId"`
-		RoleName string `json:"roleName"`
-		RoleKey  string `json:"roleKey"`
-		Sort     int64  `json:"sort"`
+		RoleName string `json:"roleName,optional"`
+		RoleKey  string `json:"roleKey,optional"`
+		Sort     int64  `json:"sort,optional"`
 		Status   int64  `json:"status,optional"`
 		Remark   string `json:"remark,optional"`
 		UpdateBy int64  `json:"updateBy,optional"`
