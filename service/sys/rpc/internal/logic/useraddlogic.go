@@ -37,9 +37,11 @@ func (l *UserAddLogic) UserAdd(in *sys.UserAddReq) (*sys.UserAddResp, error) {
 			return nil, errorx.NewDefaultError(errorx.DeptIdErrorCode)
 		}
 
-		_, err = l.svcCtx.PostModel.FindOne(l.ctx, in.PostId)
-		if err != nil {
-			return nil, errorx.NewDefaultError(errorx.PostIdErrorCode)
+		if in.PostId > 0 {
+			_, err = l.svcCtx.PostModel.FindOne(l.ctx, in.PostId)
+			if err != nil {
+				return nil, errorx.NewDefaultError(errorx.PostIdErrorCode)
+			}
 		}
 
 		var sysUser = new(model.SysUser)

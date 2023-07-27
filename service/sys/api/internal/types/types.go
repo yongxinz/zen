@@ -209,7 +209,7 @@ type RoleMenuTreeResp struct {
 }
 
 type DeptTreeResp struct {
-	Id       int64          `json:"id"`
+	Id       int64          `json:"deptId"`
 	Label    string         `json:"label"`
 	Children []DeptTreeResp `json:"children"`
 }

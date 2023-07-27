@@ -9,7 +9,7 @@ info(
 
 type (
 	DeptTreeResp {
-		Id       int64          `json:"id"`
+		Id       int64          `json:"deptId"`
 		Label    string         `json:"label"`
 		Children []DeptTreeResp `json:"children"`
 	}
