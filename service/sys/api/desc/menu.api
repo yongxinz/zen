@@ -184,7 +184,7 @@ type (
 @server(
 	jwt: Auth
 	group: menu
-	prefix: /api/v1
+	prefix: /api/v1/sys
 )
 service sys {
 	@doc(

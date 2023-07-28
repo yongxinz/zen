@@ -145,7 +145,7 @@ type (
 
 @server(
 	group: user
-	prefix: /api/v1
+	prefix: /api/v1/sys
 )
 service sys {
 	@doc(
@@ -163,7 +163,7 @@ service sys {
 @server(
 	jwt: Auth
 	group: user
-	prefix: /api/v1
+	prefix: /api/v1/sys
 )
 service sys {
 	@doc(
@@ -180,35 +180,35 @@ service sys {
 		summary: "用户列表"
 	)
 	@handler UserList
-	get /sys-user (UserListReq) returns (UserListResp)
+	get /user (UserListReq) returns (UserListResp)
 	@doc(
 		summary: "获取单个用户"
 	)
 	@handler UserRetrieve
-	get /sys-user/:userId (UserRetrieveReq) returns (UserRetrieveResp)
+	get /user/:userId (UserRetrieveReq) returns (UserRetrieveResp)
 	@doc(
 		summary: "新增用户"
 	)
 	@handler UserAdd
-	post /sys-user (UserAddReq)
+	post /user (UserAddReq)
 	@doc(
 		summary: "更新用户"
 	)
 	@handler UserUpdate
-	put /sys-user (UserUpdateReq)
+	put /user (UserUpdateReq)
 	@doc(
 		summary: "更新用户状态"
 	)
 	@handler UserUpdateStatus
-	put /sys-user/status (UserUpdateStatusReq)
+	put /user/status (UserUpdateStatusReq)
 	@doc(
 		summary: "重置用户密码"
 	)
 	@handler UserUpdatePwd
-	put /sys-user/pwd/reset (UserUpdatePwdReq)
+	put /user/pwd/reset (UserUpdatePwdReq)
 	@doc(
 		summary: "删除用户"
 	)
 	@handler UserDelete
-	delete /sys-user (UserDeleteReq)
+	delete /user (UserDeleteReq)
 }

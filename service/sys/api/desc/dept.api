@@ -102,7 +102,7 @@ type (
 @server(
 	jwt: Auth
 	group: dept
-	prefix: /api/v1
+	prefix: /api/v1/sys
 )
 service sys {
 	@doc(

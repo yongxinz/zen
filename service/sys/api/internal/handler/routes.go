@@ -28,7 +28,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: user.CaptchaHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/sys"),
 	)
 
 	server.AddRoutes(
@@ -45,42 +45,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/sys-user",
+				Path:    "/user",
 				Handler: user.UserListHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/sys-user/:userId",
+				Path:    "/user/:userId",
 				Handler: user.UserRetrieveHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/sys-user",
+				Path:    "/user",
 				Handler: user.UserAddHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/sys-user",
+				Path:    "/user",
 				Handler: user.UserUpdateHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/sys-user/status",
+				Path:    "/user/status",
 				Handler: user.UserUpdateStatusHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/sys-user/pwd/reset",
+				Path:    "/user/pwd/reset",
 				Handler: user.UserUpdatePwdHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodDelete,
-				Path:    "/sys-user",
+				Path:    "/user",
 				Handler: user.UserDeleteHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/sys"),
 	)
 
 	server.AddRoutes(
@@ -117,7 +117,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/sys"),
 	)
 
 	server.AddRoutes(
@@ -154,7 +154,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/sys"),
 	)
 
 	server.AddRoutes(
@@ -191,7 +191,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/sys"),
 	)
 
 	server.AddRoutes(
@@ -223,6 +223,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/sys"),
 	)
 }
