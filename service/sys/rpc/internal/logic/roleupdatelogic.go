@@ -37,8 +37,13 @@ func (l *RoleUpdateLogic) RoleUpdate(in *sys.RoleUpdateReq) (*sys.RoleUpdateResp
 		return nil, errorx.NewSystemError(errorx.ServerErrorCode, err.Error())
 	}
 
+	err = l.svcCtx.RoleModel.Update(l.ctx, sysRole)
+	if err != nil {
+		return nil, errorx.NewSystemError(errorx.ServerErrorCode, err.Error())
+	}
+
+	l.svcCtx.RoleMenuModel.DeleteByRoleId(l.ctx, in.RoleId)
 	for _, menuId := range in.MenuIds {
-		l.svcCtx.RoleMenuModel.DeleteByRoleId(l.ctx, in.RoleId)
 		l.svcCtx.RoleMenuModel.Insert(l.ctx, &model.SysRoleMenu{RoleId: in.RoleId, MenuId: menuId})
 	}
 

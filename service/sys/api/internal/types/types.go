@@ -180,13 +180,14 @@ type RoleAddReq struct {
 }
 
 type RoleUpdateReq struct {
-	RoleId   int64  `json:"roleId"`
-	RoleName string `json:"roleName,optional"`
-	RoleKey  string `json:"roleKey,optional"`
-	Sort     int64  `json:"sort,optional"`
-	Status   int64  `json:"status,optional"`
-	Remark   string `json:"remark,optional"`
-	UpdateBy int64  `json:"updateBy,optional"`
+	RoleId   int64   `json:"roleId"`
+	RoleName string  `json:"roleName,optional"`
+	RoleKey  string  `json:"roleKey,optional"`
+	Sort     int64   `json:"sort,optional"`
+	Status   int64   `json:"status,optional"`
+	Remark   string  `json:"remark,optional"`
+	UpdateBy int64   `json:"updateBy,optional"`
+	MenuIds  []int64 `json:"menuIds,optional"`
 }
 
 type RoleDeleteReq struct {

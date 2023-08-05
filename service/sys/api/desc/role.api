@@ -68,6 +68,7 @@ type (
 		Status   int64  `json:"status,optional"`
 		Remark   string `json:"remark,optional"`
 		UpdateBy int64  `json:"updateBy,optional"`
+        MenuIds  []int64 `json:"menuIds,optional"`
 	}
 )
 

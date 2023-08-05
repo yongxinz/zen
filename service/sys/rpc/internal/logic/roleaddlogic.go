@@ -39,8 +39,8 @@ func (l *RoleAddLogic) RoleAdd(in *sys.RoleAddReq) (*sys.RoleAddResp, error) {
 	}
 
 	roleId, _ := res.LastInsertId()
+	l.svcCtx.RoleMenuModel.DeleteByRoleId(l.ctx, roleId)
 	for _, menuId := range in.MenuIds {
-		l.svcCtx.RoleMenuModel.DeleteByRoleId(l.ctx, roleId)
 		l.svcCtx.RoleMenuModel.Insert(l.ctx, &model.SysRoleMenu{RoleId: roleId, MenuId: menuId})
 	}
 
