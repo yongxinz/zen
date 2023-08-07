@@ -3,6 +3,8 @@ package logic
 import (
 	"context"
 
+	"github.com/jinzhu/copier"
+	"github.com/yongxin/zen/common/errorx"
 	"github.com/yongxin/zen/service/sys/rpc/internal/svc"
 	"github.com/yongxin/zen/service/sys/rpc/sys"
 
@@ -24,7 +26,19 @@ func NewMenuUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *MenuUp
 }
 
 func (l *MenuUpdateLogic) MenuUpdate(in *sys.MenuUpdateReq) (*sys.MenuUpdateResp, error) {
-	// todo: add your logic here and delete this line
+	sysMenu, err := l.svcCtx.MenuModel.FindOne(l.ctx, in.MenuId)
+	if err != nil {
+		return nil, errorx.NewDefaultError(errorx.PermMenuIdErrorCode)
+	}
+
+	err = copier.Copy(sysMenu, in)
+	if err != nil {
+		return nil, errorx.NewSystemError(errorx.ServerErrorCode, err.Error())
+	}
+	err = l.svcCtx.MenuModel.Update(l.ctx, sysMenu)
+	if err != nil {
+		return nil, errorx.NewSystemError(errorx.ServerErrorCode, err.Error())
+	}
 
 	return &sys.MenuUpdateResp{}, nil
 }

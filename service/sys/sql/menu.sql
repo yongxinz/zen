@@ -17,7 +17,7 @@ CREATE TABLE `sys_menu` (
   `is_frame` varchar(1) DEFAULT '0',
   `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
   `update_by` bigint(20) DEFAULT NULL COMMENT '更新者',
-  `created_at` datetime(3) DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime(3) DEFAULT NULL COMMENT '最后更新时间',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

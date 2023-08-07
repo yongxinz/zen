@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
@@ -56,8 +57,8 @@ type (
 		IsFrame    string         `db:"is_frame"`
 		CreateBy   sql.NullInt64  `db:"create_by"`  // 创建者
 		UpdateBy   sql.NullInt64  `db:"update_by"`  // 更新者
-		CreatedAt  sql.NullTime   `db:"created_at"` // 创建时间
-		UpdatedAt  sql.NullTime   `db:"updated_at"` // 最后更新时间
+		CreatedAt  time.Time      `db:"created_at"` // 创建时间
+		UpdatedAt  time.Time      `db:"updated_at"` // 更新时间
 	}
 )
 

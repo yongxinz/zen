@@ -56,9 +56,9 @@ func (l *MenuListLogic) MenuList(in *sys.MenuListReq) (*sys.MenuListResp, error)
 			Component:  item.Component.String,
 			Visible:    item.Visible.String,
 			CreateBy:   item.CreateBy.Int64,
-			CreatedAt:  item.CreatedAt.Time.Format(globalkey.SysDateFormat),
+			CreatedAt:  item.CreatedAt.Format(globalkey.SysDateFormat),
 			UpdateBy:   item.UpdateBy.Int64,
-			UpdatedAt:  item.UpdatedAt.Time.Format(globalkey.SysDateFormat),
+			UpdatedAt:  item.UpdatedAt.Format(globalkey.SysDateFormat),
 			Children:   []*sys.MenuListData{},
 		}
 		menu := menuListCall(menus, &m)
@@ -97,9 +97,9 @@ func menuListCall(menuList []*model.SysMenu, menu *sys.MenuListData) *sys.MenuLi
 			Component:  list[j].Component.String,
 			Visible:    list[j].Visible.String,
 			CreateBy:   list[j].CreateBy.Int64,
-			CreatedAt:  list[j].CreatedAt.Time.Format(globalkey.SysDateFormat),
+			CreatedAt:  list[j].CreatedAt.Format(globalkey.SysDateFormat),
 			UpdateBy:   list[j].UpdateBy.Int64,
-			UpdatedAt:  list[j].UpdatedAt.Time.Format(globalkey.SysDateFormat),
+			UpdatedAt:  list[j].UpdatedAt.Format(globalkey.SysDateFormat),
 			Children:   []*sys.MenuListData{},
 		}
 		if mi.MenuType != "F" {

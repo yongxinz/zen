@@ -38,7 +38,7 @@ func (l *MenuRetrieveLogic) MenuRetrieve(in *sys.MenuRetrieveReq) (*sys.MenuRetr
 		MenuId:     res.Id,
 		MenuName:   res.MenuName.String,
 		Title:      res.Title.String,
-		MenuType:   res.MenuName.String,
+		MenuType:   res.MenuType.String,
 		Visible:    res.Visible.String,
 		NoCache:    res.NoCache.Int64,
 		Component:  res.Component.String,
