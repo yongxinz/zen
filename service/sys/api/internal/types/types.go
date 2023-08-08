@@ -452,7 +452,7 @@ type MenuUpdateReq struct {
 }
 
 type MenuDeleteReq struct {
-	MenuId int64 `json:"menuId"`
+	MenuId int64 `path:"menuId"`
 }
 
 type PostListReq struct {

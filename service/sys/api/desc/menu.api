@@ -177,7 +177,7 @@ type (
 
 type (
 	MenuDeleteReq {
-		MenuId int64 `json:"menuId"`
+		MenuId int64 `path:"menuId"`
 	}
 )
 
@@ -216,5 +216,5 @@ service sys {
 		summary: "删除菜单"
 	)
 	@handler MenuDelete
-	delete /menu(MenuDeleteReq)
+	delete /menu/:menuId(MenuDeleteReq)
 }

@@ -186,7 +186,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodDelete,
-				Path:    "/menu",
+				Path:    "/menu/:menuId",
 				Handler: menu.MenuDeleteHandler(serverCtx),
 			},
 		},
