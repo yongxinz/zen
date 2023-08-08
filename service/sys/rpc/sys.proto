@@ -364,9 +364,7 @@ message DeptListData{
     int64 deptId = 1;
     string deptPath = 2;
     string deptName = 3;
-    string phone = 4;
-    string email = 5;
-    string leader = 6;
+    int64 leader = 6;
     int64 status = 7;
     int64 sort = 8;
     int64 parentId = 9;
@@ -388,9 +386,7 @@ message DeptRetrieveReq {
 message DeptRetrieveResp {
     int64 deptId = 1;
     string deptName = 2;
-    string phone = 3;
-    string email = 4;
-    string leader = 5;
+    int64 leader = 5;
     int64 sort = 6;
     int64 status = 7;
     int64 parentId = 8;
@@ -398,9 +394,7 @@ message DeptRetrieveResp {
 
 message DeptAddReq {
     string deptName = 1;
-    string phone = 2;
-    string email = 3;
-    string leader = 4;
+    int64 leader = 4;
     int64 sort = 5;
     int64 status = 6;
     int64 parentId = 7;
@@ -413,9 +407,7 @@ message DeptAddResp {}
 message DeptUpdateReq {
     int64 deptId = 1;
     string deptName = 2;
-    string phone = 3;
-    string email = 4;
-    string leader = 5;
+    int64 leader = 5;
     int64 sort = 6;
     int64 status = 7;
     int64 parentId = 8;
@@ -425,7 +417,7 @@ message DeptUpdateReq {
 message DeptUpdateResp {}
 
 message DeptDeleteReq {
-    repeated int64 deptIds = 1;
+    int64 deptId = 1;
 }
 
 message DeptDeleteResp {}

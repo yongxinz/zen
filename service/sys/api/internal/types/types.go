@@ -219,10 +219,8 @@ type DeptListData struct {
 	DeptId    int64  `json:"deptId"`
 	DeptPath  string `json:"deptPath"`
 	DeptName  string `json:"deptName"`
-	Phone     string `json:"phone"`
 	Status    int64  `json:"status"`
-	Email     string `json:"email"`
-	Leader    string `json:"leader"`
+	Leader    int64  `json:"leader"`
 	Sort      int64  `json:"sort"`
 	ParentId  int64  `json:"parentId"`
 	CreatedAt string `json:"createdAt"`
@@ -235,10 +233,8 @@ type DeptListResp struct {
 	DeptId    int64          `json:"deptId"`
 	DeptPath  string         `json:"deptPath"`
 	DeptName  string         `json:"deptName"`
-	Phone     string         `json:"phone"`
 	Status    int64          `json:"status"`
-	Email     string         `json:"email"`
-	Leader    string         `json:"leader"`
+	Leader    int64          `json:"leader"`
 	Sort      int64          `json:"sort"`
 	ParentId  int64          `json:"parentId"`
 	CreatedAt string         `json:"createdAt"`
@@ -255,9 +251,7 @@ type DeptRetrieveReq struct {
 type DeptRetrieveResp struct {
 	DeptId   int64  `json:"deptId"`
 	DeptName string `json:"deptName"`
-	Phone    string `json:"phone"`
-	Email    string `json:"email"`
-	Leader   string `json:"leader"`
+	Leader   int64  `json:"leader"`
 	Sort     int64  `json:"sort"`
 	Status   int64  `json:"status"`
 	ParentId int64  `json:"parentId"`
@@ -265,9 +259,7 @@ type DeptRetrieveResp struct {
 
 type DeptAddReq struct {
 	DeptName string `json:"deptName"`
-	Phone    string `json:"phone,optional"`
-	Email    string `json:"email,optional"`
-	Leader   string `json:"leader"`
+	Leader   int64  `json:"leader"`
 	Sort     int64  `json:"sort,optional"`
 	Status   int64  `json:"status,optional"`
 	ParentId int64  `json:"parentId"`
@@ -278,9 +270,7 @@ type DeptAddReq struct {
 type DeptUpdateReq struct {
 	DeptId   int64  `json:"deptId"`
 	DeptName string `json:"deptName"`
-	Phone    string `json:"phone,optional"`
-	Email    string `json:"email,optional"`
-	Leader   string `json:"leader"`
+	Leader   int64  `json:"leader"`
 	Sort     int64  `json:"sort,optional"`
 	Status   int64  `json:"status,optional"`
 	ParentId int64  `json:"parentId"`
@@ -288,7 +278,7 @@ type DeptUpdateReq struct {
 }
 
 type DeptDeleteReq struct {
-	Ids []int64 `json:"ids"`
+	DeptId int64 `path:"deptId"`
 }
 
 type MenuRoleResp struct {

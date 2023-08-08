@@ -37,9 +37,7 @@ func (l *DeptRetrieveLogic) DeptRetrieve(in *sys.DeptRetrieveReq) (*sys.DeptRetr
 	return &sys.DeptRetrieveResp{
 		DeptId:   res.Id,
 		DeptName: res.DeptName.String,
-		Phone:    res.Phone.String,
-		Email:    res.Email.String,
-		Leader:   res.Leader.String,
+		Leader:   res.Leader.Int64,
 		Status:   res.Status.Int64,
 		Sort:     res.Sort.Int64,
 		ParentId: res.ParentId.Int64,

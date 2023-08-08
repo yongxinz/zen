@@ -43,9 +43,7 @@ type (
 		DeptPath  string         `db:"dept_path"`
 		DeptName  sql.NullString `db:"dept_name"`
 		Sort      sql.NullInt64  `db:"sort"`
-		Leader    sql.NullString `db:"leader"`
-		Phone     sql.NullString `db:"phone"`
-		Email     sql.NullString `db:"email"`
+		Leader    sql.NullInt64  `db:"leader"`
 		Status    sql.NullInt64  `db:"status"`
 		CreateBy  sql.NullInt64  `db:"create_by"`  // 创建者
 		UpdateBy  sql.NullInt64  `db:"update_by"`  // 更新者
@@ -97,8 +95,8 @@ func (m *defaultSysDeptModel) FindOne(ctx context.Context, id int64) (*SysDept, 
 func (m *defaultSysDeptModel) Insert(ctx context.Context, data *SysDept) (sql.Result, error) {
 	sysDeptIdKey := fmt.Sprintf("%s%v", cacheSysDeptIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, sysDeptRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.ParentId, data.DeptPath, data.DeptName, data.Sort, data.Leader, data.Phone, data.Email, data.Status, data.CreateBy, data.UpdateBy)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, sysDeptRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.ParentId, data.DeptPath, data.DeptName, data.Sort, data.Leader, data.Status, data.CreateBy, data.UpdateBy)
 	}, sysDeptIdKey)
 	return ret, err
 }
@@ -107,7 +105,7 @@ func (m *defaultSysDeptModel) Update(ctx context.Context, data *SysDept) error {
 	sysDeptIdKey := fmt.Sprintf("%s%v", cacheSysDeptIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, sysDeptRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.ParentId, data.DeptPath, data.DeptName, data.Sort, data.Leader, data.Phone, data.Email, data.Status, data.CreateBy, data.UpdateBy, data.Id)
+		return conn.ExecCtx(ctx, query, data.ParentId, data.DeptPath, data.DeptName, data.Sort, data.Leader, data.Status, data.CreateBy, data.UpdateBy, data.Id)
 	}, sysDeptIdKey)
 	return err
 }

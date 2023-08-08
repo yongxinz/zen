@@ -149,7 +149,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodDelete,
-				Path:    "/dept",
+				Path:    "/dept/:deptId",
 				Handler: dept.DeptDeleteHandler(serverCtx),
 			},
 		},

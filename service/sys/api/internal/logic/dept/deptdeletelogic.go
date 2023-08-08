@@ -26,7 +26,7 @@ func NewDeptDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeptDe
 
 func (l *DeptDeleteLogic) DeptDelete(req *types.DeptDeleteReq) error {
 	_, err := l.svcCtx.SysRpc.DeptDelete(l.ctx, &sysclient.DeptDeleteReq{
-		DeptIds: req.Ids,
+		DeptId: req.DeptId,
 	})
 	return err
 }
