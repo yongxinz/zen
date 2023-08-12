@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package wkf;
+option go_package="./wkf";
+
+// classify start
+message ClassifyListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message ClassifyListData{
+    int64 classifyId = 1;
+    string name = 2;
+    int64 createBy = 3;
+    string createdAt = 4;
+    int64 updateBy = 5;
+    string updatedAt = 6;
+}
+
+message ClassifyListResp {
+    int64 count = 1;
+    repeated ClassifyListData data = 2;
+}
+
+message ClassifyRetrieveReq {
+    int64 classifyId = 1;
+}
+
+message ClassifyRetrieveResp {
+    int64 classifyId = 1;
+    string name = 2;
+}
+
+message ClassifyAddReq {
+    string name = 1;
+    int64 createBy = 2;
+    int64 updateBy = 3;
+}
+
+message ClassifyAddResp {}
+
+message ClassifyUpdateReq {
+    int64 classifyId = 1;
+    string name = 2;
+    int64 updateBy = 3;
+}
+
+message ClassifyUpdateResp {}
+
+message ClassifyDeleteReq {
+    int64 classifyId = 1;
+}
+
+message ClassifyDeleteResp {}
+// classify end
+
+service Wkf {
+    rpc ClassifyList(ClassifyListReq) returns(ClassifyListResp);
+    rpc ClassifyRetrieve(ClassifyRetrieveReq) returns(ClassifyRetrieveResp);
+    rpc ClassifyAdd(ClassifyAddReq) returns(ClassifyAddResp);
+    rpc ClassifyUpdate(ClassifyUpdateReq) returns(ClassifyUpdateResp);
+    rpc ClassifyDelete(ClassifyDeleteReq) returns(ClassifyDeleteResp);
+}

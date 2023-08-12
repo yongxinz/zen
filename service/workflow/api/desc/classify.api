@@ -1,0 +1,93 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "流程分类"
+	desc: "流程分类"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	ClassifyListReq {
+		PageReq
+	}
+	ClassifyListData {
+		ClassifyId int64  `json:"classifyId"`
+		Name       string `json:"name"`
+		CreatedAt  string `json:"createdAt"`
+		UpdatedAt  string `json:"updatedAt"`
+		CreateBy   int64  `json:"createBy"`
+		UpdateBy   int64  `json:"updateBy"`
+	}
+	ClassifyListResp {
+		List []ClassifyListData `json:"list"`
+		Pagination
+	}
+)
+
+type (
+	ClassifyRetrieveReq {
+		ClassifyId int64 `path:"classifyId"`
+	}
+	ClassifyRetrieveResp {
+		ClassifyId int64  `json:"classifyId"`
+		Name       string `json:"name"`
+	}
+)
+
+type (
+	ClassifyAddReq {
+		Name     string `json:"name"`
+		CreateBy int64  `json:"createBy,optional"`
+		UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	ClassifyUpdateReq {
+		ClassifyId int64  `json:"classifyId"`
+		Name       string `json:"name"`
+		UpdateBy   int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	ClassifyDeleteReq {
+		ClassifyId int64 `path:"classifyId"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: classify
+	prefix: /api/v1/workflow
+)
+service wkf {
+	@doc(
+		summary: "流程分类列表"
+	)
+	@handler ClassifyList
+	get /classify(ClassifyListReq) returns (ClassifyListResp)
+	@doc(
+		summary: "获取单个流程分类"
+	)
+	@handler ClassifyRetrieve
+	get /classify/:classifyId(ClassifyRetrieveReq) returns (ClassifyRetrieveResp)
+	@doc(
+		summary: "新增流程分类"
+	)
+	@handler ClassifyAdd
+	post /classify(ClassifyAddReq)
+	@doc(
+		summary: "更新流程分类"
+	)
+	@handler ClassifyUpdate
+	put /classify/:classifyId(ClassifyUpdateReq)
+	@doc(
+		summary: "删除流程分类"
+	)
+	@handler ClassifyDelete
+	delete /classify/:classifyId(ClassifyDeleteReq)
+}

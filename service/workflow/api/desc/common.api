@@ -1,0 +1,20 @@
+syntax = "v1"
+
+info(
+	title: "common"
+	desc: "common"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	PageReq {
+		PageIndex int64 `form:"pageIndex,default=1"`
+		PageSize  int64 `form:"pageSize,default=20"`
+	}
+	Pagination {
+		PageIndex int64 `json:"pageIndex"`
+		PageSize  int64 `json:"pageSize"`
+		Count     int64 `json:"count"`
+	}
+)
