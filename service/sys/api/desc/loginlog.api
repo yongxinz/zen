@@ -1,0 +1,43 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "登录日志"
+	desc: "登录日志"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	LoginLogListReq {
+		PageReq
+	}
+	LoginLogListData {
+		Id            int64  `json:"id"`
+		Username      string `json:"username"`
+		Ipaddr        string `json:"ipaddr"`
+		LoginLocation string `json:"loginLocation"`
+		Browser       string `json:"browser"`
+		Os            string `json:"os"`
+		LoginTime     string `json:"loginTime"`
+		Msg           string `json:"msg"`
+	}
+	LoginLogListResp {
+		List []LoginLogListData `json:"list"`
+		Pagination
+	}
+)
+
+@server(
+	jwt: Auth
+	group: loginlog
+	prefix: /api/v1/sys
+)
+service sys {
+	@doc(
+		summary: "登录日志列表"
+	)
+	@handler LoginLogList
+	get /loginlog (LoginLogListReq) returns (LoginLogListResp)
+}

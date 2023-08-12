@@ -54,6 +54,7 @@ type SysClient interface {
 	PostAdd(ctx context.Context, in *PostAddReq, opts ...grpc.CallOption) (*PostAddResp, error)
 	PostUpdate(ctx context.Context, in *PostUpdateReq, opts ...grpc.CallOption) (*PostUpdateResp, error)
 	PostDelete(ctx context.Context, in *PostDeleteReq, opts ...grpc.CallOption) (*PostDeleteResp, error)
+	LoginLogList(ctx context.Context, in *LoginLogListReq, opts ...grpc.CallOption) (*LoginLogListResp, error)
 }
 
 type sysClient struct {
@@ -352,6 +353,15 @@ func (c *sysClient) PostDelete(ctx context.Context, in *PostDeleteReq, opts ...g
 	return out, nil
 }
 
+func (c *sysClient) LoginLogList(ctx context.Context, in *LoginLogListReq, opts ...grpc.CallOption) (*LoginLogListResp, error) {
+	out := new(LoginLogListResp)
+	err := c.cc.Invoke(ctx, "/sysclient.Sys/LoginLogList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SysServer is the server API for Sys service.
 // All implementations must embed UnimplementedSysServer
 // for forward compatibility
@@ -388,6 +398,7 @@ type SysServer interface {
 	PostAdd(context.Context, *PostAddReq) (*PostAddResp, error)
 	PostUpdate(context.Context, *PostUpdateReq) (*PostUpdateResp, error)
 	PostDelete(context.Context, *PostDeleteReq) (*PostDeleteResp, error)
+	LoginLogList(context.Context, *LoginLogListReq) (*LoginLogListResp, error)
 	mustEmbedUnimplementedSysServer()
 }
 
@@ -490,6 +501,9 @@ func (UnimplementedSysServer) PostUpdate(context.Context, *PostUpdateReq) (*Post
 }
 func (UnimplementedSysServer) PostDelete(context.Context, *PostDeleteReq) (*PostDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostDelete not implemented")
+}
+func (UnimplementedSysServer) LoginLogList(context.Context, *LoginLogListReq) (*LoginLogListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginLogList not implemented")
 }
 func (UnimplementedSysServer) mustEmbedUnimplementedSysServer() {}
 
@@ -1080,6 +1094,24 @@ func _Sys_PostDelete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sys_LoginLogList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginLogListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).LoginLogList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysclient.Sys/LoginLogList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).LoginLogList(ctx, req.(*LoginLogListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Sys_ServiceDesc is the grpc.ServiceDesc for Sys service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1214,6 +1246,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PostDelete",
 			Handler:    _Sys_PostDelete_Handler,
+		},
+		{
+			MethodName: "LoginLogList",
+			Handler:    _Sys_LoginLogList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

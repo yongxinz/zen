@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	dept "github.com/yongxin/zen/service/sys/api/internal/handler/dept"
+	loginlog "github.com/yongxin/zen/service/sys/api/internal/handler/loginlog"
 	menu "github.com/yongxin/zen/service/sys/api/internal/handler/menu"
 	post "github.com/yongxin/zen/service/sys/api/internal/handler/post"
 	role "github.com/yongxin/zen/service/sys/api/internal/handler/role"
@@ -220,6 +221,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodDelete,
 				Path:    "/post",
 				Handler: post.PostDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/sys"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/loginlog",
+				Handler: loginlog.LoginLogListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

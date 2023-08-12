@@ -491,6 +491,29 @@ message PostDeleteReq {
 message PostDeleteResp {}
 // post end
 
+// loginlog start
+message LoginLogListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message LoginLogListData{
+    int64 id = 1;
+    string username = 2;
+    string ipaddr = 3;
+    string loginLocation = 4;
+    string browser = 5;
+    string os = 6;
+    string loginTime = 7;
+    string msg = 8;
+}
+
+message LoginLogListResp {
+    int64 count = 1;
+    repeated LoginLogListData data = 2;
+}
+// loginlog end
+
 service Sys {
     rpc Login(LoginRequest) returns(LoginResponse);
 
@@ -530,4 +553,6 @@ service Sys {
     rpc PostAdd(PostAddReq) returns(PostAddResp);
     rpc PostUpdate(PostUpdateReq) returns(PostUpdateResp);
     rpc PostDelete(PostDeleteReq) returns(PostDeleteResp);
+
+    rpc LoginLogList(LoginLogListReq) returns(LoginLogListResp);
 }

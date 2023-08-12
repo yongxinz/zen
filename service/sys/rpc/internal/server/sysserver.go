@@ -181,3 +181,8 @@ func (s *SysServer) PostDelete(ctx context.Context, in *sys.PostDeleteReq) (*sys
 	l := logic.NewPostDeleteLogic(ctx, s.svcCtx)
 	return l.PostDelete(in)
 }
+
+func (s *SysServer) LoginLogList(ctx context.Context, in *sys.LoginLogListReq) (*sys.LoginLogListResp, error) {
+	l := logic.NewLoginLogListLogic(ctx, s.svcCtx)
+	return l.LoginLogList(in)
+}

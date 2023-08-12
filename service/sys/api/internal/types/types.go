@@ -503,3 +503,23 @@ type PostUpdateReq struct {
 type PostDeleteReq struct {
 	Ids []int64 `json:"ids"`
 }
+
+type LoginLogListReq struct {
+	PageReq
+}
+
+type LoginLogListData struct {
+	Id            int64  `json:"id"`
+	Username      string `json:"username"`
+	Ipaddr        string `json:"ipaddr"`
+	LoginLocation string `json:"loginLocation"`
+	Browser       string `json:"browser"`
+	Os            string `json:"os"`
+	LoginTime     string `json:"loginTime"`
+	Msg           string `json:"msg"`
+}
+
+type LoginLogListResp struct {
+	List []LoginLogListData `json:"list"`
+	Pagination
+}

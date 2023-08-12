@@ -27,6 +27,9 @@ type (
 	DeptTreeResp         = sys.DeptTreeResp
 	DeptUpdateReq        = sys.DeptUpdateReq
 	DeptUpdateResp       = sys.DeptUpdateResp
+	LoginLogListData     = sys.LoginLogListData
+	LoginLogListReq      = sys.LoginLogListReq
+	LoginLogListResp     = sys.LoginLogListResp
 	LoginRequest         = sys.LoginRequest
 	LoginResponse        = sys.LoginResponse
 	MenuAddReq           = sys.MenuAddReq
@@ -118,6 +121,7 @@ type (
 		PostAdd(ctx context.Context, in *PostAddReq, opts ...grpc.CallOption) (*PostAddResp, error)
 		PostUpdate(ctx context.Context, in *PostUpdateReq, opts ...grpc.CallOption) (*PostUpdateResp, error)
 		PostDelete(ctx context.Context, in *PostDeleteReq, opts ...grpc.CallOption) (*PostDeleteResp, error)
+		LoginLogList(ctx context.Context, in *LoginLogListReq, opts ...grpc.CallOption) (*LoginLogListResp, error)
 	}
 
 	defaultSys struct {
@@ -289,4 +293,9 @@ func (m *defaultSys) PostUpdate(ctx context.Context, in *PostUpdateReq, opts ...
 func (m *defaultSys) PostDelete(ctx context.Context, in *PostDeleteReq, opts ...grpc.CallOption) (*PostDeleteResp, error) {
 	client := sys.NewSysClient(m.cli.Conn())
 	return client.PostDelete(ctx, in, opts...)
+}
+
+func (m *defaultSys) LoginLogList(ctx context.Context, in *LoginLogListReq, opts ...grpc.CallOption) (*LoginLogListResp, error) {
+	client := sys.NewSysClient(m.cli.Conn())
+	return client.LoginLogList(ctx, in, opts...)
 }
