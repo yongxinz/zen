@@ -399,7 +399,7 @@ type MenuAddReq struct {
 	MenuName   string `json:"menuName"`
 	MenuType   string `json:"menuType"`
 	Title      string `json:"title"`
-	Permission string `json:"permission"`
+	Permission string `json:"permission,optional"`
 	Params     string `json:"params,optional"`
 	Path       string `json:"path,optional"`
 	Paths      string `json:"paths,optional"`
