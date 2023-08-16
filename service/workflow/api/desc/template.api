@@ -1,0 +1,101 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "模版管理"
+	desc: "模版管理"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	TemplateListReq {
+		PageReq
+	}
+	TemplateListData {
+		TemplateId    int64  `json:"templateId"`
+		Name          string `json:"name"`
+		FormStructure string `json:"form_structure"`
+		Remark        string `json:"remark"`
+		CreatedAt     string `json:"createdAt"`
+		UpdatedAt     string `json:"updatedAt"`
+		CreateBy      int64  `json:"createBy"`
+		UpdateBy      int64  `json:"updateBy"`
+	}
+	TemplateListResp {
+		List []TemplateListData `json:"list"`
+		Pagination
+	}
+)
+
+type (
+	TemplateRetrieveReq {
+		TemplateId int64 `path:"templateId"`
+	}
+	TemplateRetrieveResp {
+		TemplateId    int64  `json:"templateId"`
+		Name          string `json:"name"`
+		FormStructure string `json:"form_structure"`
+		Remark        string `json:"remark"`
+	}
+)
+
+type (
+	TemplateAddReq {
+		Name          string `json:"name"`
+		FormStructure string `json:"form_structure"`
+		Remark        string `json:"remark"`
+		CreateBy      int64  `json:"createBy,optional"`
+		UpdateBy      int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	TemplateUpdateReq {
+		TemplateId    int64  `json:"templateId"`
+		Name          string `json:"name"`
+		FormStructure string `json:"form_structure"`
+		Remark        string `json:"remark"`
+		UpdateBy      int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	TemplateDeleteReq {
+		TemplateId int64 `path:"templateId"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: template
+	prefix: /api/v1/workflow
+)
+service wkf {
+	@doc(
+		summary: "流程分类列表"
+	)
+	@handler TemplateList
+	get /template(TemplateListReq) returns (TemplateListResp)
+	@doc(
+		summary: "获取单个流程分类"
+	)
+	@handler TemplateRetrieve
+	get /template/:templateId(TemplateRetrieveReq) returns (TemplateRetrieveResp)
+	@doc(
+		summary: "新增流程分类"
+	)
+	@handler TemplateAdd
+	post /template(TemplateAddReq)
+	@doc(
+		summary: "更新流程分类"
+	)
+	@handler TemplateUpdate
+	put /template/:templateId(TemplateUpdateReq)
+	@doc(
+		summary: "删除流程分类"
+	)
+	@handler TemplateDelete
+	delete /template/:templateId(TemplateDeleteReq)
+}

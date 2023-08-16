@@ -24,6 +24,17 @@ type (
 	ClassifyRetrieveResp = wkf.ClassifyRetrieveResp
 	ClassifyUpdateReq    = wkf.ClassifyUpdateReq
 	ClassifyUpdateResp   = wkf.ClassifyUpdateResp
+	TemplateAddReq       = wkf.TemplateAddReq
+	TemplateAddResp      = wkf.TemplateAddResp
+	TemplateDeleteReq    = wkf.TemplateDeleteReq
+	TemplateDeleteResp   = wkf.TemplateDeleteResp
+	TemplateListData     = wkf.TemplateListData
+	TemplateListReq      = wkf.TemplateListReq
+	TemplateListResp     = wkf.TemplateListResp
+	TemplateRetrieveReq  = wkf.TemplateRetrieveReq
+	TemplateRetrieveResp = wkf.TemplateRetrieveResp
+	TemplateUpdateReq    = wkf.TemplateUpdateReq
+	TemplateUpdateResp   = wkf.TemplateUpdateResp
 
 	Wkf interface {
 		ClassifyList(ctx context.Context, in *ClassifyListReq, opts ...grpc.CallOption) (*ClassifyListResp, error)
@@ -31,6 +42,11 @@ type (
 		ClassifyAdd(ctx context.Context, in *ClassifyAddReq, opts ...grpc.CallOption) (*ClassifyAddResp, error)
 		ClassifyUpdate(ctx context.Context, in *ClassifyUpdateReq, opts ...grpc.CallOption) (*ClassifyUpdateResp, error)
 		ClassifyDelete(ctx context.Context, in *ClassifyDeleteReq, opts ...grpc.CallOption) (*ClassifyDeleteResp, error)
+		TemplateList(ctx context.Context, in *TemplateListReq, opts ...grpc.CallOption) (*TemplateListResp, error)
+		TemplateRetrieve(ctx context.Context, in *TemplateRetrieveReq, opts ...grpc.CallOption) (*TemplateRetrieveResp, error)
+		TemplateAdd(ctx context.Context, in *TemplateAddReq, opts ...grpc.CallOption) (*TemplateAddResp, error)
+		TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, opts ...grpc.CallOption) (*TemplateUpdateResp, error)
+		TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error)
 	}
 
 	defaultWkf struct {
@@ -67,4 +83,29 @@ func (m *defaultWkf) ClassifyUpdate(ctx context.Context, in *ClassifyUpdateReq, 
 func (m *defaultWkf) ClassifyDelete(ctx context.Context, in *ClassifyDeleteReq, opts ...grpc.CallOption) (*ClassifyDeleteResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.ClassifyDelete(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TemplateList(ctx context.Context, in *TemplateListReq, opts ...grpc.CallOption) (*TemplateListResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TemplateList(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TemplateRetrieve(ctx context.Context, in *TemplateRetrieveReq, opts ...grpc.CallOption) (*TemplateRetrieveResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TemplateRetrieve(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TemplateAdd(ctx context.Context, in *TemplateAddReq, opts ...grpc.CallOption) (*TemplateAddResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TemplateAdd(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, opts ...grpc.CallOption) (*TemplateUpdateResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TemplateUpdate(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TemplateDelete(ctx, in, opts...)
 }

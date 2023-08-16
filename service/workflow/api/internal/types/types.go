@@ -54,3 +54,54 @@ type ClassifyUpdateReq struct {
 type ClassifyDeleteReq struct {
 	ClassifyId int64 `path:"classifyId"`
 }
+
+type TemplateListReq struct {
+	PageReq
+}
+
+type TemplateListData struct {
+	TemplateId    int64  `json:"templateId"`
+	Name          string `json:"name"`
+	FormStructure string `json:"form_structure"`
+	Remark        string `json:"remark"`
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
+	CreateBy      int64  `json:"createBy"`
+	UpdateBy      int64  `json:"updateBy"`
+}
+
+type TemplateListResp struct {
+	List []TemplateListData `json:"list"`
+	Pagination
+}
+
+type TemplateRetrieveReq struct {
+	TemplateId int64 `path:"templateId"`
+}
+
+type TemplateRetrieveResp struct {
+	TemplateId    int64  `json:"templateId"`
+	Name          string `json:"name"`
+	FormStructure string `json:"form_structure"`
+	Remark        string `json:"remark"`
+}
+
+type TemplateAddReq struct {
+	Name          string `json:"name"`
+	FormStructure string `json:"form_structure"`
+	Remark        string `json:"remark"`
+	CreateBy      int64  `json:"createBy,optional"`
+	UpdateBy      int64  `json:"updateBy,optional"`
+}
+
+type TemplateUpdateReq struct {
+	TemplateId    int64  `json:"templateId"`
+	Name          string `json:"name"`
+	FormStructure string `json:"form_structure"`
+	Remark        string `json:"remark"`
+	UpdateBy      int64  `json:"updateBy,optional"`
+}
+
+type TemplateDeleteReq struct {
+	TemplateId int64 `path:"templateId"`
+}

@@ -46,3 +46,28 @@ func (s *WkfServer) ClassifyDelete(ctx context.Context, in *wkf.ClassifyDeleteRe
 	l := logic.NewClassifyDeleteLogic(ctx, s.svcCtx)
 	return l.ClassifyDelete(in)
 }
+
+func (s *WkfServer) TemplateList(ctx context.Context, in *wkf.TemplateListReq) (*wkf.TemplateListResp, error) {
+	l := logic.NewTemplateListLogic(ctx, s.svcCtx)
+	return l.TemplateList(in)
+}
+
+func (s *WkfServer) TemplateRetrieve(ctx context.Context, in *wkf.TemplateRetrieveReq) (*wkf.TemplateRetrieveResp, error) {
+	l := logic.NewTemplateRetrieveLogic(ctx, s.svcCtx)
+	return l.TemplateRetrieve(in)
+}
+
+func (s *WkfServer) TemplateAdd(ctx context.Context, in *wkf.TemplateAddReq) (*wkf.TemplateAddResp, error) {
+	l := logic.NewTemplateAddLogic(ctx, s.svcCtx)
+	return l.TemplateAdd(in)
+}
+
+func (s *WkfServer) TemplateUpdate(ctx context.Context, in *wkf.TemplateUpdateReq) (*wkf.TemplateUpdateResp, error) {
+	l := logic.NewTemplateUpdateLogic(ctx, s.svcCtx)
+	return l.TemplateUpdate(in)
+}
+
+func (s *WkfServer) TemplateDelete(ctx context.Context, in *wkf.TemplateDeleteReq) (*wkf.TemplateDeleteResp, error) {
+	l := logic.NewTemplateDeleteLogic(ctx, s.svcCtx)
+	return l.TemplateDelete(in)
+}

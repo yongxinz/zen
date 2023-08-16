@@ -27,6 +27,11 @@ type WkfClient interface {
 	ClassifyAdd(ctx context.Context, in *ClassifyAddReq, opts ...grpc.CallOption) (*ClassifyAddResp, error)
 	ClassifyUpdate(ctx context.Context, in *ClassifyUpdateReq, opts ...grpc.CallOption) (*ClassifyUpdateResp, error)
 	ClassifyDelete(ctx context.Context, in *ClassifyDeleteReq, opts ...grpc.CallOption) (*ClassifyDeleteResp, error)
+	TemplateList(ctx context.Context, in *TemplateListReq, opts ...grpc.CallOption) (*TemplateListResp, error)
+	TemplateRetrieve(ctx context.Context, in *TemplateRetrieveReq, opts ...grpc.CallOption) (*TemplateRetrieveResp, error)
+	TemplateAdd(ctx context.Context, in *TemplateAddReq, opts ...grpc.CallOption) (*TemplateAddResp, error)
+	TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, opts ...grpc.CallOption) (*TemplateUpdateResp, error)
+	TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error)
 }
 
 type wkfClient struct {
@@ -82,6 +87,51 @@ func (c *wkfClient) ClassifyDelete(ctx context.Context, in *ClassifyDeleteReq, o
 	return out, nil
 }
 
+func (c *wkfClient) TemplateList(ctx context.Context, in *TemplateListReq, opts ...grpc.CallOption) (*TemplateListResp, error) {
+	out := new(TemplateListResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TemplateList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TemplateRetrieve(ctx context.Context, in *TemplateRetrieveReq, opts ...grpc.CallOption) (*TemplateRetrieveResp, error) {
+	out := new(TemplateRetrieveResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TemplateRetrieve", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TemplateAdd(ctx context.Context, in *TemplateAddReq, opts ...grpc.CallOption) (*TemplateAddResp, error) {
+	out := new(TemplateAddResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TemplateAdd", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, opts ...grpc.CallOption) (*TemplateUpdateResp, error) {
+	out := new(TemplateUpdateResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TemplateUpdate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error) {
+	out := new(TemplateDeleteResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TemplateDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WkfServer is the server API for Wkf service.
 // All implementations must embed UnimplementedWkfServer
 // for forward compatibility
@@ -91,6 +141,11 @@ type WkfServer interface {
 	ClassifyAdd(context.Context, *ClassifyAddReq) (*ClassifyAddResp, error)
 	ClassifyUpdate(context.Context, *ClassifyUpdateReq) (*ClassifyUpdateResp, error)
 	ClassifyDelete(context.Context, *ClassifyDeleteReq) (*ClassifyDeleteResp, error)
+	TemplateList(context.Context, *TemplateListReq) (*TemplateListResp, error)
+	TemplateRetrieve(context.Context, *TemplateRetrieveReq) (*TemplateRetrieveResp, error)
+	TemplateAdd(context.Context, *TemplateAddReq) (*TemplateAddResp, error)
+	TemplateUpdate(context.Context, *TemplateUpdateReq) (*TemplateUpdateResp, error)
+	TemplateDelete(context.Context, *TemplateDeleteReq) (*TemplateDeleteResp, error)
 	mustEmbedUnimplementedWkfServer()
 }
 
@@ -112,6 +167,21 @@ func (UnimplementedWkfServer) ClassifyUpdate(context.Context, *ClassifyUpdateReq
 }
 func (UnimplementedWkfServer) ClassifyDelete(context.Context, *ClassifyDeleteReq) (*ClassifyDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClassifyDelete not implemented")
+}
+func (UnimplementedWkfServer) TemplateList(context.Context, *TemplateListReq) (*TemplateListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateList not implemented")
+}
+func (UnimplementedWkfServer) TemplateRetrieve(context.Context, *TemplateRetrieveReq) (*TemplateRetrieveResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateRetrieve not implemented")
+}
+func (UnimplementedWkfServer) TemplateAdd(context.Context, *TemplateAddReq) (*TemplateAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateAdd not implemented")
+}
+func (UnimplementedWkfServer) TemplateUpdate(context.Context, *TemplateUpdateReq) (*TemplateUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateUpdate not implemented")
+}
+func (UnimplementedWkfServer) TemplateDelete(context.Context, *TemplateDeleteReq) (*TemplateDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateDelete not implemented")
 }
 func (UnimplementedWkfServer) mustEmbedUnimplementedWkfServer() {}
 
@@ -216,6 +286,96 @@ func _Wkf_ClassifyDelete_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Wkf_TemplateList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TemplateList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TemplateList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TemplateList(ctx, req.(*TemplateListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TemplateRetrieve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateRetrieveReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TemplateRetrieve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TemplateRetrieve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TemplateRetrieve(ctx, req.(*TemplateRetrieveReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TemplateAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TemplateAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TemplateAdd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TemplateAdd(ctx, req.(*TemplateAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TemplateUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TemplateUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TemplateUpdate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TemplateUpdate(ctx, req.(*TemplateUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TemplateDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TemplateDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TemplateDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TemplateDelete(ctx, req.(*TemplateDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Wkf_ServiceDesc is the grpc.ServiceDesc for Wkf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +402,26 @@ var Wkf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClassifyDelete",
 			Handler:    _Wkf_ClassifyDelete_Handler,
+		},
+		{
+			MethodName: "TemplateList",
+			Handler:    _Wkf_TemplateList_Handler,
+		},
+		{
+			MethodName: "TemplateRetrieve",
+			Handler:    _Wkf_TemplateRetrieve_Handler,
+		},
+		{
+			MethodName: "TemplateAdd",
+			Handler:    _Wkf_TemplateAdd_Handler,
+		},
+		{
+			MethodName: "TemplateUpdate",
+			Handler:    _Wkf_TemplateUpdate_Handler,
+		},
+		{
+			MethodName: "TemplateDelete",
+			Handler:    _Wkf_TemplateDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

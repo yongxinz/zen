@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	classify "github.com/yongxin/zen/service/workflow/api/internal/handler/classify"
+	template "github.com/yongxin/zen/service/workflow/api/internal/handler/template"
 	"github.com/yongxin/zen/service/workflow/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -37,6 +38,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodDelete,
 				Path:    "/classify/:classifyId",
 				Handler: classify.ClassifyDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/workflow"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/template",
+				Handler: template.TemplateListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/template/:templateId",
+				Handler: template.TemplateRetrieveHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/template",
+				Handler: template.TemplateAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/template/:templateId",
+				Handler: template.TemplateUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/template/:templateId",
+				Handler: template.TemplateDeleteHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

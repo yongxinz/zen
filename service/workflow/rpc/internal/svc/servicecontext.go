@@ -9,6 +9,7 @@ import (
 type ServiceContext struct {
 	Config        config.Config
 	ClassifyModel model.WkfClassifyModel
+	TemplateModel model.WkfTemplateModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -16,5 +17,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:        c,
 		ClassifyModel: model.NewWkfClassifyModel(conn, c.CacheRedis),
+		TemplateModel: model.NewWkfTemplateModel(conn, c.CacheRedis),
 	}
 }
