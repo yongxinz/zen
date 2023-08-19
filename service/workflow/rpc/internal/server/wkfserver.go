@@ -71,3 +71,28 @@ func (s *WkfServer) TemplateDelete(ctx context.Context, in *wkf.TemplateDeleteRe
 	l := logic.NewTemplateDeleteLogic(ctx, s.svcCtx)
 	return l.TemplateDelete(in)
 }
+
+func (s *WkfServer) TaskList(ctx context.Context, in *wkf.TaskListReq) (*wkf.TaskListResp, error) {
+	l := logic.NewTaskListLogic(ctx, s.svcCtx)
+	return l.TaskList(in)
+}
+
+func (s *WkfServer) TaskRetrieve(ctx context.Context, in *wkf.TaskRetrieveReq) (*wkf.TaskRetrieveResp, error) {
+	l := logic.NewTaskRetrieveLogic(ctx, s.svcCtx)
+	return l.TaskRetrieve(in)
+}
+
+func (s *WkfServer) TaskAdd(ctx context.Context, in *wkf.TaskAddReq) (*wkf.TaskAddResp, error) {
+	l := logic.NewTaskAddLogic(ctx, s.svcCtx)
+	return l.TaskAdd(in)
+}
+
+func (s *WkfServer) TaskUpdate(ctx context.Context, in *wkf.TaskUpdateReq) (*wkf.TaskUpdateResp, error) {
+	l := logic.NewTaskUpdateLogic(ctx, s.svcCtx)
+	return l.TaskUpdate(in)
+}
+
+func (s *WkfServer) TaskDelete(ctx context.Context, in *wkf.TaskDeleteReq) (*wkf.TaskDeleteResp, error) {
+	l := logic.NewTaskDeleteLogic(ctx, s.svcCtx)
+	return l.TaskDelete(in)
+}

@@ -32,6 +32,11 @@ type WkfClient interface {
 	TemplateAdd(ctx context.Context, in *TemplateAddReq, opts ...grpc.CallOption) (*TemplateAddResp, error)
 	TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, opts ...grpc.CallOption) (*TemplateUpdateResp, error)
 	TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error)
+	TaskList(ctx context.Context, in *TaskListReq, opts ...grpc.CallOption) (*TaskListResp, error)
+	TaskRetrieve(ctx context.Context, in *TaskRetrieveReq, opts ...grpc.CallOption) (*TaskRetrieveResp, error)
+	TaskAdd(ctx context.Context, in *TaskAddReq, opts ...grpc.CallOption) (*TaskAddResp, error)
+	TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...grpc.CallOption) (*TaskUpdateResp, error)
+	TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error)
 }
 
 type wkfClient struct {
@@ -132,6 +137,51 @@ func (c *wkfClient) TemplateDelete(ctx context.Context, in *TemplateDeleteReq, o
 	return out, nil
 }
 
+func (c *wkfClient) TaskList(ctx context.Context, in *TaskListReq, opts ...grpc.CallOption) (*TaskListResp, error) {
+	out := new(TaskListResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TaskList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TaskRetrieve(ctx context.Context, in *TaskRetrieveReq, opts ...grpc.CallOption) (*TaskRetrieveResp, error) {
+	out := new(TaskRetrieveResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TaskRetrieve", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TaskAdd(ctx context.Context, in *TaskAddReq, opts ...grpc.CallOption) (*TaskAddResp, error) {
+	out := new(TaskAddResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TaskAdd", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...grpc.CallOption) (*TaskUpdateResp, error) {
+	out := new(TaskUpdateResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TaskUpdate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error) {
+	out := new(TaskDeleteResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TaskDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WkfServer is the server API for Wkf service.
 // All implementations must embed UnimplementedWkfServer
 // for forward compatibility
@@ -146,6 +196,11 @@ type WkfServer interface {
 	TemplateAdd(context.Context, *TemplateAddReq) (*TemplateAddResp, error)
 	TemplateUpdate(context.Context, *TemplateUpdateReq) (*TemplateUpdateResp, error)
 	TemplateDelete(context.Context, *TemplateDeleteReq) (*TemplateDeleteResp, error)
+	TaskList(context.Context, *TaskListReq) (*TaskListResp, error)
+	TaskRetrieve(context.Context, *TaskRetrieveReq) (*TaskRetrieveResp, error)
+	TaskAdd(context.Context, *TaskAddReq) (*TaskAddResp, error)
+	TaskUpdate(context.Context, *TaskUpdateReq) (*TaskUpdateResp, error)
+	TaskDelete(context.Context, *TaskDeleteReq) (*TaskDeleteResp, error)
 	mustEmbedUnimplementedWkfServer()
 }
 
@@ -182,6 +237,21 @@ func (UnimplementedWkfServer) TemplateUpdate(context.Context, *TemplateUpdateReq
 }
 func (UnimplementedWkfServer) TemplateDelete(context.Context, *TemplateDeleteReq) (*TemplateDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TemplateDelete not implemented")
+}
+func (UnimplementedWkfServer) TaskList(context.Context, *TaskListReq) (*TaskListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskList not implemented")
+}
+func (UnimplementedWkfServer) TaskRetrieve(context.Context, *TaskRetrieveReq) (*TaskRetrieveResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskRetrieve not implemented")
+}
+func (UnimplementedWkfServer) TaskAdd(context.Context, *TaskAddReq) (*TaskAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskAdd not implemented")
+}
+func (UnimplementedWkfServer) TaskUpdate(context.Context, *TaskUpdateReq) (*TaskUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskUpdate not implemented")
+}
+func (UnimplementedWkfServer) TaskDelete(context.Context, *TaskDeleteReq) (*TaskDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskDelete not implemented")
 }
 func (UnimplementedWkfServer) mustEmbedUnimplementedWkfServer() {}
 
@@ -376,6 +446,96 @@ func _Wkf_TemplateDelete_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Wkf_TaskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TaskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TaskList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TaskList(ctx, req.(*TaskListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TaskRetrieve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskRetrieveReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TaskRetrieve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TaskRetrieve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TaskRetrieve(ctx, req.(*TaskRetrieveReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TaskAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TaskAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TaskAdd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TaskAdd(ctx, req.(*TaskAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TaskUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TaskUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TaskUpdate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TaskUpdate(ctx, req.(*TaskUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_TaskDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TaskDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TaskDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TaskDelete(ctx, req.(*TaskDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Wkf_ServiceDesc is the grpc.ServiceDesc for Wkf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +582,26 @@ var Wkf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TemplateDelete",
 			Handler:    _Wkf_TemplateDelete_Handler,
+		},
+		{
+			MethodName: "TaskList",
+			Handler:    _Wkf_TaskList_Handler,
+		},
+		{
+			MethodName: "TaskRetrieve",
+			Handler:    _Wkf_TaskRetrieve_Handler,
+		},
+		{
+			MethodName: "TaskAdd",
+			Handler:    _Wkf_TaskAdd_Handler,
+		},
+		{
+			MethodName: "TaskUpdate",
+			Handler:    _Wkf_TaskUpdate_Handler,
+		},
+		{
+			MethodName: "TaskDelete",
+			Handler:    _Wkf_TaskDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

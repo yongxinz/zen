@@ -115,6 +115,70 @@ message TemplateDeleteReq {
 message TemplateDeleteResp {}
 // template end
 
+// task start
+message TaskListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message TaskListData{
+    int64 taskId = 1;
+    string name = 2;
+    string category = 3;
+    string content = 4;
+    string remark = 5;
+    int64 createBy = 6;
+    string createdAt = 7;
+    int64 updateBy = 8;
+    string updatedAt = 9;
+}
+
+message TaskListResp {
+    int64 count = 1;
+    repeated TaskListData data = 2;
+}
+
+message TaskRetrieveReq {
+    int64 taskId = 1;
+}
+
+message TaskRetrieveResp {
+    int64 taskId = 1;
+    string name = 2;
+    string category = 3;
+    string content = 4;
+    string remark = 5;
+}
+
+message TaskAddReq {
+    string name = 1;
+    string category = 2;
+    string content = 3;
+    string remark = 4;
+    int64 createBy = 5;
+    int64 updateBy = 6;
+}
+
+message TaskAddResp {}
+
+message TaskUpdateReq {
+    int64 taskId = 1;
+    string name = 2;
+    string category = 3;
+    string content = 4;
+    string remark = 5;
+    int64 updateBy = 6;
+}
+
+message TaskUpdateResp {}
+
+message TaskDeleteReq {
+    int64 taskId = 1;
+}
+
+message TaskDeleteResp {}
+// task end
+
 service Wkf {
     rpc ClassifyList(ClassifyListReq) returns(ClassifyListResp);
     rpc ClassifyRetrieve(ClassifyRetrieveReq) returns(ClassifyRetrieveResp);
@@ -127,4 +191,10 @@ service Wkf {
     rpc TemplateAdd(TemplateAddReq) returns(TemplateAddResp);
     rpc TemplateUpdate(TemplateUpdateReq) returns(TemplateUpdateResp);
     rpc TemplateDelete(TemplateDeleteReq) returns(TemplateDeleteResp);
+
+    rpc TaskList(TaskListReq) returns(TaskListResp);
+    rpc TaskRetrieve(TaskRetrieveReq) returns(TaskRetrieveResp);
+    rpc TaskAdd(TaskAddReq) returns(TaskAddResp);
+    rpc TaskUpdate(TaskUpdateReq) returns(TaskUpdateResp);
+    rpc TaskDelete(TaskDeleteReq) returns(TaskDeleteResp);
 }

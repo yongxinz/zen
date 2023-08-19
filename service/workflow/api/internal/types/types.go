@@ -105,3 +105,58 @@ type TemplateUpdateReq struct {
 type TemplateDeleteReq struct {
 	TemplateId int64 `path:"templateId"`
 }
+
+type TaskListReq struct {
+	PageReq
+}
+
+type TaskListData struct {
+	TaskId    int64  `json:"taskId"`
+	Name      string `json:"name"`
+	Category  string `json:"category"`
+	Content   string `json:"content"`
+	Remark    string `json:"remark"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
+	CreateBy  int64  `json:"createBy"`
+	UpdateBy  int64  `json:"updateBy"`
+}
+
+type TaskListResp struct {
+	List []TaskListData `json:"list"`
+	Pagination
+}
+
+type TaskRetrieveReq struct {
+	TaskId int64 `path:"taskId"`
+}
+
+type TaskRetrieveResp struct {
+	TaskId   int64  `json:"taskId"`
+	Name     string `json:"name"`
+	Category string `json:"category"`
+	Content  string `json:"content"`
+	Remark   string `json:"remark"`
+}
+
+type TaskAddReq struct {
+	Name     string `json:"name"`
+	Category string `json:"category"`
+	Content  string `json:"content"`
+	Remark   string `json:"remark"`
+	CreateBy int64  `json:"createBy,optional"`
+	UpdateBy int64  `json:"updateBy,optional"`
+}
+
+type TaskUpdateReq struct {
+	TaskId   int64  `json:"taskId"`
+	Name     string `json:"name"`
+	Category string `json:"category"`
+	Content  string `json:"content"`
+	Remark   string `json:"remark"`
+	UpdateBy int64  `json:"updateBy,optional"`
+}
+
+type TaskDeleteReq struct {
+	TaskId int64 `path:"taskId"`
+}

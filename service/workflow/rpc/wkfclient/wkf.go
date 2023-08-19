@@ -24,6 +24,17 @@ type (
 	ClassifyRetrieveResp = wkf.ClassifyRetrieveResp
 	ClassifyUpdateReq    = wkf.ClassifyUpdateReq
 	ClassifyUpdateResp   = wkf.ClassifyUpdateResp
+	TaskAddReq           = wkf.TaskAddReq
+	TaskAddResp          = wkf.TaskAddResp
+	TaskDeleteReq        = wkf.TaskDeleteReq
+	TaskDeleteResp       = wkf.TaskDeleteResp
+	TaskListData         = wkf.TaskListData
+	TaskListReq          = wkf.TaskListReq
+	TaskListResp         = wkf.TaskListResp
+	TaskRetrieveReq      = wkf.TaskRetrieveReq
+	TaskRetrieveResp     = wkf.TaskRetrieveResp
+	TaskUpdateReq        = wkf.TaskUpdateReq
+	TaskUpdateResp       = wkf.TaskUpdateResp
 	TemplateAddReq       = wkf.TemplateAddReq
 	TemplateAddResp      = wkf.TemplateAddResp
 	TemplateDeleteReq    = wkf.TemplateDeleteReq
@@ -47,6 +58,11 @@ type (
 		TemplateAdd(ctx context.Context, in *TemplateAddReq, opts ...grpc.CallOption) (*TemplateAddResp, error)
 		TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, opts ...grpc.CallOption) (*TemplateUpdateResp, error)
 		TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error)
+		TaskList(ctx context.Context, in *TaskListReq, opts ...grpc.CallOption) (*TaskListResp, error)
+		TaskRetrieve(ctx context.Context, in *TaskRetrieveReq, opts ...grpc.CallOption) (*TaskRetrieveResp, error)
+		TaskAdd(ctx context.Context, in *TaskAddReq, opts ...grpc.CallOption) (*TaskAddResp, error)
+		TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...grpc.CallOption) (*TaskUpdateResp, error)
+		TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error)
 	}
 
 	defaultWkf struct {
@@ -108,4 +124,29 @@ func (m *defaultWkf) TemplateUpdate(ctx context.Context, in *TemplateUpdateReq, 
 func (m *defaultWkf) TemplateDelete(ctx context.Context, in *TemplateDeleteReq, opts ...grpc.CallOption) (*TemplateDeleteResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.TemplateDelete(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TaskList(ctx context.Context, in *TaskListReq, opts ...grpc.CallOption) (*TaskListResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TaskList(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TaskRetrieve(ctx context.Context, in *TaskRetrieveReq, opts ...grpc.CallOption) (*TaskRetrieveResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TaskRetrieve(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TaskAdd(ctx context.Context, in *TaskAddReq, opts ...grpc.CallOption) (*TaskAddResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TaskAdd(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...grpc.CallOption) (*TaskUpdateResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TaskUpdate(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TaskDelete(ctx, in, opts...)
 }

@@ -1,0 +1,105 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "任务管理"
+	desc: "任务管理"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	TaskListReq {
+		PageReq
+	}
+	TaskListData {
+		TaskId    int64  `json:"taskId"`
+		Name      string `json:"name"`
+		Category  string `json:"category"`
+		Content   string `json:"content"`
+		Remark    string `json:"remark"`
+		CreatedAt string `json:"createdAt"`
+		UpdatedAt string `json:"updatedAt"`
+		CreateBy  int64  `json:"createBy"`
+		UpdateBy  int64  `json:"updateBy"`
+	}
+	TaskListResp {
+		List []TaskListData `json:"list"`
+		Pagination
+	}
+)
+
+type (
+	TaskRetrieveReq {
+		TaskId int64 `path:"taskId"`
+	}
+	TaskRetrieveResp {
+		TaskId   int64  `json:"taskId"`
+		Name     string `json:"name"`
+		Category string `json:"category"`
+		Content  string `json:"content"`
+		Remark   string `json:"remark"`
+	}
+)
+
+type (
+	TaskAddReq {
+		Name     string `json:"name"`
+		Category string `json:"category"`
+		Content  string `json:"content"`
+		Remark   string `json:"remark"`
+		CreateBy int64  `json:"createBy,optional"`
+		UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	TaskUpdateReq {
+		TaskId   int64  `json:"taskId"`
+		Name     string `json:"name"`
+		Category string `json:"category"`
+		Content  string `json:"content"`
+		Remark   string `json:"remark"`
+		UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	TaskDeleteReq {
+		TaskId int64 `path:"taskId"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: task
+	prefix: /api/v1/workflow
+)
+service wkf {
+	@doc(
+		summary: "流程分类列表"
+	)
+	@handler TaskList
+	get /task(TaskListReq) returns (TaskListResp)
+	@doc(
+		summary: "获取单个流程分类"
+	)
+	@handler TaskRetrieve
+	get /task/:taskId(TaskRetrieveReq) returns (TaskRetrieveResp)
+	@doc(
+		summary: "新增流程分类"
+	)
+	@handler TaskAdd
+	post /task(TaskAddReq)
+	@doc(
+		summary: "更新流程分类"
+	)
+	@handler TaskUpdate
+	put /task/:taskId(TaskUpdateReq)
+	@doc(
+		summary: "删除流程分类"
+	)
+	@handler TaskDelete
+	delete /task/:taskId(TaskDeleteReq)
+}
