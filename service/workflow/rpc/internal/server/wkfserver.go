@@ -96,3 +96,28 @@ func (s *WkfServer) TaskDelete(ctx context.Context, in *wkf.TaskDeleteReq) (*wkf
 	l := logic.NewTaskDeleteLogic(ctx, s.svcCtx)
 	return l.TaskDelete(in)
 }
+
+func (s *WkfServer) ProcessList(ctx context.Context, in *wkf.ProcessListReq) (*wkf.ProcessListResp, error) {
+	l := logic.NewProcessListLogic(ctx, s.svcCtx)
+	return l.ProcessList(in)
+}
+
+func (s *WkfServer) ProcessRetrieve(ctx context.Context, in *wkf.ProcessRetrieveReq) (*wkf.ProcessRetrieveResp, error) {
+	l := logic.NewProcessRetrieveLogic(ctx, s.svcCtx)
+	return l.ProcessRetrieve(in)
+}
+
+func (s *WkfServer) ProcessAdd(ctx context.Context, in *wkf.ProcessAddReq) (*wkf.ProcessAddResp, error) {
+	l := logic.NewProcessAddLogic(ctx, s.svcCtx)
+	return l.ProcessAdd(in)
+}
+
+func (s *WkfServer) ProcessUpdate(ctx context.Context, in *wkf.ProcessUpdateReq) (*wkf.ProcessUpdateResp, error) {
+	l := logic.NewProcessUpdateLogic(ctx, s.svcCtx)
+	return l.ProcessUpdate(in)
+}
+
+func (s *WkfServer) ProcessDelete(ctx context.Context, in *wkf.ProcessDeleteReq) (*wkf.ProcessDeleteResp, error) {
+	l := logic.NewProcessDeleteLogic(ctx, s.svcCtx)
+	return l.ProcessDelete(in)
+}

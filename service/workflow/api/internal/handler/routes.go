@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	classify "github.com/yongxin/zen/service/workflow/api/internal/handler/classify"
+	process "github.com/yongxin/zen/service/workflow/api/internal/handler/process"
 	task "github.com/yongxin/zen/service/workflow/api/internal/handler/task"
 	template "github.com/yongxin/zen/service/workflow/api/internal/handler/template"
 	"github.com/yongxin/zen/service/workflow/api/internal/svc"
@@ -103,6 +104,38 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodDelete,
 				Path:    "/task/:taskId",
 				Handler: task.TaskDeleteHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/workflow"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/process",
+				Handler: process.ProcessListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/process/:processId",
+				Handler: process.ProcessRetrieveHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/process",
+				Handler: process.ProcessAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/process/:processId",
+				Handler: process.ProcessUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/process/:processId",
+				Handler: process.ProcessDeleteHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

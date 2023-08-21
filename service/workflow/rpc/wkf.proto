@@ -179,6 +179,86 @@ message TaskDeleteReq {
 message TaskDeleteResp {}
 // task end
 
+// process start
+message ProcessListReq {
+    int64 page = 1;
+    int64 size = 2;
+}
+
+message ProcessListData{
+    int64 processId = 1;
+    string name = 2;
+    string icon = 3;
+    string structure = 4;
+    int64 classify = 5;
+    string template = 6;
+    string task = 7;
+    string notice = 8;
+    string remark = 9;
+    int64 createBy = 10;
+    string createdAt = 11;
+    int64 updateBy = 12;
+    string updatedAt = 13;
+}
+
+message ProcessListResp {
+    int64 count = 1;
+    repeated ProcessListData data = 2;
+}
+
+message ProcessRetrieveReq {
+    int64 processId = 1;
+}
+
+message ProcessRetrieveResp {
+    int64 processId = 1;
+    string name = 2;
+    string icon = 3;
+    string structure = 4;
+    int64 classify = 5;
+    string template = 6;
+    string task = 7;
+    string notice = 8;
+    string remark = 9;
+}
+
+message ProcessAddReq {
+    string name = 1;
+    string icon = 2;
+    string structure = 3;
+    int64 classify = 4;
+    string template = 5;
+    string task = 6;
+    string notice = 7;
+    string remark = 8;
+    int64 createBy = 9;
+    int64 updateBy = 10;
+}
+
+message ProcessAddResp {}
+
+message ProcessUpdateReq {
+    int64 processId = 1;
+    string name = 2;
+    string icon = 3;
+    string structure = 4;
+    int64 classify = 5;
+    string template = 6;
+    string task = 7;
+    string notice = 8;
+    string remark = 9;
+    int64 updateBy = 10;
+}
+
+message ProcessUpdateResp {}
+
+message ProcessDeleteReq {
+    int64 processId = 1;
+}
+
+message ProcessDeleteResp {}
+// process end
+
 service Wkf {
     rpc ClassifyList(ClassifyListReq) returns(ClassifyListResp);
     rpc ClassifyRetrieve(ClassifyRetrieveReq) returns(ClassifyRetrieveResp);
@@ -197,4 +277,10 @@ service Wkf {
     rpc TaskAdd(TaskAddReq) returns(TaskAddResp);
     rpc TaskUpdate(TaskUpdateReq) returns(TaskUpdateResp);
     rpc TaskDelete(TaskDeleteReq) returns(TaskDeleteResp);
+
+    rpc ProcessList(ProcessListReq) returns(ProcessListResp);
+    rpc ProcessRetrieve(ProcessRetrieveReq) returns(ProcessRetrieveResp);
+    rpc ProcessAdd(ProcessAddReq) returns(ProcessAddResp);
+    rpc ProcessUpdate(ProcessUpdateReq) returns(ProcessUpdateResp);
+    rpc ProcessDelete(ProcessDeleteReq) returns(ProcessDeleteResp);
 }

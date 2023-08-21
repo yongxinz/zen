@@ -1,0 +1,121 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "流程设计"
+	desc: "流程设计"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	ProcessListReq {
+		PageReq
+	}
+	ProcessListData {
+		ProcessId int64  `json:"processId"`
+		Name      string `json:"name"`
+		Icon      string `json:"icon"`
+		Structure string `json:"structure"`
+		Classify  int64  `json:"classify"`
+		Template  string `json:"template"`
+		Task      string `json:"task"`
+		Notice    string `json:"notice"`
+		Remark    string `json:"remark"`
+		CreatedAt string `json:"createdAt"`
+		UpdatedAt string `json:"updatedAt"`
+		CreateBy  int64  `json:"createBy"`
+		UpdateBy  int64  `json:"updateBy"`
+	}
+	ProcessListResp {
+		List []ProcessListData `json:"list"`
+		Pagination
+	}
+)
+
+type (
+	ProcessRetrieveReq {
+		ProcessId int64 `path:"processId"`
+	}
+	ProcessRetrieveResp {
+		ProcessId int64  `json:"processId"`
+		Name      string `json:"name"`
+		Icon      string `json:"icon"`
+		Structure string `json:"structure"`
+		Classify  int64  `json:"classify"`
+		Template  string `json:"template"`
+		Task      string `json:"task"`
+		Notice    string `json:"notice"`
+		Remark    string `json:"remark"`
+	}
+)
+
+type (
+	ProcessAddReq {
+		Name      string `json:"name"`
+		Icon      string `json:"icon"`
+		Structure string `json:"structure"`
+		Classify  int64  `json:"classify"`
+		Template  string `json:"template"`
+		Task      string `json:"task"`
+		Notice    string `json:"notice"`
+		Remark    string `json:"remark"`
+		CreateBy  int64  `json:"createBy,optional"`
+		UpdateBy  int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	ProcessUpdateReq {
+		ProcessId int64  `json:"processId"`
+		Name      string `json:"name"`
+		Icon      string `json:"icon"`
+		Structure string `json:"structure"`
+		Classify  int64  `json:"classify"`
+		Template  string `json:"template"`
+		Task      string `json:"task"`
+		Notice    string `json:"notice"`
+		Remark    string `json:"remark"`
+		UpdateBy  int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	ProcessDeleteReq {
+		ProcessId int64 `path:"processId"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: process
+	prefix: /api/v1/workflow
+)
+service wkf {
+	@doc(
+		summary: "流程设计列表"
+	)
+	@handler ProcessList
+	get /process(ProcessListReq) returns (ProcessListResp)
+	@doc(
+		summary: "获取单个流程设计"
+	)
+	@handler ProcessRetrieve
+	get /process/:processId(ProcessRetrieveReq) returns (ProcessRetrieveResp)
+	@doc(
+		summary: "新增流程设计"
+	)
+	@handler ProcessAdd
+	post /process(ProcessAddReq)
+	@doc(
+		summary: "更新流程设计"
+	)
+	@handler ProcessUpdate
+	put /process/:processId(ProcessUpdateReq)
+	@doc(
+		summary: "删除流程设计"
+	)
+	@handler ProcessDelete
+	delete /process/:processId(ProcessDeleteReq)
+}

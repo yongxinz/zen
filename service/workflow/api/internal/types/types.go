@@ -160,3 +160,74 @@ type TaskUpdateReq struct {
 type TaskDeleteReq struct {
 	TaskId int64 `path:"taskId"`
 }
+
+type ProcessListReq struct {
+	PageReq
+}
+
+type ProcessListData struct {
+	ProcessId int64  `json:"processId"`
+	Name      string `json:"name"`
+	Icon      string `json:"icon"`
+	Structure string `json:"structure"`
+	Classify  int64  `json:"classify"`
+	Template  string `json:"template"`
+	Task      string `json:"task"`
+	Notice    string `json:"notice"`
+	Remark    string `json:"remark"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
+	CreateBy  int64  `json:"createBy"`
+	UpdateBy  int64  `json:"updateBy"`
+}
+
+type ProcessListResp struct {
+	List []ProcessListData `json:"list"`
+	Pagination
+}
+
+type ProcessRetrieveReq struct {
+	ProcessId int64 `path:"processId"`
+}
+
+type ProcessRetrieveResp struct {
+	ProcessId int64  `json:"processId"`
+	Name      string `json:"name"`
+	Icon      string `json:"icon"`
+	Structure string `json:"structure"`
+	Classify  int64  `json:"classify"`
+	Template  string `json:"template"`
+	Task      string `json:"task"`
+	Notice    string `json:"notice"`
+	Remark    string `json:"remark"`
+}
+
+type ProcessAddReq struct {
+	Name      string `json:"name"`
+	Icon      string `json:"icon"`
+	Structure string `json:"structure"`
+	Classify  int64  `json:"classify"`
+	Template  string `json:"template"`
+	Task      string `json:"task"`
+	Notice    string `json:"notice"`
+	Remark    string `json:"remark"`
+	CreateBy  int64  `json:"createBy,optional"`
+	UpdateBy  int64  `json:"updateBy,optional"`
+}
+
+type ProcessUpdateReq struct {
+	ProcessId int64  `json:"processId"`
+	Name      string `json:"name"`
+	Icon      string `json:"icon"`
+	Structure string `json:"structure"`
+	Classify  int64  `json:"classify"`
+	Template  string `json:"template"`
+	Task      string `json:"task"`
+	Notice    string `json:"notice"`
+	Remark    string `json:"remark"`
+	UpdateBy  int64  `json:"updateBy,optional"`
+}
+
+type ProcessDeleteReq struct {
+	ProcessId int64 `path:"processId"`
+}

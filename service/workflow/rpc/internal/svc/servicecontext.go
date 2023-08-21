@@ -11,6 +11,7 @@ type ServiceContext struct {
 	ClassifyModel model.WkfClassifyModel
 	TemplateModel model.WkfTemplateModel
 	TaskModel     model.WkfTaskModel
+	ProcessModel  model.WkfProcessModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -20,5 +21,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		ClassifyModel: model.NewWkfClassifyModel(conn, c.CacheRedis),
 		TemplateModel: model.NewWkfTemplateModel(conn, c.CacheRedis),
 		TaskModel:     model.NewWkfTaskModel(conn, c.CacheRedis),
+		ProcessModel:  model.NewWkfProcessModel(conn, c.CacheRedis),
 	}
 }

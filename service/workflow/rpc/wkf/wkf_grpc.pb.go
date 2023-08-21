@@ -37,6 +37,11 @@ type WkfClient interface {
 	TaskAdd(ctx context.Context, in *TaskAddReq, opts ...grpc.CallOption) (*TaskAddResp, error)
 	TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...grpc.CallOption) (*TaskUpdateResp, error)
 	TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error)
+	ProcessList(ctx context.Context, in *ProcessListReq, opts ...grpc.CallOption) (*ProcessListResp, error)
+	ProcessRetrieve(ctx context.Context, in *ProcessRetrieveReq, opts ...grpc.CallOption) (*ProcessRetrieveResp, error)
+	ProcessAdd(ctx context.Context, in *ProcessAddReq, opts ...grpc.CallOption) (*ProcessAddResp, error)
+	ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error)
+	ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error)
 }
 
 type wkfClient struct {
@@ -182,6 +187,51 @@ func (c *wkfClient) TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...g
 	return out, nil
 }
 
+func (c *wkfClient) ProcessList(ctx context.Context, in *ProcessListReq, opts ...grpc.CallOption) (*ProcessListResp, error) {
+	out := new(ProcessListResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/ProcessList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) ProcessRetrieve(ctx context.Context, in *ProcessRetrieveReq, opts ...grpc.CallOption) (*ProcessRetrieveResp, error) {
+	out := new(ProcessRetrieveResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/ProcessRetrieve", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) ProcessAdd(ctx context.Context, in *ProcessAddReq, opts ...grpc.CallOption) (*ProcessAddResp, error) {
+	out := new(ProcessAddResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/ProcessAdd", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error) {
+	out := new(ProcessUpdateResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/ProcessUpdate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wkfClient) ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error) {
+	out := new(ProcessDeleteResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/ProcessDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WkfServer is the server API for Wkf service.
 // All implementations must embed UnimplementedWkfServer
 // for forward compatibility
@@ -201,6 +251,11 @@ type WkfServer interface {
 	TaskAdd(context.Context, *TaskAddReq) (*TaskAddResp, error)
 	TaskUpdate(context.Context, *TaskUpdateReq) (*TaskUpdateResp, error)
 	TaskDelete(context.Context, *TaskDeleteReq) (*TaskDeleteResp, error)
+	ProcessList(context.Context, *ProcessListReq) (*ProcessListResp, error)
+	ProcessRetrieve(context.Context, *ProcessRetrieveReq) (*ProcessRetrieveResp, error)
+	ProcessAdd(context.Context, *ProcessAddReq) (*ProcessAddResp, error)
+	ProcessUpdate(context.Context, *ProcessUpdateReq) (*ProcessUpdateResp, error)
+	ProcessDelete(context.Context, *ProcessDeleteReq) (*ProcessDeleteResp, error)
 	mustEmbedUnimplementedWkfServer()
 }
 
@@ -252,6 +307,21 @@ func (UnimplementedWkfServer) TaskUpdate(context.Context, *TaskUpdateReq) (*Task
 }
 func (UnimplementedWkfServer) TaskDelete(context.Context, *TaskDeleteReq) (*TaskDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskDelete not implemented")
+}
+func (UnimplementedWkfServer) ProcessList(context.Context, *ProcessListReq) (*ProcessListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessList not implemented")
+}
+func (UnimplementedWkfServer) ProcessRetrieve(context.Context, *ProcessRetrieveReq) (*ProcessRetrieveResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessRetrieve not implemented")
+}
+func (UnimplementedWkfServer) ProcessAdd(context.Context, *ProcessAddReq) (*ProcessAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessAdd not implemented")
+}
+func (UnimplementedWkfServer) ProcessUpdate(context.Context, *ProcessUpdateReq) (*ProcessUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessUpdate not implemented")
+}
+func (UnimplementedWkfServer) ProcessDelete(context.Context, *ProcessDeleteReq) (*ProcessDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessDelete not implemented")
 }
 func (UnimplementedWkfServer) mustEmbedUnimplementedWkfServer() {}
 
@@ -536,6 +606,96 @@ func _Wkf_TaskDelete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Wkf_ProcessList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).ProcessList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/ProcessList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).ProcessList(ctx, req.(*ProcessListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_ProcessRetrieve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessRetrieveReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).ProcessRetrieve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/ProcessRetrieve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).ProcessRetrieve(ctx, req.(*ProcessRetrieveReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_ProcessAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).ProcessAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/ProcessAdd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).ProcessAdd(ctx, req.(*ProcessAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_ProcessUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).ProcessUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/ProcessUpdate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).ProcessUpdate(ctx, req.(*ProcessUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Wkf_ProcessDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).ProcessDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/ProcessDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).ProcessDelete(ctx, req.(*ProcessDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Wkf_ServiceDesc is the grpc.ServiceDesc for Wkf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -602,6 +762,26 @@ var Wkf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TaskDelete",
 			Handler:    _Wkf_TaskDelete_Handler,
+		},
+		{
+			MethodName: "ProcessList",
+			Handler:    _Wkf_ProcessList_Handler,
+		},
+		{
+			MethodName: "ProcessRetrieve",
+			Handler:    _Wkf_ProcessRetrieve_Handler,
+		},
+		{
+			MethodName: "ProcessAdd",
+			Handler:    _Wkf_ProcessAdd_Handler,
+		},
+		{
+			MethodName: "ProcessUpdate",
+			Handler:    _Wkf_ProcessUpdate_Handler,
+		},
+		{
+			MethodName: "ProcessDelete",
+			Handler:    _Wkf_ProcessDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

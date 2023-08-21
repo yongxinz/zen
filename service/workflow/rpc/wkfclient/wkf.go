@@ -24,6 +24,17 @@ type (
 	ClassifyRetrieveResp = wkf.ClassifyRetrieveResp
 	ClassifyUpdateReq    = wkf.ClassifyUpdateReq
 	ClassifyUpdateResp   = wkf.ClassifyUpdateResp
+	ProcessAddReq        = wkf.ProcessAddReq
+	ProcessAddResp       = wkf.ProcessAddResp
+	ProcessDeleteReq     = wkf.ProcessDeleteReq
+	ProcessDeleteResp    = wkf.ProcessDeleteResp
+	ProcessListData      = wkf.ProcessListData
+	ProcessListReq       = wkf.ProcessListReq
+	ProcessListResp      = wkf.ProcessListResp
+	ProcessRetrieveReq   = wkf.ProcessRetrieveReq
+	ProcessRetrieveResp  = wkf.ProcessRetrieveResp
+	ProcessUpdateReq     = wkf.ProcessUpdateReq
+	ProcessUpdateResp    = wkf.ProcessUpdateResp
 	TaskAddReq           = wkf.TaskAddReq
 	TaskAddResp          = wkf.TaskAddResp
 	TaskDeleteReq        = wkf.TaskDeleteReq
@@ -63,6 +74,11 @@ type (
 		TaskAdd(ctx context.Context, in *TaskAddReq, opts ...grpc.CallOption) (*TaskAddResp, error)
 		TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...grpc.CallOption) (*TaskUpdateResp, error)
 		TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error)
+		ProcessList(ctx context.Context, in *ProcessListReq, opts ...grpc.CallOption) (*ProcessListResp, error)
+		ProcessRetrieve(ctx context.Context, in *ProcessRetrieveReq, opts ...grpc.CallOption) (*ProcessRetrieveResp, error)
+		ProcessAdd(ctx context.Context, in *ProcessAddReq, opts ...grpc.CallOption) (*ProcessAddResp, error)
+		ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error)
+		ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error)
 	}
 
 	defaultWkf struct {
@@ -149,4 +165,29 @@ func (m *defaultWkf) TaskUpdate(ctx context.Context, in *TaskUpdateReq, opts ...
 func (m *defaultWkf) TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*TaskDeleteResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.TaskDelete(ctx, in, opts...)
+}
+
+func (m *defaultWkf) ProcessList(ctx context.Context, in *ProcessListReq, opts ...grpc.CallOption) (*ProcessListResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.ProcessList(ctx, in, opts...)
+}
+
+func (m *defaultWkf) ProcessRetrieve(ctx context.Context, in *ProcessRetrieveReq, opts ...grpc.CallOption) (*ProcessRetrieveResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.ProcessRetrieve(ctx, in, opts...)
+}
+
+func (m *defaultWkf) ProcessAdd(ctx context.Context, in *ProcessAddReq, opts ...grpc.CallOption) (*ProcessAddResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.ProcessAdd(ctx, in, opts...)
+}
+
+func (m *defaultWkf) ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.ProcessUpdate(ctx, in, opts...)
+}
+
+func (m *defaultWkf) ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.ProcessDelete(ctx, in, opts...)
 }
