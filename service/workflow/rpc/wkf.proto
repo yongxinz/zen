@@ -257,6 +257,20 @@ message ProcessDeleteReq {
 }
 
 message ProcessDeleteResp {}
+
+message ProcessClassifyReq {
+    string name = 1;
+}
+
+message ProcessClassifyData {
+    int64 classifyId = 1;
+    string name = 2;
+    repeated ProcessListData process = 3;
+}
+
+message ProcessClassifyResp {
+    repeated ProcessClassifyData data = 1;
+}
 // process end
 
 service Wkf {
@@ -283,4 +297,5 @@ service Wkf {
     rpc ProcessAdd(ProcessAddReq) returns(ProcessAddResp);
     rpc ProcessUpdate(ProcessUpdateReq) returns(ProcessUpdateResp);
     rpc ProcessDelete(ProcessDeleteReq) returns(ProcessDeleteResp);
+    rpc ProcessClassify(ProcessClassifyReq) returns(ProcessClassifyResp);
 }

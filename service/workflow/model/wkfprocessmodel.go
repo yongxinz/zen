@@ -18,10 +18,21 @@ type (
 		wkfProcessModel
 		FindAll(context.Context, int64, int64) ([]*WkfProcess, error)
 		Count(context.Context) (int64, error)
+		FindProcessClassify(context.Context, string) ([]*WkfProcessClassify, error)
 	}
 
 	customWkfProcessModel struct {
 		*defaultWkfProcessModel
+		classifyTable string
+	}
+
+	WkfProcessClassify struct {
+		Id           int64  `db:"id"`            // 编码
+		Name         string `db:"name"`          // 名称
+		Icon         string `db:"icon"`          // ICON
+		ClassifyId   int64  `db:"classify_id"`   // 分类ID
+		ClassifyName string `db:"classify_name"` // 分类名称
+		Remark       string `db:"remark"`        // 备注
 	}
 )
 
@@ -29,6 +40,7 @@ type (
 func NewWkfProcessModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) WkfProcessModel {
 	return &customWkfProcessModel{
 		defaultWkfProcessModel: newWkfProcessModel(conn, c, opts...),
+		classifyTable:          "`wkf_classify`",
 	}
 }
 
@@ -55,5 +67,26 @@ func (m *customWkfProcessModel) Count(ctx context.Context) (int64, error) {
 		return count, nil
 	default:
 		return count, err
+	}
+}
+
+func (m *customWkfProcessModel) FindProcessClassify(ctx context.Context, name string) ([]*WkfProcessClassify, error) {
+	var query string
+	var resp []*WkfProcessClassify
+
+	if name == "" {
+		query = fmt.Sprintf("SELECT wp.id, wp.name, wp.icon, wp.remark, wc.id as classify_id, wc.name as classify_name from %s wp left join %s wc on wp.classify = wc.id ;", m.table, m.classifyTable)
+	} else {
+		query = fmt.Sprintf("SELECT wp.id, wp.name, wp.icon, wp.remark, wc.id as classify_id, wc.name as classify_name from %s wp left join %s wc on wp.classify = wc.id where wp.name like '%s';", m.table, m.classifyTable, name)
+	}
+
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
 	}
 }

@@ -121,3 +121,8 @@ func (s *WkfServer) ProcessDelete(ctx context.Context, in *wkf.ProcessDeleteReq)
 	l := logic.NewProcessDeleteLogic(ctx, s.svcCtx)
 	return l.ProcessDelete(in)
 }
+
+func (s *WkfServer) ProcessClassify(ctx context.Context, in *wkf.ProcessClassifyReq) (*wkf.ProcessClassifyResp, error) {
+	l := logic.NewProcessClassifyLogic(ctx, s.svcCtx)
+	return l.ProcessClassify(in)
+}

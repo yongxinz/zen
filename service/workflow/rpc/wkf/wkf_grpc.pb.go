@@ -42,6 +42,7 @@ type WkfClient interface {
 	ProcessAdd(ctx context.Context, in *ProcessAddReq, opts ...grpc.CallOption) (*ProcessAddResp, error)
 	ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error)
 	ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error)
+	ProcessClassify(ctx context.Context, in *ProcessClassifyReq, opts ...grpc.CallOption) (*ProcessClassifyResp, error)
 }
 
 type wkfClient struct {
@@ -232,6 +233,15 @@ func (c *wkfClient) ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opt
 	return out, nil
 }
 
+func (c *wkfClient) ProcessClassify(ctx context.Context, in *ProcessClassifyReq, opts ...grpc.CallOption) (*ProcessClassifyResp, error) {
+	out := new(ProcessClassifyResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/ProcessClassify", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WkfServer is the server API for Wkf service.
 // All implementations must embed UnimplementedWkfServer
 // for forward compatibility
@@ -256,6 +266,7 @@ type WkfServer interface {
 	ProcessAdd(context.Context, *ProcessAddReq) (*ProcessAddResp, error)
 	ProcessUpdate(context.Context, *ProcessUpdateReq) (*ProcessUpdateResp, error)
 	ProcessDelete(context.Context, *ProcessDeleteReq) (*ProcessDeleteResp, error)
+	ProcessClassify(context.Context, *ProcessClassifyReq) (*ProcessClassifyResp, error)
 	mustEmbedUnimplementedWkfServer()
 }
 
@@ -322,6 +333,9 @@ func (UnimplementedWkfServer) ProcessUpdate(context.Context, *ProcessUpdateReq) 
 }
 func (UnimplementedWkfServer) ProcessDelete(context.Context, *ProcessDeleteReq) (*ProcessDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessDelete not implemented")
+}
+func (UnimplementedWkfServer) ProcessClassify(context.Context, *ProcessClassifyReq) (*ProcessClassifyResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessClassify not implemented")
 }
 func (UnimplementedWkfServer) mustEmbedUnimplementedWkfServer() {}
 
@@ -696,6 +710,24 @@ func _Wkf_ProcessDelete_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Wkf_ProcessClassify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessClassifyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).ProcessClassify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/ProcessClassify",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).ProcessClassify(ctx, req.(*ProcessClassifyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Wkf_ServiceDesc is the grpc.ServiceDesc for Wkf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -782,6 +814,10 @@ var Wkf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessDelete",
 			Handler:    _Wkf_ProcessDelete_Handler,
+		},
+		{
+			MethodName: "ProcessClassify",
+			Handler:    _Wkf_ProcessClassify_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

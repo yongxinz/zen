@@ -87,6 +87,22 @@ type (
 	}
 )
 
+type (
+    ProcessClassifyReq {
+        Name string `form:"name,optional"`
+    }
+
+    ProcessClassifyData {
+        ClassifyId int64             `json:"classifyId"`
+        Name       string            `json:"name"`
+        Process    []ProcessListData `json:"process"`
+    }
+
+    ProcessClassifyResp {
+        List []ProcessClassifyData `json:"list"`
+    }
+)
+
 @server(
 	jwt: Auth
 	group: process
@@ -118,4 +134,9 @@ service wkf {
 	)
 	@handler ProcessDelete
 	delete /process/:processId(ProcessDeleteReq)
+    @doc(
+		summary: "流程分类"
+	)
+	@handler ProcessClassify
+	get /process/classify(ProcessClassifyReq) returns (ProcessClassifyResp)
 }

@@ -137,6 +137,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/process/:processId",
 				Handler: process.ProcessDeleteHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/process/classify",
+				Handler: process.ProcessClassifyHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/workflow"),

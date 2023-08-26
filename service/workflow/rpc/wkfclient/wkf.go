@@ -26,6 +26,9 @@ type (
 	ClassifyUpdateResp   = wkf.ClassifyUpdateResp
 	ProcessAddReq        = wkf.ProcessAddReq
 	ProcessAddResp       = wkf.ProcessAddResp
+	ProcessClassifyData  = wkf.ProcessClassifyData
+	ProcessClassifyReq   = wkf.ProcessClassifyReq
+	ProcessClassifyResp  = wkf.ProcessClassifyResp
 	ProcessDeleteReq     = wkf.ProcessDeleteReq
 	ProcessDeleteResp    = wkf.ProcessDeleteResp
 	ProcessListData      = wkf.ProcessListData
@@ -79,6 +82,7 @@ type (
 		ProcessAdd(ctx context.Context, in *ProcessAddReq, opts ...grpc.CallOption) (*ProcessAddResp, error)
 		ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error)
 		ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error)
+		ProcessClassify(ctx context.Context, in *ProcessClassifyReq, opts ...grpc.CallOption) (*ProcessClassifyResp, error)
 	}
 
 	defaultWkf struct {
@@ -190,4 +194,9 @@ func (m *defaultWkf) ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, op
 func (m *defaultWkf) ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.ProcessDelete(ctx, in, opts...)
+}
+
+func (m *defaultWkf) ProcessClassify(ctx context.Context, in *ProcessClassifyReq, opts ...grpc.CallOption) (*ProcessClassifyResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.ProcessClassify(ctx, in, opts...)
 }

@@ -231,3 +231,17 @@ type ProcessUpdateReq struct {
 type ProcessDeleteReq struct {
 	ProcessId int64 `path:"processId"`
 }
+
+type ProcessClassifyReq struct {
+	Name string `form:"name,optional"`
+}
+
+type ProcessClassifyData struct {
+	ClassifyId int64             `json:"classifyId"`
+	Name       string            `json:"name"`
+	Process    []ProcessListData `json:"process"`
+}
+
+type ProcessClassifyResp struct {
+	List []ProcessClassifyData `json:"list"`
+}
