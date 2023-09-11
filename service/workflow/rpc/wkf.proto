@@ -311,15 +311,16 @@ message TicketListReq {
 
 message TicketListData {
     int64 ticketId = 1;
-    string processName = 2;
-    string stateName = 3;
-    string processMethod = 4;
-    string principals = 5;
-    int64 isEnd = 6;
-    int64 createBy = 7;
-    string createdAt = 8;
-    int64 updateBy = 9;
-    string updatedAt = 10;
+    int64 processId = 2;
+    string processName = 3;
+    string stateName = 4;
+    string processMethod = 5;
+    string principals = 6;
+    int64 isEnd = 7;
+    int64 createBy = 8;
+    string createdAt = 9;
+    int64 updateBy = 10;
+    string updatedAt = 11;
 }
 
 message TicketListResp {

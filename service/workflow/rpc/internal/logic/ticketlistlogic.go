@@ -91,6 +91,7 @@ func (l *TicketListLogic) TicketList(in *wkf.TicketListReq) (*wkf.TicketListResp
 		data = append(data, &wkf.TicketListData{
 			TicketId:      v.Id,
 			StateName:     stateName,
+			ProcessId:     v.ProcessId,
 			ProcessName:   v.ProcessName,
 			ProcessMethod: processMethod,
 			Principals:    principals,

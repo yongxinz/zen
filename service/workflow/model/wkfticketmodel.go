@@ -27,6 +27,7 @@ type (
 
 	TicketList struct {
 		WkfTicket
+		ProcessId   int64  `db:"process_id"`
 		ProcessName string `db:"process_name"`
 	}
 )
@@ -50,7 +51,7 @@ func (m *customWkfTicketModel) FindAll(ctx context.Context, Current, PageSize in
 	case 1:
 		query := fmt.Sprintf(
 			`SELECT
-				wt.*, wp.name as process_name
+				wt.*, wp.name as process_name, wp.id as process_id
 			from
 				%s wt
 			left join %s wp on
@@ -68,7 +69,7 @@ func (m *customWkfTicketModel) FindAll(ctx context.Context, Current, PageSize in
 	case 2:
 		query := fmt.Sprintf(
 			`SELECT
-				wt.*, wp.name as process_name
+				wt.*, wp.name as process_name, wp.id as process_id
 			from
 				%s wt
 			left join %s wp on
@@ -80,7 +81,7 @@ func (m *customWkfTicketModel) FindAll(ctx context.Context, Current, PageSize in
 	case 3:
 		query := fmt.Sprintf(
 			`SELECT
-				wt.*, wp.name as process_name
+				wt.*, wp.name as process_name, wp.id as process_id
 			from
 				%s wt
 			left join %s wp on
@@ -92,7 +93,7 @@ func (m *customWkfTicketModel) FindAll(ctx context.Context, Current, PageSize in
 	case 4:
 		query := fmt.Sprintf(
 			`SELECT
-				wt.*, wp.name as process_name
+				wt.*, wp.name as process_name, wp.id as process_id
 			from
 				%s wt
 			left join %s wp on
@@ -160,6 +161,14 @@ func (m *customWkfTicketModel) Count(ctx context.Context, params map[string]int6
 				JSON_CONTAINS(wt.related_person, JSON_ARRAY(?));`, m.table, m.processTable)
 		err = m.QueryRowsNoCacheCtx(ctx, &count, query, params["userId"])
 	case 4:
+		query := fmt.Sprintf(
+			`SELECT
+				count(*)
+			from
+				%s wt
+			left join %s wp on
+				wt.process_id = wp.id;`, m.table, m.processTable)
+		err = m.QueryRowsNoCacheCtx(ctx, &count, query)
 	default:
 		return 0, fmt.Errorf("请确认查询的数据类型是否正确")
 	}

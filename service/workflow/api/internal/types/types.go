@@ -279,6 +279,7 @@ type TicketListReq struct {
 
 type TicketListData struct {
 	TicketId      int64  `json:"ticket_id"`
+	ProcessId     int64  `json:"process_id"`
 	ProcessName   string `json:"process_name"`
 	StateName     string `json:"state_name"`
 	ProcessMethod string `json:"process_method"`
