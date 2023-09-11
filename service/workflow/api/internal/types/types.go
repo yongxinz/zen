@@ -257,6 +257,8 @@ type TicketInfoResp struct {
 	Circulation string `json:"circulation"`
 	Nodes       string `json:"nodes"`
 	Edges       string `json:"edges"`
+	Ticket      string `json:"ticket"`
+	FormData    string `json:"form_data"`
 }
 
 type TicketAddReq struct {

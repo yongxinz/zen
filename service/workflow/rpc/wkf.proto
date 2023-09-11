@@ -285,6 +285,8 @@ message TicketProcessResp {
     string circulation = 3;
     string nodes = 4;
     string edges = 5;
+    string ticket = 6;
+    string formData = 7;
 }
 
 message TicketAddReq {

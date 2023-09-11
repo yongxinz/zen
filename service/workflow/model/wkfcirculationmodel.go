@@ -33,7 +33,7 @@ func NewWkfCirculationModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.
 
 func (m *customWkfCirculationModel) FindByTicket(ctx context.Context, ticket int64) ([]*WkfCirculation, error) {
 	var resp []*WkfCirculation
-	query := fmt.Sprintf("select * from %s where ticket = ? order by id desc", m.table)
+	query := fmt.Sprintf("select * from %s where ticket_id = ? order by id desc", m.table)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, ticket)
 	switch err {
 	case nil:

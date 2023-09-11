@@ -39,6 +39,7 @@ func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.Ticke
 		processStructure map[string]interface{}
 		processNodes     []map[string]interface{}
 		template         []*model.WkfTemplate
+		formInfo         []*model.WkfForm
 		ticketInfo       Ticket
 		// formInfo         []*model.WkfForm
 		stateList []map[string]interface{}
@@ -168,10 +169,11 @@ func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.Ticke
 			}
 		}
 
-		// formInfo, _ = l.svcCtx.FormModel.FindByTicket(l.ctx, in.TicketId)
+		formInfo, _ = l.svcCtx.FormModel.FindByTicket(l.ctx, in.TicketId)
 	}
 	templateByte, _ := json.Marshal(template)
-	// formInfoByte, _ := json.Marshal(formInfo)
+	ticketByte, _ := json.Marshal(ticketInfo)
+	formInfoByte, _ := json.Marshal(formInfo)
 
 	return &wkf.TicketProcessResp{
 		Process:     string(processInfoByte),
@@ -179,6 +181,8 @@ func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.Ticke
 		Edges:       string(processEdgesByte),
 		Circulation: string(circutionByte),
 		Template:    string(templateByte),
+		FormData:    string(formInfoByte),
+		Ticket:      string(ticketByte),
 	}, nil
 }
 

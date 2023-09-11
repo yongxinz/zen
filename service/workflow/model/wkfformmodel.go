@@ -33,7 +33,7 @@ func NewWkfFormModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 
 func (m *customWkfFormModel) FindByTicket(ctx context.Context, ticket int64) ([]*WkfForm, error) {
 	var resp []*WkfForm
-	query := fmt.Sprintf("select * from %s where ticket = ? order by id desc", m.table)
+	query := fmt.Sprintf("select * from %s where ticket_id = ? order by id desc", m.table)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, ticket)
 	switch err {
 	case nil:
