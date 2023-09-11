@@ -396,7 +396,7 @@ type MenuRetrieveResp struct {
 }
 
 type MenuAddReq struct {
-	MenuName   string `json:"menuName"`
+	MenuName   string `json:"menuName,optional"`
 	MenuType   string `json:"menuType"`
 	Title      string `json:"title"`
 	Permission string `json:"permission,optional"`
