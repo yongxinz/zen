@@ -49,6 +49,10 @@ message UserRetrieveResp {
     int64 postId = 10;
 }
 
+message UserListByIdsReq {
+    repeated int64 userIds = 1;
+}
+
 message UserListReq {
     int64 page = 1;
     int64 size = 2;
@@ -136,6 +140,10 @@ message UserDeleteResp {}
 // user end
 
 // role start
+message RoleListByIdsReq {
+    repeated int64 roleIds = 1;
+}
+
 message RoleListReq {
     int64 page = 1;
     int64 size = 2;
@@ -357,6 +365,10 @@ message DeptTreeResp {
     repeated DeptTreeData data = 1;
 }
 
+message DeptListByIdsReq {
+    repeated int64 deptIds = 1;
+}
+
 message DeptListReq {
 }
 
@@ -525,6 +537,7 @@ service Sys {
     rpc UserUpdateStatus(UserUpdateStatusReq) returns(UserUpdateStatusResp);
     rpc UserUpdatePwd(UserUpdatePwdReq) returns(UserUpdatePwdResp);
     rpc UserDelete(UserDeleteReq) returns(UserDeleteResp);
+    rpc UserListByIds(UserListByIdsReq) returns(UserListResp);
 
     rpc RoleMenuTree(RoleMenuTreeReq) returns(RoleMenuTreeResp);
     rpc RoleList(RoleListReq) returns(RoleListResp);
@@ -532,6 +545,7 @@ service Sys {
     rpc RoleRetrieve(RoleRetrieveReq) returns(RoleRetrieveResp);
     rpc RoleUpdate(RoleUpdateReq) returns(RoleUpdateResp);
     rpc RoleDelete(RoleDeleteReq) returns(RoleDeleteResp);
+    rpc RoleListByIds(RoleListByIdsReq) returns(RoleListResp);
 
     rpc MenuAdd(MenuAddReq) returns(MenuAddResp);
     rpc MenuList(MenuListReq) returns(MenuListResp);
@@ -547,6 +561,7 @@ service Sys {
     rpc DeptAdd(DeptAddReq) returns(DeptAddResp);
     rpc DeptUpdate(DeptUpdateReq) returns(DeptUpdateResp);
     rpc DeptDelete(DeptDeleteReq) returns(DeptDeleteResp);
+    rpc DeptListByIds(DeptListByIdsReq) returns(DeptListResp);
 
     rpc PostList(PostListReq) returns(PostListResp);
     rpc PostRetrieve(PostRetrieveReq) returns(PostRetrieveResp);

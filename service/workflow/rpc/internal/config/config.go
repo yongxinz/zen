@@ -11,4 +11,5 @@ type Config struct {
 		DataSource string
 	}
 	CacheRedis cache.CacheConf
+	SysRpc     zrpc.RpcClientConf
 }

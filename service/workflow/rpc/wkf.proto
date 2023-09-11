@@ -273,6 +273,61 @@ message ProcessClassifyResp {
 }
 // process end
 
+// ticket start
+message TicketProcessReq {
+    int64 processId = 1;
+    int64 ticketId = 2;
+}
+
+message TicketProcessResp {
+    string process = 1;
+    string template = 2;
+    string circulation = 3;
+    string nodes = 4;
+    string edges = 5;
+}
+
+message TicketAddReq {
+    int64 processId = 1;
+    int64 classifyId = 2;
+    string processMethod = 3;
+    string source = 4;
+    string sourceState = 5;
+    string state = 6;
+    string tasks = 7;
+    string template = 8;
+    int64 createBy = 9;
+    int64 updateBy = 10;
+}
+
+message TicketAddResp {}
+
+message TicketListReq {
+    int64 page = 1;
+    int64 size = 2;
+    int64 category = 3;
+    int64 userId = 4;
+}
+
+message TicketListData {
+    int64 ticketId = 1;
+    string processName = 2;
+    string stateName = 3;
+    string processMethod = 4;
+    string principals = 5;
+    int64 isEnd = 6;
+    int64 createBy = 7;
+    string createdAt = 8;
+    int64 updateBy = 9;
+    string updatedAt = 10;
+}
+
+message TicketListResp {
+    int64 count = 1;
+    repeated TicketListData data = 2;
+}
+// ticket end
+
 service Wkf {
     rpc ClassifyList(ClassifyListReq) returns(ClassifyListResp);
     rpc ClassifyRetrieve(ClassifyRetrieveReq) returns(ClassifyRetrieveResp);
@@ -298,4 +353,8 @@ service Wkf {
     rpc ProcessUpdate(ProcessUpdateReq) returns(ProcessUpdateResp);
     rpc ProcessDelete(ProcessDeleteReq) returns(ProcessDeleteResp);
     rpc ProcessClassify(ProcessClassifyReq) returns(ProcessClassifyResp);
+
+    rpc TicketProcess(TicketProcessReq) returns(TicketProcessResp);
+    rpc TicketList(TicketListReq) returns(TicketListResp);
+    rpc TicketAdd(TicketAddReq) returns(TicketAddResp);
 }

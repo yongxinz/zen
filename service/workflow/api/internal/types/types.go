@@ -245,3 +245,52 @@ type ProcessClassifyData struct {
 type ProcessClassifyResp struct {
 	List []ProcessClassifyData `json:"list"`
 }
+
+type TicketInfoReq struct {
+	ProcessId int64 `form:"processId,default=0"`
+	TicketId  int64 `form:"ticketId,default=0"`
+}
+
+type TicketInfoResp struct {
+	Process     string `json:"process"`
+	Template    string `json:"template"`
+	Circulation string `json:"circulation"`
+	Nodes       string `json:"nodes"`
+	Edges       string `json:"edges"`
+}
+
+type TicketAddReq struct {
+	ProcessId     int64  `json:"process_id"`
+	ClassifyId    int64  `json:"classify_id"`
+	ProcessMethod string `json:"process_method"`
+	Source        string `json:"source"`
+	SourceState   string `json:"source_state"`
+	State         string `json:"state"`
+	Tasks         string `json:"tasks"`
+	Template      string `json:"template"`
+	CreateBy      int64  `json:"createBy,optional"`
+	UpdateBy      int64  `json:"updateBy,optional"`
+}
+
+type TicketListReq struct {
+	PageReq
+	Category int64 `form:"category"`
+}
+
+type TicketListData struct {
+	TicketId      int64  `json:"ticket_id"`
+	ProcessName   string `json:"process_name"`
+	StateName     string `json:"state_name"`
+	ProcessMethod string `json:"process_method"`
+	Principals    string `json:"principals"`
+	IsEnd         int64  `json:"is_end"`
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
+	CreateBy      int64  `json:"createBy"`
+	UpdateBy      int64  `json:"updateBy"`
+}
+
+type TicketListResp struct {
+	List []TicketListData `json:"list"`
+	Pagination
+}

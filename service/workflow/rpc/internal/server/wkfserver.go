@@ -126,3 +126,18 @@ func (s *WkfServer) ProcessClassify(ctx context.Context, in *wkf.ProcessClassify
 	l := logic.NewProcessClassifyLogic(ctx, s.svcCtx)
 	return l.ProcessClassify(in)
 }
+
+func (s *WkfServer) TicketProcess(ctx context.Context, in *wkf.TicketProcessReq) (*wkf.TicketProcessResp, error) {
+	l := logic.NewTicketProcessLogic(ctx, s.svcCtx)
+	return l.TicketProcess(in)
+}
+
+func (s *WkfServer) TicketList(ctx context.Context, in *wkf.TicketListReq) (*wkf.TicketListResp, error) {
+	l := logic.NewTicketListLogic(ctx, s.svcCtx)
+	return l.TicketList(in)
+}
+
+func (s *WkfServer) TicketAdd(ctx context.Context, in *wkf.TicketAddReq) (*wkf.TicketAddResp, error) {
+	l := logic.NewTicketAddLogic(ctx, s.svcCtx)
+	return l.TicketAdd(in)
+}

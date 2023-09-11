@@ -31,12 +31,14 @@ type SysClient interface {
 	UserUpdateStatus(ctx context.Context, in *UserUpdateStatusReq, opts ...grpc.CallOption) (*UserUpdateStatusResp, error)
 	UserUpdatePwd(ctx context.Context, in *UserUpdatePwdReq, opts ...grpc.CallOption) (*UserUpdatePwdResp, error)
 	UserDelete(ctx context.Context, in *UserDeleteReq, opts ...grpc.CallOption) (*UserDeleteResp, error)
+	UserListByIds(ctx context.Context, in *UserListByIdsReq, opts ...grpc.CallOption) (*UserListResp, error)
 	RoleMenuTree(ctx context.Context, in *RoleMenuTreeReq, opts ...grpc.CallOption) (*RoleMenuTreeResp, error)
 	RoleList(ctx context.Context, in *RoleListReq, opts ...grpc.CallOption) (*RoleListResp, error)
 	RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
 	RoleRetrieve(ctx context.Context, in *RoleRetrieveReq, opts ...grpc.CallOption) (*RoleRetrieveResp, error)
 	RoleUpdate(ctx context.Context, in *RoleUpdateReq, opts ...grpc.CallOption) (*RoleUpdateResp, error)
 	RoleDelete(ctx context.Context, in *RoleDeleteReq, opts ...grpc.CallOption) (*RoleDeleteResp, error)
+	RoleListByIds(ctx context.Context, in *RoleListByIdsReq, opts ...grpc.CallOption) (*RoleListResp, error)
 	MenuAdd(ctx context.Context, in *MenuAddReq, opts ...grpc.CallOption) (*MenuAddResp, error)
 	MenuList(ctx context.Context, in *MenuListReq, opts ...grpc.CallOption) (*MenuListResp, error)
 	MenuRetrieve(ctx context.Context, in *MenuRetrieveReq, opts ...grpc.CallOption) (*MenuRetrieveResp, error)
@@ -49,6 +51,7 @@ type SysClient interface {
 	DeptAdd(ctx context.Context, in *DeptAddReq, opts ...grpc.CallOption) (*DeptAddResp, error)
 	DeptUpdate(ctx context.Context, in *DeptUpdateReq, opts ...grpc.CallOption) (*DeptUpdateResp, error)
 	DeptDelete(ctx context.Context, in *DeptDeleteReq, opts ...grpc.CallOption) (*DeptDeleteResp, error)
+	DeptListByIds(ctx context.Context, in *DeptListByIdsReq, opts ...grpc.CallOption) (*DeptListResp, error)
 	PostList(ctx context.Context, in *PostListReq, opts ...grpc.CallOption) (*PostListResp, error)
 	PostRetrieve(ctx context.Context, in *PostRetrieveReq, opts ...grpc.CallOption) (*PostRetrieveResp, error)
 	PostAdd(ctx context.Context, in *PostAddReq, opts ...grpc.CallOption) (*PostAddResp, error)
@@ -146,6 +149,15 @@ func (c *sysClient) UserDelete(ctx context.Context, in *UserDeleteReq, opts ...g
 	return out, nil
 }
 
+func (c *sysClient) UserListByIds(ctx context.Context, in *UserListByIdsReq, opts ...grpc.CallOption) (*UserListResp, error) {
+	out := new(UserListResp)
+	err := c.cc.Invoke(ctx, "/sysclient.Sys/UserListByIds", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sysClient) RoleMenuTree(ctx context.Context, in *RoleMenuTreeReq, opts ...grpc.CallOption) (*RoleMenuTreeResp, error) {
 	out := new(RoleMenuTreeResp)
 	err := c.cc.Invoke(ctx, "/sysclient.Sys/RoleMenuTree", in, out, opts...)
@@ -194,6 +206,15 @@ func (c *sysClient) RoleUpdate(ctx context.Context, in *RoleUpdateReq, opts ...g
 func (c *sysClient) RoleDelete(ctx context.Context, in *RoleDeleteReq, opts ...grpc.CallOption) (*RoleDeleteResp, error) {
 	out := new(RoleDeleteResp)
 	err := c.cc.Invoke(ctx, "/sysclient.Sys/RoleDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysClient) RoleListByIds(ctx context.Context, in *RoleListByIdsReq, opts ...grpc.CallOption) (*RoleListResp, error) {
+	out := new(RoleListResp)
+	err := c.cc.Invoke(ctx, "/sysclient.Sys/RoleListByIds", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -308,6 +329,15 @@ func (c *sysClient) DeptDelete(ctx context.Context, in *DeptDeleteReq, opts ...g
 	return out, nil
 }
 
+func (c *sysClient) DeptListByIds(ctx context.Context, in *DeptListByIdsReq, opts ...grpc.CallOption) (*DeptListResp, error) {
+	out := new(DeptListResp)
+	err := c.cc.Invoke(ctx, "/sysclient.Sys/DeptListByIds", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sysClient) PostList(ctx context.Context, in *PostListReq, opts ...grpc.CallOption) (*PostListResp, error) {
 	out := new(PostListResp)
 	err := c.cc.Invoke(ctx, "/sysclient.Sys/PostList", in, out, opts...)
@@ -375,12 +405,14 @@ type SysServer interface {
 	UserUpdateStatus(context.Context, *UserUpdateStatusReq) (*UserUpdateStatusResp, error)
 	UserUpdatePwd(context.Context, *UserUpdatePwdReq) (*UserUpdatePwdResp, error)
 	UserDelete(context.Context, *UserDeleteReq) (*UserDeleteResp, error)
+	UserListByIds(context.Context, *UserListByIdsReq) (*UserListResp, error)
 	RoleMenuTree(context.Context, *RoleMenuTreeReq) (*RoleMenuTreeResp, error)
 	RoleList(context.Context, *RoleListReq) (*RoleListResp, error)
 	RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error)
 	RoleRetrieve(context.Context, *RoleRetrieveReq) (*RoleRetrieveResp, error)
 	RoleUpdate(context.Context, *RoleUpdateReq) (*RoleUpdateResp, error)
 	RoleDelete(context.Context, *RoleDeleteReq) (*RoleDeleteResp, error)
+	RoleListByIds(context.Context, *RoleListByIdsReq) (*RoleListResp, error)
 	MenuAdd(context.Context, *MenuAddReq) (*MenuAddResp, error)
 	MenuList(context.Context, *MenuListReq) (*MenuListResp, error)
 	MenuRetrieve(context.Context, *MenuRetrieveReq) (*MenuRetrieveResp, error)
@@ -393,6 +425,7 @@ type SysServer interface {
 	DeptAdd(context.Context, *DeptAddReq) (*DeptAddResp, error)
 	DeptUpdate(context.Context, *DeptUpdateReq) (*DeptUpdateResp, error)
 	DeptDelete(context.Context, *DeptDeleteReq) (*DeptDeleteResp, error)
+	DeptListByIds(context.Context, *DeptListByIdsReq) (*DeptListResp, error)
 	PostList(context.Context, *PostListReq) (*PostListResp, error)
 	PostRetrieve(context.Context, *PostRetrieveReq) (*PostRetrieveResp, error)
 	PostAdd(context.Context, *PostAddReq) (*PostAddResp, error)
@@ -433,6 +466,9 @@ func (UnimplementedSysServer) UserUpdatePwd(context.Context, *UserUpdatePwdReq) 
 func (UnimplementedSysServer) UserDelete(context.Context, *UserDeleteReq) (*UserDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserDelete not implemented")
 }
+func (UnimplementedSysServer) UserListByIds(context.Context, *UserListByIdsReq) (*UserListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserListByIds not implemented")
+}
 func (UnimplementedSysServer) RoleMenuTree(context.Context, *RoleMenuTreeReq) (*RoleMenuTreeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoleMenuTree not implemented")
 }
@@ -450,6 +486,9 @@ func (UnimplementedSysServer) RoleUpdate(context.Context, *RoleUpdateReq) (*Role
 }
 func (UnimplementedSysServer) RoleDelete(context.Context, *RoleDeleteReq) (*RoleDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RoleDelete not implemented")
+}
+func (UnimplementedSysServer) RoleListByIds(context.Context, *RoleListByIdsReq) (*RoleListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleListByIds not implemented")
 }
 func (UnimplementedSysServer) MenuAdd(context.Context, *MenuAddReq) (*MenuAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MenuAdd not implemented")
@@ -486,6 +525,9 @@ func (UnimplementedSysServer) DeptUpdate(context.Context, *DeptUpdateReq) (*Dept
 }
 func (UnimplementedSysServer) DeptDelete(context.Context, *DeptDeleteReq) (*DeptDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeptDelete not implemented")
+}
+func (UnimplementedSysServer) DeptListByIds(context.Context, *DeptListByIdsReq) (*DeptListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeptListByIds not implemented")
 }
 func (UnimplementedSysServer) PostList(context.Context, *PostListReq) (*PostListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostList not implemented")
@@ -680,6 +722,24 @@ func _Sys_UserDelete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sys_UserListByIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListByIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).UserListByIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysclient.Sys/UserListByIds",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).UserListByIds(ctx, req.(*UserListByIdsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Sys_RoleMenuTree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RoleMenuTreeReq)
 	if err := dec(in); err != nil {
@@ -784,6 +844,24 @@ func _Sys_RoleDelete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SysServer).RoleDelete(ctx, req.(*RoleDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Sys_RoleListByIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleListByIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).RoleListByIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysclient.Sys/RoleListByIds",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).RoleListByIds(ctx, req.(*RoleListByIdsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1004,6 +1082,24 @@ func _Sys_DeptDelete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sys_DeptListByIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeptListByIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServer).DeptListByIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysclient.Sys/DeptListByIds",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServer).DeptListByIds(ctx, req.(*DeptListByIdsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Sys_PostList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PostListReq)
 	if err := dec(in); err != nil {
@@ -1156,6 +1252,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Sys_UserDelete_Handler,
 		},
 		{
+			MethodName: "UserListByIds",
+			Handler:    _Sys_UserListByIds_Handler,
+		},
+		{
 			MethodName: "RoleMenuTree",
 			Handler:    _Sys_RoleMenuTree_Handler,
 		},
@@ -1178,6 +1278,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RoleDelete",
 			Handler:    _Sys_RoleDelete_Handler,
+		},
+		{
+			MethodName: "RoleListByIds",
+			Handler:    _Sys_RoleListByIds_Handler,
 		},
 		{
 			MethodName: "MenuAdd",
@@ -1226,6 +1330,10 @@ var Sys_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeptDelete",
 			Handler:    _Sys_DeptDelete_Handler,
+		},
+		{
+			MethodName: "DeptListByIds",
+			Handler:    _Sys_DeptListByIds_Handler,
 		},
 		{
 			MethodName: "PostList",

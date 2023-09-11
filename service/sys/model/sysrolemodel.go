@@ -21,6 +21,7 @@ type (
 		FindAll(context.Context, int64, int64) ([]*SysRole, error)
 		Count(context.Context) (int64, error)
 		DeleteMulti(context.Context, []int64) error
+		FindByIds(context.Context, []int64) ([]*SysRole, error)
 	}
 
 	customSysRoleModel struct {
@@ -75,4 +76,23 @@ func (m *customSysRoleModel) DeleteMulti(ctx context.Context, roleIds []int64) e
 		return err
 	}
 	return nil
+}
+
+func (m *customSysRoleModel) FindByIds(ctx context.Context, ids []int64) ([]*SysRole, error) {
+	var resp []*SysRole
+
+	args := make([]any, len(ids))
+	for i, id := range ids {
+		args[i] = id
+	}
+	query := fmt.Sprintf(`select * from %s where id in (?`+strings.Repeat(",?", len(ids)-1)+`)`, m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, args...)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
 }

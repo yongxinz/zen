@@ -1,0 +1,85 @@
+syntax = "v1"
+
+// import "common.api"
+
+info(
+	title: "工单中心"
+	desc: "工单中心"
+	author: "yongxinz"
+	github: "https://github.com/yongxinz"
+)
+
+type (
+	TicketInfoReq {
+		ProcessId int64 `form:"processId,default=0"`
+		TicketId  int64 `form:"ticketId,default=0"`
+	}
+	TicketInfoResp {
+		Process     string `json:"process"`
+		Template    string `json:"template"`
+		Circulation string `json:"circulation"`
+		Nodes       string `json:"nodes"`
+		Edges       string `json:"edges"`
+	}
+)
+
+type (
+	TicketAddReq {
+		ProcessId     int64  `json:"process_id"`
+		ClassifyId    int64  `json:"classify_id"`
+		ProcessMethod string `json:"process_method"`
+		Source        string `json:"source"`
+		SourceState   string `json:"source_state"`
+		State         string `json:"state"`
+		Tasks         string `json:"tasks"`
+		Template      string `json:"template"`
+		CreateBy      int64  `json:"createBy,optional"`
+		UpdateBy      int64  `json:"updateBy,optional"`
+	}
+)
+
+type (
+	TicketListReq {
+		PageReq
+		Category int64 `form:"category"`
+	}
+	TicketListData {
+		TicketId      int64  `json:"ticket_id"`
+		ProcessName   string `json:"process_name"`
+		StateName     string `json:"state_name"`
+		ProcessMethod string `json:"process_method"`
+		Principals    string `json:"principals"`
+		IsEnd         int64  `json:"is_end"`
+		CreatedAt     string `json:"createdAt"`
+		UpdatedAt     string `json:"updatedAt"`
+		CreateBy      int64  `json:"createBy"`
+		UpdateBy      int64  `json:"updateBy"`
+	}
+	TicketListResp {
+		List []TicketListData `json:"list"`
+		Pagination
+	}
+)
+
+@server(
+	jwt: Auth
+	group: ticket
+	prefix: /api/v1/workflow
+)
+service wkf {
+	@doc(
+		summary: "工单信息"
+	)
+	@handler TicketInfo
+	get /ticket/process-structure(TicketInfoReq) returns (TicketInfoResp)
+	@doc(
+		summary: "创建工单"
+	)
+	@handler TicketAdd
+	post /ticket(TicketAddReq)
+	@doc(
+		summary: "工单列表"
+	)
+	@handler TicketList
+	get /ticket(TicketListReq) returns (TicketListResp)
+}

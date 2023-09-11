@@ -21,6 +21,7 @@ type (
 		FindAll(context.Context, int64, int64) ([]*SysUserList, error)
 		Count(context.Context) (int64, error)
 		DeleteMulti(context.Context, []int64) error
+		FindByIds(context.Context, []int64) ([]*SysUser, error)
 	}
 
 	customSysUserModel struct {
@@ -80,4 +81,23 @@ func (m *customSysUserModel) DeleteMulti(ctx context.Context, userIds []int64) e
 		return err
 	}
 	return nil
+}
+
+func (m *customSysUserModel) FindByIds(ctx context.Context, ids []int64) ([]*SysUser, error) {
+	var resp []*SysUser
+
+	args := make([]any, len(ids))
+	for i, id := range ids {
+		args[i] = id
+	}
+	query := fmt.Sprintf(`select * from %s where id in (?`+strings.Repeat(",?", len(ids)-1)+`)`, m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, args...)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
 }

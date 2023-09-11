@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -18,6 +19,7 @@ type (
 		wkfTemplateModel
 		FindAll(context.Context, int64, int64) ([]*WkfTemplate, error)
 		Count(context.Context) (int64, error)
+		FindByIds(context.Context, []int64) ([]*WkfTemplate, error)
 	}
 
 	customWkfTemplateModel struct {
@@ -55,5 +57,24 @@ func (m *customWkfTemplateModel) Count(ctx context.Context) (int64, error) {
 		return count, nil
 	default:
 		return count, err
+	}
+}
+
+func (m *customWkfTemplateModel) FindByIds(ctx context.Context, ids []int64) ([]*WkfTemplate, error) {
+	var resp []*WkfTemplate
+
+	args := make([]any, len(ids))
+	for i, id := range ids {
+		args[i] = id
+	}
+	query := fmt.Sprintf(`select * from %s where id in (?`+strings.Repeat(",?", len(ids)-1)+`)`, m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, args...)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
 	}
 }

@@ -8,6 +8,7 @@ import (
 	process "github.com/yongxin/zen/service/workflow/api/internal/handler/process"
 	task "github.com/yongxin/zen/service/workflow/api/internal/handler/task"
 	template "github.com/yongxin/zen/service/workflow/api/internal/handler/template"
+	ticket "github.com/yongxin/zen/service/workflow/api/internal/handler/ticket"
 	"github.com/yongxin/zen/service/workflow/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -141,6 +142,28 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/process/classify",
 				Handler: process.ProcessClassifyHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/workflow"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/ticket/process-structure",
+				Handler: ticket.TicketInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/ticket",
+				Handler: ticket.TicketAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/ticket",
+				Handler: ticket.TicketListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

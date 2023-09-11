@@ -60,6 +60,13 @@ type (
 	TemplateRetrieveResp = wkf.TemplateRetrieveResp
 	TemplateUpdateReq    = wkf.TemplateUpdateReq
 	TemplateUpdateResp   = wkf.TemplateUpdateResp
+	TicketAddReq         = wkf.TicketAddReq
+	TicketAddResp        = wkf.TicketAddResp
+	TicketListData       = wkf.TicketListData
+	TicketListReq        = wkf.TicketListReq
+	TicketListResp       = wkf.TicketListResp
+	TicketProcessReq     = wkf.TicketProcessReq
+	TicketProcessResp    = wkf.TicketProcessResp
 
 	Wkf interface {
 		ClassifyList(ctx context.Context, in *ClassifyListReq, opts ...grpc.CallOption) (*ClassifyListResp, error)
@@ -83,6 +90,9 @@ type (
 		ProcessUpdate(ctx context.Context, in *ProcessUpdateReq, opts ...grpc.CallOption) (*ProcessUpdateResp, error)
 		ProcessDelete(ctx context.Context, in *ProcessDeleteReq, opts ...grpc.CallOption) (*ProcessDeleteResp, error)
 		ProcessClassify(ctx context.Context, in *ProcessClassifyReq, opts ...grpc.CallOption) (*ProcessClassifyResp, error)
+		TicketProcess(ctx context.Context, in *TicketProcessReq, opts ...grpc.CallOption) (*TicketProcessResp, error)
+		TicketList(ctx context.Context, in *TicketListReq, opts ...grpc.CallOption) (*TicketListResp, error)
+		TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grpc.CallOption) (*TicketAddResp, error)
 	}
 
 	defaultWkf struct {
@@ -199,4 +209,19 @@ func (m *defaultWkf) ProcessDelete(ctx context.Context, in *ProcessDeleteReq, op
 func (m *defaultWkf) ProcessClassify(ctx context.Context, in *ProcessClassifyReq, opts ...grpc.CallOption) (*ProcessClassifyResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.ProcessClassify(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TicketProcess(ctx context.Context, in *TicketProcessReq, opts ...grpc.CallOption) (*TicketProcessResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TicketProcess(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TicketList(ctx context.Context, in *TicketListReq, opts ...grpc.CallOption) (*TicketListResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TicketList(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grpc.CallOption) (*TicketAddResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TicketAdd(ctx, in, opts...)
 }

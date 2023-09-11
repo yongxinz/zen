@@ -67,6 +67,11 @@ func (s *SysServer) UserDelete(ctx context.Context, in *sys.UserDeleteReq) (*sys
 	return l.UserDelete(in)
 }
 
+func (s *SysServer) UserListByIds(ctx context.Context, in *sys.UserListByIdsReq) (*sys.UserListResp, error) {
+	l := logic.NewUserListByIdsLogic(ctx, s.svcCtx)
+	return l.UserListByIds(in)
+}
+
 func (s *SysServer) RoleMenuTree(ctx context.Context, in *sys.RoleMenuTreeReq) (*sys.RoleMenuTreeResp, error) {
 	l := logic.NewRoleMenuTreeLogic(ctx, s.svcCtx)
 	return l.RoleMenuTree(in)
@@ -95,6 +100,11 @@ func (s *SysServer) RoleUpdate(ctx context.Context, in *sys.RoleUpdateReq) (*sys
 func (s *SysServer) RoleDelete(ctx context.Context, in *sys.RoleDeleteReq) (*sys.RoleDeleteResp, error) {
 	l := logic.NewRoleDeleteLogic(ctx, s.svcCtx)
 	return l.RoleDelete(in)
+}
+
+func (s *SysServer) RoleListByIds(ctx context.Context, in *sys.RoleListByIdsReq) (*sys.RoleListResp, error) {
+	l := logic.NewRoleListByIdsLogic(ctx, s.svcCtx)
+	return l.RoleListByIds(in)
 }
 
 func (s *SysServer) MenuAdd(ctx context.Context, in *sys.MenuAddReq) (*sys.MenuAddResp, error) {
@@ -155,6 +165,11 @@ func (s *SysServer) DeptUpdate(ctx context.Context, in *sys.DeptUpdateReq) (*sys
 func (s *SysServer) DeptDelete(ctx context.Context, in *sys.DeptDeleteReq) (*sys.DeptDeleteResp, error) {
 	l := logic.NewDeptDeleteLogic(ctx, s.svcCtx)
 	return l.DeptDelete(in)
+}
+
+func (s *SysServer) DeptListByIds(ctx context.Context, in *sys.DeptListByIdsReq) (*sys.DeptListResp, error) {
+	l := logic.NewDeptListByIdsLogic(ctx, s.svcCtx)
+	return l.DeptListByIds(in)
 }
 
 func (s *SysServer) PostList(ctx context.Context, in *sys.PostListReq) (*sys.PostListResp, error) {
