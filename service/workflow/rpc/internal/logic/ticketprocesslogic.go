@@ -31,7 +31,8 @@ func NewTicketProcessLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tic
 
 type Ticket struct {
 	*model.WkfTicket
-	CurrentState string `json:"current_state"`
+	CurrentState  string `json:"current_state"`
+	UserAuthority bool   `json:"userAuthority"`
 }
 
 func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.TicketProcessResp, error) {
@@ -171,6 +172,7 @@ func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.Ticke
 
 		formInfo, _ = l.svcCtx.FormModel.FindByTicket(l.ctx, in.TicketId)
 	}
+	ticketInfo.UserAuthority = true
 	templateByte, _ := json.Marshal(template)
 	ticketByte, _ := json.Marshal(ticketInfo)
 	formInfoByte, _ := json.Marshal(formInfo)
