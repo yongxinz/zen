@@ -62,6 +62,8 @@ type (
 	TemplateUpdateResp   = wkf.TemplateUpdateResp
 	TicketAddReq         = wkf.TicketAddReq
 	TicketAddResp        = wkf.TicketAddResp
+	TicketHandleReq      = wkf.TicketHandleReq
+	TicketHandleResp     = wkf.TicketHandleResp
 	TicketListData       = wkf.TicketListData
 	TicketListReq        = wkf.TicketListReq
 	TicketListResp       = wkf.TicketListResp
@@ -93,6 +95,7 @@ type (
 		TicketProcess(ctx context.Context, in *TicketProcessReq, opts ...grpc.CallOption) (*TicketProcessResp, error)
 		TicketList(ctx context.Context, in *TicketListReq, opts ...grpc.CallOption) (*TicketListResp, error)
 		TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grpc.CallOption) (*TicketAddResp, error)
+		TicketHandle(ctx context.Context, in *TicketHandleReq, opts ...grpc.CallOption) (*TicketHandleResp, error)
 	}
 
 	defaultWkf struct {
@@ -224,4 +227,9 @@ func (m *defaultWkf) TicketList(ctx context.Context, in *TicketListReq, opts ...
 func (m *defaultWkf) TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grpc.CallOption) (*TicketAddResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.TicketAdd(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TicketHandle(ctx context.Context, in *TicketHandleReq, opts ...grpc.CallOption) (*TicketHandleResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TicketHandle(ctx, in, opts...)
 }

@@ -141,3 +141,8 @@ func (s *WkfServer) TicketAdd(ctx context.Context, in *wkf.TicketAddReq) (*wkf.T
 	l := logic.NewTicketAddLogic(ctx, s.svcCtx)
 	return l.TicketAdd(in)
 }
+
+func (s *WkfServer) TicketHandle(ctx context.Context, in *wkf.TicketHandleReq) (*wkf.TicketHandleResp, error) {
+	l := logic.NewTicketHandleLogic(ctx, s.svcCtx)
+	return l.TicketHandle(in)
+}

@@ -64,17 +64,21 @@ type (
 	}
 )
 
+type (
+	TicketHandleReq {
+		TicketId       int64  `json:"ticket_id"`
+		FlowProperties int64  `json:"flow_properties"`
+		Remark         string `json:"remark"`
+		UpdateBy       int64  `json:"updateBy,optional"`
+	}
+)
+
 @server(
 	jwt: Auth
 	group: ticket
 	prefix: /api/v1/workflow
 )
 service wkf {
-	@doc(
-		summary: "工单信息"
-	)
-	@handler TicketInfo
-	get /ticket/process-structure(TicketInfoReq) returns (TicketInfoResp)
 	@doc(
 		summary: "创建工单"
 	)
@@ -85,4 +89,14 @@ service wkf {
 	)
 	@handler TicketList
 	get /ticket(TicketListReq) returns (TicketListResp)
+    @doc(
+		summary: "工单信息"
+	)
+	@handler TicketInfo
+	get /ticket/process-structure(TicketInfoReq) returns (TicketInfoResp)
+    @doc(
+		summary: "工单处理"
+	)
+	@handler TicketHandle
+	post /ticket/handle(TicketHandleReq)
 }

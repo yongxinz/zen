@@ -329,6 +329,15 @@ message TicketListResp {
     int64 count = 1;
     repeated TicketListData data = 2;
 }
+
+message TicketHandleReq {
+    int64 ticketId = 1;
+    int64 flowProperties = 2;
+    string remark = 3;
+    int64 updateBy = 4;
+}
+
+message TicketHandleResp {}
 // ticket end
 
 service Wkf {
@@ -360,4 +369,5 @@ service Wkf {
     rpc TicketProcess(TicketProcessReq) returns(TicketProcessResp);
     rpc TicketList(TicketListReq) returns(TicketListResp);
     rpc TicketAdd(TicketAddReq) returns(TicketAddResp);
+    rpc TicketHandle(TicketHandleReq) returns(TicketHandleResp);
 }

@@ -46,6 +46,7 @@ type WkfClient interface {
 	TicketProcess(ctx context.Context, in *TicketProcessReq, opts ...grpc.CallOption) (*TicketProcessResp, error)
 	TicketList(ctx context.Context, in *TicketListReq, opts ...grpc.CallOption) (*TicketListResp, error)
 	TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grpc.CallOption) (*TicketAddResp, error)
+	TicketHandle(ctx context.Context, in *TicketHandleReq, opts ...grpc.CallOption) (*TicketHandleResp, error)
 }
 
 type wkfClient struct {
@@ -272,6 +273,15 @@ func (c *wkfClient) TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grp
 	return out, nil
 }
 
+func (c *wkfClient) TicketHandle(ctx context.Context, in *TicketHandleReq, opts ...grpc.CallOption) (*TicketHandleResp, error) {
+	out := new(TicketHandleResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TicketHandle", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WkfServer is the server API for Wkf service.
 // All implementations must embed UnimplementedWkfServer
 // for forward compatibility
@@ -300,6 +310,7 @@ type WkfServer interface {
 	TicketProcess(context.Context, *TicketProcessReq) (*TicketProcessResp, error)
 	TicketList(context.Context, *TicketListReq) (*TicketListResp, error)
 	TicketAdd(context.Context, *TicketAddReq) (*TicketAddResp, error)
+	TicketHandle(context.Context, *TicketHandleReq) (*TicketHandleResp, error)
 	mustEmbedUnimplementedWkfServer()
 }
 
@@ -378,6 +389,9 @@ func (UnimplementedWkfServer) TicketList(context.Context, *TicketListReq) (*Tick
 }
 func (UnimplementedWkfServer) TicketAdd(context.Context, *TicketAddReq) (*TicketAddResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TicketAdd not implemented")
+}
+func (UnimplementedWkfServer) TicketHandle(context.Context, *TicketHandleReq) (*TicketHandleResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TicketHandle not implemented")
 }
 func (UnimplementedWkfServer) mustEmbedUnimplementedWkfServer() {}
 
@@ -824,6 +838,24 @@ func _Wkf_TicketAdd_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Wkf_TicketHandle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TicketHandleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TicketHandle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TicketHandle",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TicketHandle(ctx, req.(*TicketHandleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Wkf_ServiceDesc is the grpc.ServiceDesc for Wkf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -926,6 +958,10 @@ var Wkf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TicketAdd",
 			Handler:    _Wkf_TicketAdd_Handler,
+		},
+		{
+			MethodName: "TicketHandle",
+			Handler:    _Wkf_TicketHandle_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

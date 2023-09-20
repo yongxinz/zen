@@ -3470,6 +3470,115 @@ func (x *TicketListResp) GetData() []*TicketListData {
 	return nil
 }
 
+type TicketHandleReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TicketId       int64  `protobuf:"varint,1,opt,name=ticketId,proto3" json:"ticketId,omitempty"`
+	FlowProperties int64  `protobuf:"varint,2,opt,name=flowProperties,proto3" json:"flowProperties,omitempty"`
+	Remark         string `protobuf:"bytes,3,opt,name=remark,proto3" json:"remark,omitempty"`
+	UpdateBy       int64  `protobuf:"varint,4,opt,name=updateBy,proto3" json:"updateBy,omitempty"`
+}
+
+func (x *TicketHandleReq) Reset() {
+	*x = TicketHandleReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wkf_proto_msgTypes[54]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TicketHandleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TicketHandleReq) ProtoMessage() {}
+
+func (x *TicketHandleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_wkf_proto_msgTypes[54]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TicketHandleReq.ProtoReflect.Descriptor instead.
+func (*TicketHandleReq) Descriptor() ([]byte, []int) {
+	return file_wkf_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *TicketHandleReq) GetTicketId() int64 {
+	if x != nil {
+		return x.TicketId
+	}
+	return 0
+}
+
+func (x *TicketHandleReq) GetFlowProperties() int64 {
+	if x != nil {
+		return x.FlowProperties
+	}
+	return 0
+}
+
+func (x *TicketHandleReq) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+func (x *TicketHandleReq) GetUpdateBy() int64 {
+	if x != nil {
+		return x.UpdateBy
+	}
+	return 0
+}
+
+type TicketHandleResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *TicketHandleResp) Reset() {
+	*x = TicketHandleResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wkf_proto_msgTypes[55]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TicketHandleResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TicketHandleResp) ProtoMessage() {}
+
+func (x *TicketHandleResp) ProtoReflect() protoreflect.Message {
+	mi := &file_wkf_proto_msgTypes[55]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TicketHandleResp.ProtoReflect.Descriptor instead.
+func (*TicketHandleResp) Descriptor() ([]byte, []int) {
+	return file_wkf_proto_rawDescGZIP(), []int{55}
+}
+
 var File_wkf_proto protoreflect.FileDescriptor
 
 var file_wkf_proto_rawDesc = []byte{
@@ -3826,7 +3935,17 @@ var file_wkf_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x27, 0x0a, 0x04, 0x64,
 	0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x77, 0x6b, 0x66, 0x2e,
 	0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04,
-	0x64, 0x61, 0x74, 0x61, 0x32, 0xc3, 0x0b, 0x0a, 0x03, 0x57, 0x6b, 0x66, 0x12, 0x3b, 0x0a, 0x0c,
+	0x64, 0x61, 0x74, 0x61, 0x22, 0x89, 0x01, 0x0a, 0x0f, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x48,
+	0x61, 0x6e, 0x64, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x49, 0x64, 0x12, 0x26, 0x0a, 0x0e, 0x66, 0x6c, 0x6f, 0x77, 0x50, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x66, 0x6c,
+	0x6f, 0x77, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x69, 0x65, 0x73, 0x12, 0x16, 0x0a, 0x06,
+	0x72, 0x65, 0x6d, 0x61, 0x72, 0x6b, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65,
+	0x6d, 0x61, 0x72, 0x6b, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x42, 0x79,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x42, 0x79,
+	0x22, 0x12, 0x0a, 0x10, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x32, 0x80, 0x0c, 0x0a, 0x03, 0x57, 0x6b, 0x66, 0x12, 0x3b, 0x0a, 0x0c,
 	0x43, 0x6c, 0x61, 0x73, 0x73, 0x69, 0x66, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x14, 0x2e, 0x77,
 	0x6b, 0x66, 0x2e, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x69, 0x66, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x52,
 	0x65, 0x71, 0x1a, 0x15, 0x2e, 0x77, 0x6b, 0x66, 0x2e, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x69, 0x66,
@@ -3918,8 +4037,12 @@ var file_wkf_proto_rawDesc = []byte{
 	0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x32, 0x0a, 0x09, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74,
 	0x41, 0x64, 0x64, 0x12, 0x11, 0x2e, 0x77, 0x6b, 0x66, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74,
 	0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x77, 0x6b, 0x66, 0x2e, 0x54, 0x69, 0x63,
-	0x6b, 0x65, 0x74, 0x41, 0x64, 0x64, 0x52, 0x65, 0x73, 0x70, 0x42, 0x07, 0x5a, 0x05, 0x2e, 0x2f,
-	0x77, 0x6b, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6b, 0x65, 0x74, 0x41, 0x64, 0x64, 0x52, 0x65, 0x73, 0x70, 0x12, 0x3b, 0x0a, 0x0c, 0x54, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x14, 0x2e, 0x77, 0x6b, 0x66,
+	0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x52, 0x65, 0x71,
+	0x1a, 0x15, 0x2e, 0x77, 0x6b, 0x66, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x48, 0x61, 0x6e,
+	0x64, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x42, 0x07, 0x5a, 0x05, 0x2e, 0x2f, 0x77, 0x6b, 0x66,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3934,7 +4057,7 @@ func file_wkf_proto_rawDescGZIP() []byte {
 	return file_wkf_proto_rawDescData
 }
 
-var file_wkf_proto_msgTypes = make([]protoimpl.MessageInfo, 54)
+var file_wkf_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
 var file_wkf_proto_goTypes = []interface{}{
 	(*ClassifyListReq)(nil),      // 0: wkf.ClassifyListReq
 	(*ClassifyListData)(nil),     // 1: wkf.ClassifyListData
@@ -3990,6 +4113,8 @@ var file_wkf_proto_goTypes = []interface{}{
 	(*TicketListReq)(nil),        // 51: wkf.TicketListReq
 	(*TicketListData)(nil),       // 52: wkf.TicketListData
 	(*TicketListResp)(nil),       // 53: wkf.TicketListResp
+	(*TicketHandleReq)(nil),      // 54: wkf.TicketHandleReq
+	(*TicketHandleResp)(nil),     // 55: wkf.TicketHandleResp
 }
 var file_wkf_proto_depIdxs = []int32{
 	1,  // 0: wkf.ClassifyListResp.data:type_name -> wkf.ClassifyListData
@@ -4023,32 +4148,34 @@ var file_wkf_proto_depIdxs = []int32{
 	47, // 28: wkf.Wkf.TicketProcess:input_type -> wkf.TicketProcessReq
 	51, // 29: wkf.Wkf.TicketList:input_type -> wkf.TicketListReq
 	49, // 30: wkf.Wkf.TicketAdd:input_type -> wkf.TicketAddReq
-	2,  // 31: wkf.Wkf.ClassifyList:output_type -> wkf.ClassifyListResp
-	4,  // 32: wkf.Wkf.ClassifyRetrieve:output_type -> wkf.ClassifyRetrieveResp
-	6,  // 33: wkf.Wkf.ClassifyAdd:output_type -> wkf.ClassifyAddResp
-	8,  // 34: wkf.Wkf.ClassifyUpdate:output_type -> wkf.ClassifyUpdateResp
-	10, // 35: wkf.Wkf.ClassifyDelete:output_type -> wkf.ClassifyDeleteResp
-	13, // 36: wkf.Wkf.TemplateList:output_type -> wkf.TemplateListResp
-	15, // 37: wkf.Wkf.TemplateRetrieve:output_type -> wkf.TemplateRetrieveResp
-	17, // 38: wkf.Wkf.TemplateAdd:output_type -> wkf.TemplateAddResp
-	19, // 39: wkf.Wkf.TemplateUpdate:output_type -> wkf.TemplateUpdateResp
-	21, // 40: wkf.Wkf.TemplateDelete:output_type -> wkf.TemplateDeleteResp
-	24, // 41: wkf.Wkf.TaskList:output_type -> wkf.TaskListResp
-	26, // 42: wkf.Wkf.TaskRetrieve:output_type -> wkf.TaskRetrieveResp
-	28, // 43: wkf.Wkf.TaskAdd:output_type -> wkf.TaskAddResp
-	30, // 44: wkf.Wkf.TaskUpdate:output_type -> wkf.TaskUpdateResp
-	32, // 45: wkf.Wkf.TaskDelete:output_type -> wkf.TaskDeleteResp
-	35, // 46: wkf.Wkf.ProcessList:output_type -> wkf.ProcessListResp
-	37, // 47: wkf.Wkf.ProcessRetrieve:output_type -> wkf.ProcessRetrieveResp
-	39, // 48: wkf.Wkf.ProcessAdd:output_type -> wkf.ProcessAddResp
-	41, // 49: wkf.Wkf.ProcessUpdate:output_type -> wkf.ProcessUpdateResp
-	43, // 50: wkf.Wkf.ProcessDelete:output_type -> wkf.ProcessDeleteResp
-	46, // 51: wkf.Wkf.ProcessClassify:output_type -> wkf.ProcessClassifyResp
-	48, // 52: wkf.Wkf.TicketProcess:output_type -> wkf.TicketProcessResp
-	53, // 53: wkf.Wkf.TicketList:output_type -> wkf.TicketListResp
-	50, // 54: wkf.Wkf.TicketAdd:output_type -> wkf.TicketAddResp
-	31, // [31:55] is the sub-list for method output_type
-	7,  // [7:31] is the sub-list for method input_type
+	54, // 31: wkf.Wkf.TicketHandle:input_type -> wkf.TicketHandleReq
+	2,  // 32: wkf.Wkf.ClassifyList:output_type -> wkf.ClassifyListResp
+	4,  // 33: wkf.Wkf.ClassifyRetrieve:output_type -> wkf.ClassifyRetrieveResp
+	6,  // 34: wkf.Wkf.ClassifyAdd:output_type -> wkf.ClassifyAddResp
+	8,  // 35: wkf.Wkf.ClassifyUpdate:output_type -> wkf.ClassifyUpdateResp
+	10, // 36: wkf.Wkf.ClassifyDelete:output_type -> wkf.ClassifyDeleteResp
+	13, // 37: wkf.Wkf.TemplateList:output_type -> wkf.TemplateListResp
+	15, // 38: wkf.Wkf.TemplateRetrieve:output_type -> wkf.TemplateRetrieveResp
+	17, // 39: wkf.Wkf.TemplateAdd:output_type -> wkf.TemplateAddResp
+	19, // 40: wkf.Wkf.TemplateUpdate:output_type -> wkf.TemplateUpdateResp
+	21, // 41: wkf.Wkf.TemplateDelete:output_type -> wkf.TemplateDeleteResp
+	24, // 42: wkf.Wkf.TaskList:output_type -> wkf.TaskListResp
+	26, // 43: wkf.Wkf.TaskRetrieve:output_type -> wkf.TaskRetrieveResp
+	28, // 44: wkf.Wkf.TaskAdd:output_type -> wkf.TaskAddResp
+	30, // 45: wkf.Wkf.TaskUpdate:output_type -> wkf.TaskUpdateResp
+	32, // 46: wkf.Wkf.TaskDelete:output_type -> wkf.TaskDeleteResp
+	35, // 47: wkf.Wkf.ProcessList:output_type -> wkf.ProcessListResp
+	37, // 48: wkf.Wkf.ProcessRetrieve:output_type -> wkf.ProcessRetrieveResp
+	39, // 49: wkf.Wkf.ProcessAdd:output_type -> wkf.ProcessAddResp
+	41, // 50: wkf.Wkf.ProcessUpdate:output_type -> wkf.ProcessUpdateResp
+	43, // 51: wkf.Wkf.ProcessDelete:output_type -> wkf.ProcessDeleteResp
+	46, // 52: wkf.Wkf.ProcessClassify:output_type -> wkf.ProcessClassifyResp
+	48, // 53: wkf.Wkf.TicketProcess:output_type -> wkf.TicketProcessResp
+	53, // 54: wkf.Wkf.TicketList:output_type -> wkf.TicketListResp
+	50, // 55: wkf.Wkf.TicketAdd:output_type -> wkf.TicketAddResp
+	55, // 56: wkf.Wkf.TicketHandle:output_type -> wkf.TicketHandleResp
+	32, // [32:57] is the sub-list for method output_type
+	7,  // [7:32] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name
 	7,  // [7:7] is the sub-list for extension extendee
 	0,  // [0:7] is the sub-list for field type_name
@@ -4708,6 +4835,30 @@ func file_wkf_proto_init() {
 				return nil
 			}
 		}
+		file_wkf_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TicketHandleReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wkf_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TicketHandleResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4715,7 +4866,7 @@ func file_wkf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_wkf_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   54,
+			NumMessages:   56,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

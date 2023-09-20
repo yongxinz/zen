@@ -151,11 +151,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodGet,
-				Path:    "/ticket/process-structure",
-				Handler: ticket.TicketInfoHandler(serverCtx),
-			},
-			{
 				Method:  http.MethodPost,
 				Path:    "/ticket",
 				Handler: ticket.TicketAddHandler(serverCtx),
@@ -164,6 +159,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/ticket",
 				Handler: ticket.TicketListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/ticket/process-structure",
+				Handler: ticket.TicketInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/ticket/handle",
+				Handler: ticket.TicketHandleHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

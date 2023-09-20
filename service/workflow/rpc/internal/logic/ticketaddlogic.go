@@ -30,7 +30,7 @@ func NewTicketAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TicketA
 func (l *TicketAddLogic) TicketAdd(in *wkf.TicketAddReq) (*wkf.TicketAddResp, error) {
 	var (
 		processState ProcessState
-		nodeState    []interface{}
+		nodeState    map[string]interface{}
 		template     map[string][]interface{}
 	)
 
@@ -94,7 +94,7 @@ func (l *TicketAddLogic) TicketAdd(in *wkf.TicketAddReq) (*wkf.TicketAddResp, er
 		TicketId:    ticketId,
 		State:       in.SourceState,
 		Source:      in.Source,
-		Target:      nodeState[0].(map[string]interface{})["id"].(string),
+		Target:      nodeState["id"].(string),
 		Circulation: "新建",
 		HandlerId:   in.CreateBy,
 		HandlerName: "xxx",

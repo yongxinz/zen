@@ -297,3 +297,10 @@ type TicketListResp struct {
 	List []TicketListData `json:"list"`
 	Pagination
 }
+
+type TicketHandleReq struct {
+	TicketId       int64  `json:"ticket_id"`
+	FlowProperties int64  `json:"flow_properties"`
+	Remark         string `json:"remark"`
+	UpdateBy       int64  `json:"updateBy,optional"`
+}
