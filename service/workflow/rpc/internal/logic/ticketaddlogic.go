@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"strconv"
 
 	"github.com/yongxin/zen/common/errorx"
 	"github.com/yongxin/zen/service/workflow/model"
@@ -17,6 +16,8 @@ type TicketAddLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
+
+	ProcessStructure
 }
 
 func NewTicketAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TicketAddLogic {
@@ -29,9 +30,8 @@ func NewTicketAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TicketA
 
 func (l *TicketAddLogic) TicketAdd(in *wkf.TicketAddReq) (*wkf.TicketAddResp, error) {
 	var (
-		processState ProcessState
-		nodeState    map[string]interface{}
-		template     map[string][]interface{}
+		nodeState map[string]interface{}
+		template  map[string][]interface{}
 	)
 
 	processInfo, err := l.svcCtx.ProcessModel.FindOne(l.ctx, in.ProcessId)
@@ -42,7 +42,7 @@ func (l *TicketAddLogic) TicketAdd(in *wkf.TicketAddReq) (*wkf.TicketAddResp, er
 		return nil, errorx.NewSystemError(errorx.ServerErrorCode, err.Error())
 	}
 
-	err = json.Unmarshal([]byte(processInfo.Structure), &processState.Structure)
+	err = json.Unmarshal([]byte(processInfo.Structure), &l.ProcessStructure.Structure)
 	if err != nil {
 		return nil, errorx.NewDefaultError(errorx.ServerErrorCode)
 	}
@@ -106,51 +106,4 @@ func (l *TicketAddLogic) TicketAdd(in *wkf.TicketAddReq) (*wkf.TicketAddResp, er
 	}
 
 	return &wkf.TicketAddResp{}, nil
-}
-
-type ProcessState struct {
-	Structure map[string][]map[string]interface{}
-}
-
-// 获取节点信息
-func (p *ProcessState) GetNode(stateId string) (nodeValue map[string]interface{}, err error) {
-	for _, node := range p.Structure["nodes"] {
-		if node["id"] == stateId {
-			nodeValue = node
-		}
-	}
-	return
-}
-
-// 获取流转信息
-func (p *ProcessState) GetEdge(stateId string, classify string) (edgeValue []map[string]interface{}, err error) {
-	var (
-		leftSort  int
-		rightSort int
-	)
-
-	for _, edge := range p.Structure["edges"] {
-		if edge[classify] == stateId {
-			edgeValue = append(edgeValue, edge)
-		}
-	}
-
-	// 排序
-	if len(edgeValue) > 1 {
-		for i := 0; i < len(edgeValue)-1; i++ {
-			for j := i + 1; j < len(edgeValue); j++ {
-				if t, ok := edgeValue[i]["sort"]; ok {
-					leftSort, _ = strconv.Atoi(t.(string))
-				}
-				if t, ok := edgeValue[j]["sort"]; ok {
-					rightSort, _ = strconv.Atoi(t.(string))
-				}
-				if leftSort > rightSort {
-					edgeValue[j], edgeValue[i] = edgeValue[i], edgeValue[j]
-				}
-			}
-		}
-	}
-
-	return
 }

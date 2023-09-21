@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"strconv"
 
@@ -20,10 +19,11 @@ type TicketHandleLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
-	ticketInfo       *model.WkfTicket
-	processStructure ProcessState
-	targetState      map[string]interface{}
-	updateData       map[string]interface{}
+
+	targetState map[string]interface{}
+	updateData  map[string]interface{}
+	ProcessStructure
+	UserPermission
 }
 
 func NewTicketHandleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TicketHandleLogic {
@@ -35,16 +35,28 @@ func NewTicketHandleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tick
 }
 
 func (l *TicketHandleLogic) TicketHandle(in *wkf.TicketHandleReq) (*wkf.TicketHandleResp, error) {
-	userPermission, err := l.JudgeUserPermission(l.ctx, in.TicketId, in.UpdateBy)
-	if err != nil || !userPermission {
-		return nil, err
-	}
+	var err error
 
-	// search ticket info
-	l.ticketInfo, err = l.svcCtx.TicketModel.FindOne(l.ctx, in.TicketId)
+	// get ticket info
+	l.UserPermission.TicketInfo, err = l.svcCtx.TicketModel.FindOne(l.ctx, in.TicketId)
 	if err != nil {
 		err = fmt.Errorf("TicketHandle Ticket FindOne, %v", err.Error())
 		return &wkf.TicketHandleResp{}, err
+	}
+
+	// get user info
+	l.UserPermission.UserInfo, err = l.svcCtx.SysRpc.UserRetrieve(l.ctx, &sys.UserInfoReq{
+		UserId: in.UpdateBy,
+	})
+	if err != nil {
+		err = fmt.Errorf("TicketHandle SysRpc UserRetrieve, %v", err.Error())
+		return &wkf.TicketHandleResp{}, err
+	}
+
+	// Determine whether the user has operating permissions for the ticket
+	userPermission, err := l.UserPermission.JudgeUserPermission()
+	if err != nil || !userPermission {
+		return nil, err
 	}
 
 	// get source state
@@ -54,19 +66,19 @@ func (l *TicketHandleLogic) TicketHandle(in *wkf.TicketHandleReq) (*wkf.TicketHa
 	}
 
 	// search process info
-	processInfo, err := l.svcCtx.ProcessModel.FindOne(l.ctx, l.ticketInfo.ProcessId)
+	processInfo, err := l.svcCtx.ProcessModel.FindOne(l.ctx, l.UserPermission.TicketInfo.ProcessId)
 	if err != nil {
 		err = fmt.Errorf("TicketHandle Process FindOne, %v", err.Error())
 		return &wkf.TicketHandleResp{}, err
 	}
 
-	err = json.Unmarshal([]byte(processInfo.Structure), &l.processStructure.Structure)
+	err = json.Unmarshal([]byte(processInfo.Structure), &l.ProcessStructure.Structure)
 	if err != nil {
 		err = fmt.Errorf("TicketHandle Unmarshal to processStructure error, %v", err.Error())
 		return nil, err
 	}
 	var targetId, circulationValue string
-	edges := l.processStructure.Structure["edges"]
+	edges := l.ProcessStructure.Structure["edges"]
 	for _, edge := range edges {
 		flowProperties, _ := strconv.Atoi(edge["flowProperties"].(string))
 		if edge["source"].(string) == sourceState["id"] && in.FlowProperties == int64(flowProperties) {
@@ -76,7 +88,7 @@ func (l *TicketHandleLogic) TicketHandle(in *wkf.TicketHandleReq) (*wkf.TicketHa
 		}
 	}
 
-	l.targetState, err = l.processStructure.GetNode(targetId)
+	l.targetState, err = l.ProcessStructure.GetNode(targetId)
 	if err != nil {
 		return nil, err
 	}
@@ -124,63 +136,6 @@ func (l *TicketHandleLogic) TicketHandle(in *wkf.TicketHandleReq) (*wkf.TicketHa
 	return &wkf.TicketHandleResp{}, err
 }
 
-// Determine whether the user has operating permissions for the current node
-func (l *TicketHandleLogic) JudgeUserPermission(ctx context.Context, ticketId, userId int64) (bool, error) {
-	var currentState map[string]interface{}
-
-	// search ticket info
-	ticketInfo, err := l.svcCtx.TicketModel.FindOne(ctx, ticketId)
-	if err != nil {
-		err = fmt.Errorf("JudgeUserPermission Ticket FindOne, %v", err.Error())
-		return false, err
-	}
-
-	// Get the current node that the user needs to process
-	err = json.Unmarshal([]byte(ticketInfo.State), &currentState)
-	if err != nil {
-		err = fmt.Errorf("JudgeUserPermission Ticket State Unmarshal, %v", err.Error())
-		return false, err
-	}
-
-	// search process info
-	// process, err := svcCtx.ProcessModel.FindOne(ctx, ticketInfo.ProcessId)
-	// if err != nil {
-	// 	err = fmt.Errorf("JudgeUserPermission Process FindOne, %v", err.Error())
-	// 	return false, err
-	// }
-
-	// search user info
-	userInfo, err := l.svcCtx.SysRpc.UserRetrieve(ctx, &sys.UserInfoReq{
-		UserId: userId,
-	})
-	if err != nil {
-		return false, err
-	}
-
-	switch currentState["process_method"].(string) {
-	case "person":
-		for _, processorValue := range currentState["processor"].([]interface{}) {
-			if int64(processorValue.(float64)) == userId {
-				return true, nil
-			}
-		}
-	case "role":
-		for _, processorValue := range currentState["processor"].([]interface{}) {
-			if int64(processorValue.(float64)) == userInfo.RoleId {
-				return true, nil
-			}
-		}
-	case "department":
-		for _, processorValue := range currentState["processor"].([]interface{}) {
-			if int64(processorValue.(float64)) == userInfo.DeptId {
-				return true, nil
-			}
-		}
-	}
-
-	return false, errors.New("no permission to process this node")
-}
-
 func (l *TicketHandleLogic) hanlde(ticketId, flowProperties int64) error {
 	if flowProperties == 0 {
 		err := l.circulation(ticketId, flowProperties)
@@ -222,7 +177,7 @@ func (l *TicketHandleLogic) circulation(ticketId, flowProperties int64) error {
 func (l *TicketHandleLogic) getSourceState() (map[string]interface{}, error) {
 	var state map[string]interface{}
 
-	err := json.Unmarshal([]byte(l.ticketInfo.State), &state)
+	err := json.Unmarshal([]byte(l.UserPermission.TicketInfo.State), &state)
 	if err != nil {
 		err = fmt.Errorf("getSourceState Unmarshal to state error, %v", err.Error())
 		return nil, err
