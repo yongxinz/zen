@@ -338,6 +338,12 @@ message TicketHandleReq {
 }
 
 message TicketHandleResp {}
+
+message TicketDeleteReq {
+    int64 ticketId = 1;
+}
+
+message TicketDeleteResp {}
 // ticket end
 
 service Wkf {
@@ -370,4 +376,5 @@ service Wkf {
     rpc TicketList(TicketListReq) returns(TicketListResp);
     rpc TicketAdd(TicketAddReq) returns(TicketAddResp);
     rpc TicketHandle(TicketHandleReq) returns(TicketHandleResp);
+    rpc TicketDelete(TicketDeleteReq) returns(TicketDeleteResp);
 }

@@ -73,6 +73,12 @@ type (
 	}
 )
 
+type (
+	TicketDeleteReq {
+		TicketId int64 `path:"ticketId"`
+	}
+)
+
 @server(
 	jwt: Auth
 	group: ticket
@@ -99,4 +105,9 @@ service wkf {
 	)
 	@handler TicketHandle
 	post /ticket/handle(TicketHandleReq)
+    @doc(
+		summary: "工单删除"
+	)
+	@handler TicketDelete
+	delete /ticket/:ticketId(TicketDeleteReq)
 }

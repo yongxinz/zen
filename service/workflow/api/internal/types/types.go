@@ -304,3 +304,7 @@ type TicketHandleReq struct {
 	Remark         string `json:"remark"`
 	UpdateBy       int64  `json:"updateBy,optional"`
 }
+
+type TicketDeleteReq struct {
+	TicketId int64 `path:"ticketId"`
+}

@@ -170,6 +170,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/ticket/handle",
 				Handler: ticket.TicketHandleHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/ticket/:ticketId",
+				Handler: ticket.TicketDeleteHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/workflow"),
