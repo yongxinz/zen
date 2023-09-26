@@ -95,6 +95,13 @@ type (
 	}
 )
 
+type (
+	TicketUrgeReq {
+		TicketId int64 `json:"ticket_id"`
+		UpdateBy int64 `json:"updateBy,optional"`
+	}
+)
+
 @server(
 	jwt: Auth
 	group: ticket
@@ -136,4 +143,9 @@ service wkf {
 	)
 	@handler TicketTransfer
 	post /ticket/transfer(TicketTransferReq)
+    @doc(
+		summary: "工单催办"
+	)
+	@handler TicketUrge
+	post /ticket/urge(TicketUrgeReq)
 }

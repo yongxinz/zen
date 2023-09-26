@@ -360,6 +360,13 @@ message TicketTransferReq {
 }
 
 message TicketTransferResp {}
+
+message TicketUrgeReq {
+    int64 ticketId = 1;
+    int64 updateBy = 2;
+}
+
+message TicketUrgeResp {}
 // ticket end
 
 service Wkf {
@@ -395,4 +402,5 @@ service Wkf {
     rpc TicketDelete(TicketDeleteReq) returns(TicketDeleteResp);
     rpc TicketFinish(TicketFinishReq) returns(TicketFinishResp);
     rpc TicketTransfer(TicketTransferReq) returns(TicketTransferResp);
+    rpc TicketUrge(TicketUrgeReq) returns(TicketUrgeResp);
 }

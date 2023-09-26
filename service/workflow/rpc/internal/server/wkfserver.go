@@ -161,3 +161,8 @@ func (s *WkfServer) TicketTransfer(ctx context.Context, in *wkf.TicketTransferRe
 	l := logic.NewTicketTransferLogic(ctx, s.svcCtx)
 	return l.TicketTransfer(in)
 }
+
+func (s *WkfServer) TicketUrge(ctx context.Context, in *wkf.TicketUrgeReq) (*wkf.TicketUrgeResp, error) {
+	l := logic.NewTicketUrgeLogic(ctx, s.svcCtx)
+	return l.TicketUrge(in)
+}

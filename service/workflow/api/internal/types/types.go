@@ -320,3 +320,8 @@ type TicketTransferReq struct {
 	Remark   string `json:"remark"`
 	UpdateBy int64  `json:"updateBy,optional"`
 }
+
+type TicketUrgeReq struct {
+	TicketId int64 `json:"ticket_id"`
+	UpdateBy int64 `json:"updateBy,optional"`
+}

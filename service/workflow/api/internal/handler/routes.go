@@ -185,6 +185,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/ticket/transfer",
 				Handler: ticket.TicketTransferHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/ticket/urge",
+				Handler: ticket.TicketUrgeHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/workflow"),
