@@ -351,6 +351,15 @@ message TicketFinishReq {
 }
 
 message TicketFinishResp {}
+
+message TicketTransferReq {
+    int64 ticketId = 1;
+    int64 userId = 2;
+    string remark = 3;
+    int64 updateBy = 4;
+}
+
+message TicketTransferResp {}
 // ticket end
 
 service Wkf {
@@ -385,4 +394,5 @@ service Wkf {
     rpc TicketHandle(TicketHandleReq) returns(TicketHandleResp);
     rpc TicketDelete(TicketDeleteReq) returns(TicketDeleteResp);
     rpc TicketFinish(TicketFinishReq) returns(TicketFinishResp);
+    rpc TicketTransfer(TicketTransferReq) returns(TicketTransferResp);
 }

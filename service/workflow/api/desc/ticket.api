@@ -82,7 +82,16 @@ type (
 type (
 	TicketFinishReq {
 		TicketId int64 `json:"ticket_id"`
-        UpdateBy int64  `json:"updateBy,optional"`
+		UpdateBy int64 `json:"updateBy,optional"`
+	}
+)
+
+type (
+	TicketTransferReq {
+		TicketId int64  `json:"ticket_id"`
+		UserId   int64  `json:"user_id"`
+		Remark   string `json:"remark"`
+		UpdateBy int64  `json:"updateBy,optional"`
 	}
 )
 
@@ -102,24 +111,29 @@ service wkf {
 	)
 	@handler TicketList
 	get /ticket(TicketListReq) returns (TicketListResp)
-    @doc(
+	@doc(
 		summary: "工单信息"
 	)
 	@handler TicketInfo
 	get /ticket/process-structure(TicketInfoReq) returns (TicketInfoResp)
-    @doc(
+	@doc(
 		summary: "工单处理"
 	)
 	@handler TicketHandle
 	post /ticket/handle(TicketHandleReq)
-    @doc(
+	@doc(
 		summary: "工单删除"
 	)
 	@handler TicketDelete
 	delete /ticket/:ticketId(TicketDeleteReq)
-    @doc(
+	@doc(
 		summary: "工单结束"
 	)
 	@handler TicketFinish
 	post /ticket/finish(TicketFinishReq)
+	@doc(
+		summary: "工单转交"
+	)
+	@handler TicketTransfer
+	post /ticket/transfer(TicketTransferReq)
 }

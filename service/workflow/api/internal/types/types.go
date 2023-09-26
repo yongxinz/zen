@@ -313,3 +313,10 @@ type TicketFinishReq struct {
 	TicketId int64 `json:"ticket_id"`
 	UpdateBy int64 `json:"updateBy,optional"`
 }
+
+type TicketTransferReq struct {
+	TicketId int64  `json:"ticket_id"`
+	UserId   int64  `json:"user_id"`
+	Remark   string `json:"remark"`
+	UpdateBy int64  `json:"updateBy,optional"`
+}

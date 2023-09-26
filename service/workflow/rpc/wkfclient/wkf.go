@@ -73,6 +73,8 @@ type (
 	TicketListResp       = wkf.TicketListResp
 	TicketProcessReq     = wkf.TicketProcessReq
 	TicketProcessResp    = wkf.TicketProcessResp
+	TicketTransferReq    = wkf.TicketTransferReq
+	TicketTransferResp   = wkf.TicketTransferResp
 
 	Wkf interface {
 		ClassifyList(ctx context.Context, in *ClassifyListReq, opts ...grpc.CallOption) (*ClassifyListResp, error)
@@ -102,6 +104,7 @@ type (
 		TicketHandle(ctx context.Context, in *TicketHandleReq, opts ...grpc.CallOption) (*TicketHandleResp, error)
 		TicketDelete(ctx context.Context, in *TicketDeleteReq, opts ...grpc.CallOption) (*TicketDeleteResp, error)
 		TicketFinish(ctx context.Context, in *TicketFinishReq, opts ...grpc.CallOption) (*TicketFinishResp, error)
+		TicketTransfer(ctx context.Context, in *TicketTransferReq, opts ...grpc.CallOption) (*TicketTransferResp, error)
 	}
 
 	defaultWkf struct {
@@ -248,4 +251,9 @@ func (m *defaultWkf) TicketDelete(ctx context.Context, in *TicketDeleteReq, opts
 func (m *defaultWkf) TicketFinish(ctx context.Context, in *TicketFinishReq, opts ...grpc.CallOption) (*TicketFinishResp, error) {
 	client := wkf.NewWkfClient(m.cli.Conn())
 	return client.TicketFinish(ctx, in, opts...)
+}
+
+func (m *defaultWkf) TicketTransfer(ctx context.Context, in *TicketTransferReq, opts ...grpc.CallOption) (*TicketTransferResp, error) {
+	client := wkf.NewWkfClient(m.cli.Conn())
+	return client.TicketTransfer(ctx, in, opts...)
 }

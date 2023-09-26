@@ -156,3 +156,8 @@ func (s *WkfServer) TicketFinish(ctx context.Context, in *wkf.TicketFinishReq) (
 	l := logic.NewTicketFinishLogic(ctx, s.svcCtx)
 	return l.TicketFinish(in)
 }
+
+func (s *WkfServer) TicketTransfer(ctx context.Context, in *wkf.TicketTransferReq) (*wkf.TicketTransferResp, error) {
+	l := logic.NewTicketTransferLogic(ctx, s.svcCtx)
+	return l.TicketTransfer(in)
+}
