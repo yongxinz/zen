@@ -344,6 +344,13 @@ message TicketDeleteReq {
 }
 
 message TicketDeleteResp {}
+
+message TicketFinishReq {
+    int64 ticketId = 1;
+    int64 updateBy = 2;
+}
+
+message TicketFinishResp {}
 // ticket end
 
 service Wkf {
@@ -377,4 +384,5 @@ service Wkf {
     rpc TicketAdd(TicketAddReq) returns(TicketAddResp);
     rpc TicketHandle(TicketHandleReq) returns(TicketHandleResp);
     rpc TicketDelete(TicketDeleteReq) returns(TicketDeleteResp);
+    rpc TicketFinish(TicketFinishReq) returns(TicketFinishResp);
 }

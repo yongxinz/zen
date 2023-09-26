@@ -308,3 +308,8 @@ type TicketHandleReq struct {
 type TicketDeleteReq struct {
 	TicketId int64 `path:"ticketId"`
 }
+
+type TicketFinishReq struct {
+	TicketId int64 `json:"ticket_id"`
+	UpdateBy int64 `json:"updateBy,optional"`
+}

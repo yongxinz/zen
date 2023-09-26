@@ -48,6 +48,7 @@ type WkfClient interface {
 	TicketAdd(ctx context.Context, in *TicketAddReq, opts ...grpc.CallOption) (*TicketAddResp, error)
 	TicketHandle(ctx context.Context, in *TicketHandleReq, opts ...grpc.CallOption) (*TicketHandleResp, error)
 	TicketDelete(ctx context.Context, in *TicketDeleteReq, opts ...grpc.CallOption) (*TicketDeleteResp, error)
+	TicketFinish(ctx context.Context, in *TicketFinishReq, opts ...grpc.CallOption) (*TicketFinishResp, error)
 }
 
 type wkfClient struct {
@@ -292,6 +293,15 @@ func (c *wkfClient) TicketDelete(ctx context.Context, in *TicketDeleteReq, opts 
 	return out, nil
 }
 
+func (c *wkfClient) TicketFinish(ctx context.Context, in *TicketFinishReq, opts ...grpc.CallOption) (*TicketFinishResp, error) {
+	out := new(TicketFinishResp)
+	err := c.cc.Invoke(ctx, "/wkf.Wkf/TicketFinish", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WkfServer is the server API for Wkf service.
 // All implementations must embed UnimplementedWkfServer
 // for forward compatibility
@@ -322,6 +332,7 @@ type WkfServer interface {
 	TicketAdd(context.Context, *TicketAddReq) (*TicketAddResp, error)
 	TicketHandle(context.Context, *TicketHandleReq) (*TicketHandleResp, error)
 	TicketDelete(context.Context, *TicketDeleteReq) (*TicketDeleteResp, error)
+	TicketFinish(context.Context, *TicketFinishReq) (*TicketFinishResp, error)
 	mustEmbedUnimplementedWkfServer()
 }
 
@@ -406,6 +417,9 @@ func (UnimplementedWkfServer) TicketHandle(context.Context, *TicketHandleReq) (*
 }
 func (UnimplementedWkfServer) TicketDelete(context.Context, *TicketDeleteReq) (*TicketDeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TicketDelete not implemented")
+}
+func (UnimplementedWkfServer) TicketFinish(context.Context, *TicketFinishReq) (*TicketFinishResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TicketFinish not implemented")
 }
 func (UnimplementedWkfServer) mustEmbedUnimplementedWkfServer() {}
 
@@ -888,6 +902,24 @@ func _Wkf_TicketDelete_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Wkf_TicketFinish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TicketFinishReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WkfServer).TicketFinish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wkf.Wkf/TicketFinish",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WkfServer).TicketFinish(ctx, req.(*TicketFinishReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Wkf_ServiceDesc is the grpc.ServiceDesc for Wkf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -998,6 +1030,10 @@ var Wkf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TicketDelete",
 			Handler:    _Wkf_TicketDelete_Handler,
+		},
+		{
+			MethodName: "TicketFinish",
+			Handler:    _Wkf_TicketFinish_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

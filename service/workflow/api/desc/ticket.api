@@ -79,6 +79,13 @@ type (
 	}
 )
 
+type (
+	TicketFinishReq {
+		TicketId int64 `json:"ticket_id"`
+        UpdateBy int64  `json:"updateBy,optional"`
+	}
+)
+
 @server(
 	jwt: Auth
 	group: ticket
@@ -110,4 +117,9 @@ service wkf {
 	)
 	@handler TicketDelete
 	delete /ticket/:ticketId(TicketDeleteReq)
+    @doc(
+		summary: "工单结束"
+	)
+	@handler TicketFinish
+	post /ticket/finish(TicketFinishReq)
 }

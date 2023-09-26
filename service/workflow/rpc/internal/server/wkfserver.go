@@ -151,3 +151,8 @@ func (s *WkfServer) TicketDelete(ctx context.Context, in *wkf.TicketDeleteReq) (
 	l := logic.NewTicketDeleteLogic(ctx, s.svcCtx)
 	return l.TicketDelete(in)
 }
+
+func (s *WkfServer) TicketFinish(ctx context.Context, in *wkf.TicketFinishReq) (*wkf.TicketFinishResp, error) {
+	l := logic.NewTicketFinishLogic(ctx, s.svcCtx)
+	return l.TicketFinish(in)
+}
