@@ -175,7 +175,7 @@ func (l *TicketHandleLogic) circulation(ticketId, flowProperties int64) error {
 }
 
 func (l *TicketHandleLogic) getSourceState() (map[string]interface{}, error) {
-	var state map[string]interface{}
+	var state []map[string]interface{}
 
 	err := json.Unmarshal([]byte(l.UserPermission.TicketInfo.State), &state)
 	if err != nil {
@@ -183,5 +183,5 @@ func (l *TicketHandleLogic) getSourceState() (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	return state, nil
+	return state[0], nil
 }

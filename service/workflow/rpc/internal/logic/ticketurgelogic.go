@@ -34,7 +34,7 @@ func (l *TicketUrgeLogic) TicketUrge(in *wkf.TicketUrgeReq) (*wkf.TicketUrgeResp
 	}
 
 	if ticketInfo.UrgeLasttime != 0 && (int64(time.Now().Unix())-ticketInfo.UrgeLasttime) < 600 {
-		err = fmt.Errorf("can only be done once every ten minutes.")
+		err = fmt.Errorf("can only be done once every ten minutes")
 		return &wkf.TicketUrgeResp{}, err
 	}
 

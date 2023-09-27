@@ -44,7 +44,6 @@ func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.Ticke
 		ticketInfo       Ticket
 		// formInfo         []*model.WkfForm
 		stateList []map[string]interface{}
-		state     map[string]interface{}
 	)
 
 	userId := int64(1)
@@ -116,12 +115,11 @@ func (l *TicketProcessLogic) TicketProcess(in *wkf.TicketProcessReq) (*wkf.Ticke
 		}
 
 		// 获取当前节点
-		err = json.Unmarshal([]byte(ticketInfo.State), &state)
+		err = json.Unmarshal([]byte(ticketInfo.State), &stateList)
 		if err != nil {
 			err = fmt.Errorf("序列化节点列表失败，%v", err.Error())
 			return nil, err
 		}
-		stateList = append(stateList, state)
 		if len(stateList) == 0 {
 			err = errors.New("当前工单没有下一节点数据")
 			return nil, err

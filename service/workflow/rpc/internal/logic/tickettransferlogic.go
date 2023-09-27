@@ -34,15 +34,15 @@ func (l *TicketTransferLogic) TicketTransfer(in *wkf.TicketTransferReq) (*wkf.Ti
 		return &wkf.TicketTransferResp{}, err
 	}
 
-	var state map[string]interface{}
+	var state []map[string]interface{}
 	err = json.Unmarshal([]byte(ticketInfo.State), &state)
 	if err != nil {
 		err = fmt.Errorf("TicketTransfer Unmarshal to state error, %v", err.Error())
 		return nil, err
 	}
 
-	state["processor"] = []interface{}{in.UserId}
-	state["process_method"] = "person"
+	state[0]["processor"] = []interface{}{in.UserId}
+	state[0]["process_method"] = "person"
 
 	stateValue, err := json.Marshal(state)
 	if err != nil {
@@ -60,7 +60,7 @@ func (l *TicketTransferLogic) TicketTransfer(in *wkf.TicketTransferReq) (*wkf.Ti
 
 	wkfCirculation := &model.WkfCirculation{
 		TicketId:    in.TicketId,
-		State:       state["label"].(string),
+		State:       state[0]["label"].(string),
 		Circulation: "转交",
 		HandlerId:   in.UpdateBy,
 		HandlerName: "xxx",

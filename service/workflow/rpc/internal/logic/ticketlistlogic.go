@@ -72,7 +72,7 @@ func (l *TicketListLogic) TicketList(in *wkf.TicketListReq) (*wkf.TicketListResp
 		return nil, err
 	}
 
-	var state map[string]interface{}
+	var state []map[string]interface{}
 	for _, v := range res {
 		err = json.Unmarshal([]byte(v.State), &state)
 		if err != nil {
@@ -81,11 +81,11 @@ func (l *TicketListLogic) TicketList(in *wkf.TicketListReq) (*wkf.TicketListResp
 		}
 
 		processorList := make([]int64, 0)
-		for _, p := range state["processor"].([]interface{}) {
+		for _, p := range state[0]["processor"].([]interface{}) {
 			processorList = append(processorList, int64(p.(float64)))
 		}
-		stateName := state["label"].(string)
-		processMethod := state["process_method"].(string)
+		stateName := state[0]["label"].(string)
+		processMethod := state[0]["process_method"].(string)
 		principals, _ := l.getPrincipal(processorList, processMethod)
 
 		data = append(data, &wkf.TicketListData{
